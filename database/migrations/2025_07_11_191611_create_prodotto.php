@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('prodotto', function (Blueprint $table) {
             $table->id();
-            $table->string('descrizione',1000);
-            $table->string('note_tecniche',1000);
-            $table->string('mod_installazione',1000);
+            $table->string('descrizione', 1000);
+            $table->string('tecniche_uso', 1000);
+            $table->string('mod_installazione', 1000);
             $table->string('modello', 100);
             $table->string('marca',100);
             $table->string('foto', 500);

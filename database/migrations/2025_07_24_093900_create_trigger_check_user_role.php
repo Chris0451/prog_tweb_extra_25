@@ -9,17 +9,17 @@ return new class extends Migration
     {
         // Trigger per TECNICO_ASSISTENZA
         DB::unprepared("
-            CREATE TRIGGER check_tecnico_ruolo
+            CREATE TRIGGER check_tecnico_role
             BEFORE INSERT ON tecnico_assistenza
             FOR EACH ROW
             BEGIN
-                DECLARE user_ruolo VARCHAR(20);
-                SELECT ruolo INTO user_ruolo FROM users WHERE id = NEW.id_utente;
+                DECLARE user_role VARCHAR(20);
+                SELECT role INTO user_role FROM users WHERE id = NEW.id_utente;
 
-                IF user_ruolo IS NULL THEN
+                IF user_role IS NULL THEN
                     SIGNAL SQLSTATE '45000'
                     SET MESSAGE_TEXT = 'Utente non esistente.';
-                ELSEIF user_ruolo <> 'tecnico' THEN
+                ELSEIF user_role <> 'tecnico' THEN
                     SIGNAL SQLSTATE '45000'
                     SET MESSAGE_TEXT = 'Ruolo non valido per tecnico_assistenza.';
                 END IF;
@@ -28,17 +28,17 @@ return new class extends Migration
 
         // Trigger per STAFF_TECNICO
         DB::unprepared("
-            CREATE TRIGGER check_staff_ruolo
+            CREATE TRIGGER check_staff_role
             BEFORE INSERT ON staff_tecnico
             FOR EACH ROW
             BEGIN
-                DECLARE user_ruolo VARCHAR(20);
-                SELECT ruolo INTO user_ruolo FROM users WHERE id = NEW.id_utente;
+                DECLARE user_role VARCHAR(20);
+                SELECT role INTO user_role FROM users WHERE id = NEW.id_utente;
 
-                IF user_ruolo IS NULL THEN
+                IF user_role IS NULL THEN
                     SIGNAL SQLSTATE '45000'
                     SET MESSAGE_TEXT = 'Utente non esistente.';
-                ELSEIF user_ruolo <> 'staff' THEN
+                ELSEIF user_role <> 'staff' THEN
                     SIGNAL SQLSTATE '45000'
                     SET MESSAGE_TEXT = 'Ruolo non valido per staff_tecnico.';
                 END IF;
@@ -47,17 +47,17 @@ return new class extends Migration
 
         // Trigger per AMMINISTRATORE
         DB::unprepared("
-            CREATE TRIGGER check_admin_ruolo
+            CREATE TRIGGER check_admin_role
             BEFORE INSERT ON admin
             FOR EACH ROW
             BEGIN
-                DECLARE user_ruolo VARCHAR(20);
-                SELECT ruolo INTO user_ruolo FROM users WHERE id = NEW.id_utente;
+                DECLARE user_role VARCHAR(20);
+                SELECT role INTO user_role FROM users WHERE id = NEW.id_utente;
 
-                IF user_ruolo IS NULL THEN
+                IF user_role IS NULL THEN
                     SIGNAL SQLSTATE '45000'
                     SET MESSAGE_TEXT = 'Utente non esistente.';
-                ELSEIF user_ruolo <> 'admin' THEN
+                ELSEIF user_role <> 'admin' THEN
                     SIGNAL SQLSTATE '45000'
                     SET MESSAGE_TEXT = 'Ruolo non valido per amministratore.';
                 END IF;
@@ -67,8 +67,8 @@ return new class extends Migration
 
     public function down(): void
     {
-        DB::unprepared("DROP TRIGGER IF EXISTS check_tecnico_ruolo;");
-        DB::unprepared("DROP TRIGGER IF EXISTS check_staff_ruolo;");
-        DB::unprepared("DROP TRIGGER IF EXISTS check_admin_ruolo;");
+        DB::unprepared("DROP TRIGGER IF EXISTS check_tecnico_role;");
+        DB::unprepared("DROP TRIGGER IF EXISTS check_staff_role;");
+        DB::unprepared("DROP TRIGGER IF EXISTS check_admin_role;");
     }
 };

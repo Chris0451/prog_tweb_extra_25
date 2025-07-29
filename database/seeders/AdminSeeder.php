@@ -6,15 +6,15 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TecnicoAssistenzaSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('tecnico_assistenza')->insert([
-            ['id_utente' => '1', 'data_nascita' => '1989-01-21', 'nome_CA' => 'Centro Assistenza Falconara', 'indirizzo_CA' => 'Via Roma, 30 - Falconara - Ancona' ]
+        DB::table('admin')->insert([
+            ['id_utente' => '3']
         ]);
     }
 }
