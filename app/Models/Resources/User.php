@@ -18,9 +18,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
+        'nome',
+        'cognome',
+        'role'
     ];
 
     /**
@@ -41,8 +43,38 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    /**
+     * Verifica se il corretto ruolo dell'utente.
+     *
+     * @return bool
+     */
+    public function isTecnico():bool{
+        return $this->ruolo === 'tecnico';
+    }
+    public function isStaff():bool{
+        return $this->ruolo === 'staff';
+    }
+    public function isAdmin():bool{
+        return $this->ruolo === 'admin';
+    }
+
+    /**
+     * Verifica se l'utente appartiene a uno dei ruoli specificati.
+     * Utile per controllare ruoli multipli.
+     *
+     * @param  array|string  $roles
+     * @return bool
+     */
+    public function hasRole(array|string $roles): bool
+    {
+        // Se $roles è una stringa, la convertiamo in un array per uniformità
+        if (is_string($roles)) {
+            $roles = [$roles];
+        }
+
+        return in_array($this->role, $roles);
     }
 }
