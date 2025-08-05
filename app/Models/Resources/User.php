@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->ruolo === 'admin';
     }
 
+    public function profiloTecnico()
+    {
+        return $this->hasOne(Tecnico::class, 'id_utente');
+    }
+
     /**
      * Verifica se l'utente appartiene a uno dei ruoli specificati.
      * Utile per controllare ruoli multipli.

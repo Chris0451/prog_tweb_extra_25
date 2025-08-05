@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Resources;
 
+use App\Models\Tecnico;
 use Illuminate\Database\Eloquent\Model;
 
 class CentroAssistenza extends Model
 {
     protected $table = 'centro_assistenza';
-    public $incrementing = false;
-    protected $primaryKey = null;
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+    protected $keyType = 'unsignedBigInteger';
 
     protected $fillable = [
         'nome',
@@ -18,6 +20,6 @@ class CentroAssistenza extends Model
 
     public function tecnico()
     {
-        
+        return $this->hasMany(Tecnico::class, 'id');
     }
 }

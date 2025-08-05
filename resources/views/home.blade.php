@@ -6,7 +6,7 @@
 
     @include('layouts.home_layouts.products', ['prodotti' => $prodotti])
 
-    @include('layouts.home_layouts.centers')
+    @include('layouts.home_layouts.centers', ['centri' => $centri])
 
     @include('layouts.home_layouts.contacts')
 
