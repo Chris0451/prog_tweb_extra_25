@@ -1,13 +1,13 @@
-@extends('home_layouts.app')
+@extends('layouts.home_layouts.app')
 
 @section('content')
 
-    @include('home_layouts.hero')
+    @include('layouts.home_layouts.hero')
 
-    @include('home_layouts.products')
+    @include('layouts.home_layouts.products', ['prodotti' => $prodotti])
 
-    @include('home_layouts.centers')
+    @include('layouts.home_layouts.centers')
 
-    @include('home_layouts.contacts')
+    @include('layouts.home_layouts.contacts')
 
 @endsection

@@ -14,7 +14,7 @@ class TecnicoAssistenzaSeeder extends Seeder
     public function run(): void
     {
         DB::table('tecnico_assistenza')->insert([
-            ['id_utente' => '1', 'data_nascita' => '1989-01-21', 'nome_CA' => 'Centro Assistenza Falconara', 'indirizzo_CA' => 'Via Roma, 30 - Falconara - Ancona' ]
+            ['id_utente' => '1', 'data_nascita' => '1989-01-21', 'id_centro_assistenza' => '1' ]
         ]);
     }
 }

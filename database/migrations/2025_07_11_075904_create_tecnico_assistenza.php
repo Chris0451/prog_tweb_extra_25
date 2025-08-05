@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("id_utente");
             $table->date("data_nascita");
-            $table->string("nome_CA");
-            $table->string("indirizzo_CA");
+            $table->unsignedBigInteger("id_centro_assistenza");
             $table->foreign("id_utente")->references('id')->on("users")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreign(['nome_CA', 'indirizzo_CA'])->references(['nome', 'indirizzo'])->on('centro_assistenza')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign("id_centro_assistenza")->references('id')->on('centro_assistenza')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
