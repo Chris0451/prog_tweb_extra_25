@@ -4,7 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/home', [PublicController::class, 'showHome']);
+Route::get('/', [PublicController::class, 'showHome']);
+
 
 /*
 

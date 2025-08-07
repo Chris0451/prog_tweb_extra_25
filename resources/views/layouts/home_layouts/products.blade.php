@@ -2,9 +2,9 @@
         <h2>Catalogo Prodotti</h2>
         <div class="card">
             <p>Scopri la gamma di computer, stampanti e accessori. Ogni scheda contiene foto, note d'uso e modalità di installazione.</p>
-            <form id="searchFormProducts" action="" method="GET">
-                    <input id="search" name="search" type="text" placeholder="Ricerca nella descrizione (anche con Tel*)">
-                    <input id="submit" type="submit" value="Ricerca">
+            <form id="searchFormProducts" method="GET" action="#prodotti">
+                <input id="search" name="search" type="text" value="{{ request('search') }}" placeholder="Ricerca nella descrizione (anche con Tel*)">
+                <input id="submit" type="submit" value="Ricerca">
             </form>
             <div class="row" style="display: flex; flex-wrap: wrap; gap: 20px;"> 
                 @foreach($prodotti as $prodotto)
@@ -19,6 +19,7 @@
                     </div>
                 @endforeach
             </div>
+            
             <div style="margin-top: 20px;">
                 {{ $prodotti->links('pagination::default-prodotti') }}
             </div>
