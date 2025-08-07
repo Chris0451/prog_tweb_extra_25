@@ -22,6 +22,7 @@ class PublicController extends Controller
         $prodotti = Catalog::getPaginatedProds($request);
         $centri = Catalog::getPaginatedCenters($request);
         
+        
         return view('home', [
             'prodotti' => $prodotti,
             'centri' => $centri,

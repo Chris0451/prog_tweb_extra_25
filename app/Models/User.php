@@ -52,13 +52,13 @@ class User extends Authenticatable
      * @return bool
      */
     public function isTecnico():bool{
-        return $this->ruolo === 'tecnico';
+        return $this->role === 'tecnico';
     }
     public function isStaff():bool{
-        return $this->ruolo === 'staff';
+        return $this->role === 'staff';
     }
     public function isAdmin():bool{
-        return $this->ruolo === 'admin';
+        return $this->role === 'admin';
     }
 
     public function profiloTecnico()

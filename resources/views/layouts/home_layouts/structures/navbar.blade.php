@@ -4,5 +4,5 @@
         <a href="#prodotti">Prodotti</a>
         <a href="#centri">Centri</a>
         <a href="#contatti">Contatti</a>
-        <a href="#">Login - Area riservata</a>
+        <a href="{{ route('login') }}">Login - Area riservata</a>
 </nav>

@@ -16,6 +16,12 @@
                         <p><strong>Descrizione:</strong> {{ $prodotto->descrizione }}</p>
                         <p><strong>Tecniche d'uso:</strong> {{ $prodotto->tecniche_uso }}</p>
                         <p><strong>Installazione:</strong> {{ $prodotto->mod_installazione }}</p>
+                        @if(auth()->user()?->role === 'tecnico')
+                            <!-- Contenuto per tecnico:
+                                 Mostrare i malfunzionamenti e le relative soluzioni di ogni prodotto
+                            -->
+                        @endif
+
                     </div>
                 @endforeach
             </div>

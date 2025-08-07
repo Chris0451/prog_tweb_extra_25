@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicController::class, 'showHome']);
 
-
+Route::get('/dashboard', function () {
+    return view('layouts.home_layouts.app');
+})->middleware(['auth'])->name('dashboard');
 /*
 
 Route::get('/dashboard', function () {
