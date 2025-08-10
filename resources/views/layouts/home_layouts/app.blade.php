@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="it">
 @include('layouts.home_layouts.structures.head')
-<body>
+<body class="{{ request()->is('login') ? 'login-page' : '' }}">
+
     @include('layouts.home_layouts.structures.header')
 
     <button class="menu-toggle" onclick="toggleMenu()">☰ Sezioni Home</button>

@@ -22,4 +22,8 @@ class Malfunzionamento extends Model
         return $this->belongsTo(Prodotto::class, 'id_prodotto', 'id');
     }
 
+    public function soluzione()
+    {
+        return $this->hasMany(SoluzioneTecnica::class, 'tipologia_malfunzionamento', 'tipologia');
+    }
 }

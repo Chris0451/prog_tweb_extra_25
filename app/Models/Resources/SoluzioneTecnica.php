@@ -20,4 +20,9 @@ class SoluzioneTecnica extends Model
     {
         return $this->belongsTo(Prodotto::class, 'id', 'id_prodotto');
     }
+
+    public function malfunzionamento()
+    {
+        return $this->belongsTo(Malfunzionamento::class, 'tipologia', 'tipologia_mafunzionamento');
+    }
 }

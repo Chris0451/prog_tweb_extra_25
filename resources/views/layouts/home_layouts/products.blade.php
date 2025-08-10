@@ -20,6 +20,8 @@
                             <!-- Contenuto per tecnico:
                                  Mostrare i malfunzionamenti e le relative soluzioni di ogni prodotto
                             -->
+                            <p>-------------</p>
+                            
                         @endif
 
                     </div>

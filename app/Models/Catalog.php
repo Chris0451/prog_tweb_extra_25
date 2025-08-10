@@ -31,8 +31,6 @@ class Catalog
         }
 
         return $query->paginate($perPage, ['*'], 'prodotti_page')->appends($request->all());
-
-        //return Prodotto::paginate($perPage, ['*'], 'prodotti_page')->appends($request->all());
     }
 
     public static function getPaginatedCenters($request, $perPage = 3)

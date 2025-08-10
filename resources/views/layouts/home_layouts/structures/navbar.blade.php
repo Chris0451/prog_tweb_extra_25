@@ -4,5 +4,16 @@
         <a href="#prodotti">Prodotti</a>
         <a href="#centri">Centri</a>
         <a href="#contatti">Contatti</a>
-        <a href="{{ route('login') }}">Login - Area riservata</a>
+        @guest
+            <a href="{{ route('login') }}">Login - Area riservata</a>
+        @endguest
+
+        @auth
+            @if(Auth::user()->role === 'tecnico')
+                <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+                    @csrf
+                    <button type="submit">Logout per tecnico</button>
+                </form>
+            @endif
+        @endauth
 </nav>

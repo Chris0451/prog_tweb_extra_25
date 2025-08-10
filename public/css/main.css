@@ -243,3 +243,99 @@ nav.sticky {
     box-shadow: 0 3px 9px rgba(13,71,161,0.16);
 }
 /* ***FINE STYLE SEARCHBAR*** */
+
+/* ***STYLE PER FORM DI LOGIN*** */
+/* Layout generale del form */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Titolo */
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #1f2937; /* grigio scuro Tailwind */
+}
+
+/* Etichette */
+.login-container label {
+    font-weight: 500;
+    color: #374151;
+}
+
+/* Campi di input */
+.login-container input[type="username"],
+.login-container input[type="password"] {
+    width: 93%;
+    padding: 0.75rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background-color: #f9fafb;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.login-container input[type="username"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #6366f1; /* indigo-500 */
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    outline: none;
+}
+
+/* Pulsante login */
+.login-container button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4f46e5; /* indigo-600 */
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.login-container button:hover {
+    background-color: #4338ca; /* indigo-700 */
+}
+
+/* Link "forgot password" */
+.login-container a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.login-container a:hover {
+    color: #1f2937;
+}
+
+/* Background solo per la sezione login */
+body.login-page {
+    background: url('/images/bg-login.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Sfocatura dietro il contenitore */
+body.login-page .login-container {
+    background: rgba(255, 255, 255, 0.3); /* semi-trasparente */
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    max-width: 400px;
+    margin: 60px auto;
+}
+
+/* ***FINE STYLE FORM DI LOGIN*** */
