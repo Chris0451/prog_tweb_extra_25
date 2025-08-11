@@ -156,7 +156,7 @@ nav.sticky {
 
 /* STYLE PER PAGINATOR E SINGOLI ITEM */
 #paginator {
-    flex: 0 0 29.8%; 
+    flex: 0 0 31.5%; 
     background: white; 
     padding: 10px;
     border-radius: 8px; 
@@ -323,7 +323,7 @@ nav.sticky {
 
 /* Background solo per la sezione login */
 body.login-page {
-    background: url('/images/bg-login.jpg') no-repeat center center fixed;
+    background: url('images/bg-login.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -337,5 +337,59 @@ body.login-page .login-container {
     max-width: 400px;
     margin: 60px auto;
 }
-
 /* ***FINE STYLE FORM DI LOGIN*** */
+
+
+/*INIZIO STYLE DASHBOARD UTENTI*/
+:root{
+  --indigo:#0d47a1;
+  --bg:#f7f7f7;
+  --card:#fff;
+  --muted:#6b7280;
+}
+
+*{box-sizing:border-box}
+
+.dash-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;background:var(--indigo);color:#fff;
+}
+
+.dash-header h1{margin:0;font-size:1.25rem}
+
+.dash-user{display:flex;gap:12px;align-items:center}
+.chip-role{
+  background:rgba(255,255,255,.2);padding:6px 10px;border-radius:999px;font-weight:700;letter-spacing:.5px
+}
+
+.btn-logout{
+  background:#fff;color:var(--indigo);border:none;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer
+}
+
+.btn-logout:hover{opacity:.95}
+
+.dash-wrapper{max-width:1100px;margin:28px auto;padding:0 16px}
+.card{
+  background:var(--card);border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.08);
+  padding:22px;margin-bottom:20px
+}
+.grid-3{display:grid;grid-template-columns:180px 1fr 1fr;gap:22px}
+.grid-2{display:grid;grid-template-columns:1fr 220px;gap:16px}
+
+.avatar img{
+  width:180px;height:180px;object-fit:cover;border-radius:12px;border:1px solid #e5e7eb;background:#f9fafb
+}
+.block h2{margin:0 0 10px 0;color:var(--indigo);font-size:1.1rem}
+.list{list-style:none;margin:0;padding:0}
+.list li{margin:6px 0}
+
+.foto-centro img{
+  width:100%;height:160px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;background:#f9fafb
+}
+
+@media (max-width: 900px){
+  .grid-3{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+  .avatar img{width:140px;height:140px}
+}
+/*FINE STYLE DASHBOARD UTENTE*/

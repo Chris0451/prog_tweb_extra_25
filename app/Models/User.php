@@ -61,9 +61,9 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
-    public function profiloTecnico()
+    public function tecnico()
     {
-        return $this->hasOne(Tecnico::class, 'id_utente');
+        return $this->hasOne(Tecnico::class, 'id_utente', 'id');
     }
 
     /**

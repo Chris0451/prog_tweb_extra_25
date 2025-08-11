@@ -9,11 +9,16 @@
         @endguest
 
         @auth
-            @if(Auth::user()->role === 'tecnico')
-                <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-                    @csrf
-                    <button type="submit">Logout per tecnico</button>
-                </form>
+            @php($ruolo = Auth::user()->role ?? Auth::user()->ruolo)
+            @if($ruolo === 'tecnico')
+                <a href="{{ route('dashboard.tecnico') }}">Dashboard Tecnico</a>
+            @elseif($ruolo === 'staff')
+                <a href="{{ route('dashboard.staff') }}">Dashboard Staff</a>
+            @elseif($ruolo === 'admin')
+                <a href="{{ route('dashboard.admin') }}">Dashboard Admin</a>
             @endif
         @endauth
+
+
+        
 </nav>

@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StaffTecnicoSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(ProductSeeder::class);
+        $this->call(MalfunctionSeeder::class);
+        $this->call(SolutionSeeder::class);
     }
 }

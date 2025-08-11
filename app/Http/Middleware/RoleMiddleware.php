@@ -17,9 +17,9 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        $user = Auth::user(); // oppure $request->user()
+        $user = Auth::user();
 
-        if (!$user || $user->ruolo !== $role) {
+        if (!$user || $user->role !== $role) {
             abort(403, 'Accesso negato');
         }
         return $next($request);

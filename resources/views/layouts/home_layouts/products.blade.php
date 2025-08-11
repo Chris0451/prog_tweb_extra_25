@@ -20,10 +20,32 @@
                             <!-- Contenuto per tecnico:
                                  Mostrare i malfunzionamenti e le relative soluzioni di ogni prodotto
                             -->
-                            <p>-------------</p>
-                            
-                        @endif
+                            <hr>
+                            <h3 style="color: red;">Malfunzionamenti</h3>
+                            @forelse($prodotto->malfunzionamento ?? [] as $m)
+                                <div style="margin-bottom:10px;">
+                                    <h4 style="color: #7b0707c1;">{{ $m->tipologia ?? 'Malfunzionamento' }}</h1>
 
+                                    <div>{{ $m->descrizione }}</div>
+                                    
+                                    @if($m->soluzione_tecnica->isNotEmpty())
+                                    <h3 style="color: green;">Soluzioni</h3>
+                                        <ol>
+                                            @foreach($m->soluzione_tecnica ?? [] as $s)
+                                                <li>
+                                                    <h4 style="color: #2f9c0094">{{$s->tipologia}}</h4>
+                                                    <p>{{ $s->descrizione }}</p>
+                                                </li>
+                                            @endforeach
+                                        </ol>
+                                    @else
+                                        <em>Nessuna soluzione registrata</em>
+                                    @endif
+                                </div>
+                            @empty
+                                <em>Nessun malfunzionamento registrato</em>
+                            @endforelse
+                        @endif
                     </div>
                 @endforeach
             </div>

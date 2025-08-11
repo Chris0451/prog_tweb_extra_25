@@ -8,12 +8,13 @@ use Illuminate\Database\Schema\ForeignKeyDefinition;
 class Malfunzionamento extends Model
 {
     protected $table = 'malfunzionamento';
-    public $incrementing = false;
-    protected $primaryKey = null;
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+    public $timestamps = false;
 
     protected $fillable = [
-        'descrizione',
         'tipologia',
+        'descrizione',
         'id_prodotto'
     ];
 
@@ -22,8 +23,8 @@ class Malfunzionamento extends Model
         return $this->belongsTo(Prodotto::class, 'id_prodotto', 'id');
     }
 
-    public function soluzione()
+    public function soluzione_tecnica()
     {
-        return $this->hasMany(SoluzioneTecnica::class, 'tipologia_malfunzionamento', 'tipologia');
+        return $this->hasMany(SoluzioneTecnica::class, 'id_malfunzionamento', 'id');
     }
 }

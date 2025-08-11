@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accesso_prodotto', function (Blueprint $table) {
+        Schema::create('assegnazione_prodotto', function (Blueprint $table) {
+            $table->unsignedBigInteger("id_staff_associato");
             $table->unsignedBigInteger("id_prodotto");
-            $table->unsignedBigInteger("tecnico_associato");
             $table->foreign("id_prodotto")->references("id")->on("prodotto")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreign("tecnico_associato")->references("id")->on("tecnico_assistenza")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("id_staff_associato")->references("id")->on("staff_tecnico")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
-            $table->primary(["id_prodotto","tecnico_associato"]);
+            $table->primary(["id_prodotto","id_staff_associato"]);
         });
     }
 

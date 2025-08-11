@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
 </head>
-<body class="font-sans antialiased bg-gray-100">
+<body class="{{ request()->is('login') ? 'login-page' : '' }}">
     <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0">
 
         {{-- Il contenuto dinamico della pagina (login, register, ecc.) --}}

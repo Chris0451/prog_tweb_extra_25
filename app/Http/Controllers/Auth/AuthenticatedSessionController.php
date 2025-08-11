@@ -28,7 +28,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+
+        //REDIRECT ALLA HOME PER IL CORRETTO ACCESSO DEL TECNICO (VISUALIZZAZIONE MALFUNZIONAMENTI E SOLUZIONI DEI PRODOTTI ASSOCIATI)
+        if($user->role === 'tecnico'){
+            return redirect()->route('home');
+        }
+
+        //REDIRECT ALLA DASHBOARD DIPENDENTE DAL RUOLO DELL'UTENTE CHE ACCEDE
+        return redirect()->intended(route('dashboard.'.$user->role, absolute: false));
     }
 
     /**

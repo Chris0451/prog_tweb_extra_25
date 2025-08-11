@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Resources\CentroAssistenza;
+use App\Models\CentroAssistenza;
 use Illuminate\Database\Eloquent\Model;
 
 class Tecnico extends Model
@@ -11,7 +11,6 @@ class Tecnico extends Model
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = false;
-    protected $keyType = 'unsignedBigInteger';
 
     protected $fillable = [
         'id_utente',
@@ -21,11 +20,11 @@ class Tecnico extends Model
 
     public function utente()
     {
-        return $this->belongsTo(User::class, 'id_utente');
+        return $this->belongsTo(User::class, 'id_utente', 'id');
     }
 
-    public function centro_assistenza()
+    public function centro()
     {
-        return $this->hasOne(CentroAssistenza::class, 'id_centro_assistenza');
+        return $this->belongsTo(CentroAssistenza::class, 'id_centro_assistenza', 'id');
     }
 }

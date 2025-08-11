@@ -7,22 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class SoluzioneTecnica extends Model
 {
     protected $table = 'soluzione_tecnica';
-    public $incrementing = false;
-    protected $primaryKey = null;
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+    public $timestamps = false;
 
     protected $fillable = [
+        'tipologia',
         'descrizione',
-        'tipologia_malfunzionamento',
-        'id_prodotto'
+        'id_malfunzionamento'
     ];
-
-    public function prodotto()
-    {
-        return $this->belongsTo(Prodotto::class, 'id', 'id_prodotto');
-    }
 
     public function malfunzionamento()
     {
-        return $this->belongsTo(Malfunzionamento::class, 'tipologia', 'tipologia_mafunzionamento');
+        return $this->belongsTo(Malfunzionamento::class, 'id_malfunzionamento', 'id');
     }
 }

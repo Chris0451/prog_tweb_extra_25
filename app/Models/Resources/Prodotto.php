@@ -10,9 +10,9 @@ class Prodotto extends Model
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = false;
-    protected $keyType = 'unsignedBigInteger';
 
     protected $fillable = [
+        'nome',
         'descrizione',
         'tecniche_uso',
         'mod_installazione',

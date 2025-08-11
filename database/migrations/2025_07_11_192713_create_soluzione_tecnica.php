@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use function Laravel\Prompts\table;
+
 return new class extends Migration
 {
     /**
@@ -12,14 +14,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('soluzione_tecnica', function (Blueprint $table) {
+            $table->id();
+            $table->string('tipologia');
             $table->string('descrizione');
-            $table->string('tipologia_malfunzionamento');
-            $table->unsignedBigInteger('id_prodotto');
+            $table->unsignedBigInteger('id_malfunzionamento');
             
-            $table->foreign('id_prodotto')->references('id')->on('prodotto')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('tipologia_malfunzionamento')->references('tipologia')->on('malfunzionamento')->onDelete('cascade')->onUpdate('cascade');
-            
-            $table->primary(['descrizione','tipologia_malfunzionamento', 'id_prodotto']);
+            $table->foreign('id_malfunzionamento')->references('id')->on('malfunzionamento')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
