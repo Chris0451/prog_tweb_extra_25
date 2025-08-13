@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Resources;
 
-use App\Models\Tecnico;
+use App\Models\Resources\Tecnico;
 use Illuminate\Database\Eloquent\Model;
 
 class CentroAssistenza extends Model

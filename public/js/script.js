@@ -25,7 +25,7 @@ function handleStickyNavbar() {
     }
 }
 
-//PULSANTE "TORNA SU" CON EVENT LISTENER
+//FUNZIONE PER PULSANTE "TORNA SU" CON EVENT LISTENER
 function handleBackToTop() {
     if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
         backToTopBtn.classList.add("show");
@@ -36,3 +36,125 @@ function handleBackToTop() {
 backToTopBtn.addEventListener("click", function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+//SCRIPT JQUERY PER SELECT PRODOTTI E MALFUNZIONAMENTI
+(function() {
+    // === Select form ===
+    const $prod   = $('#prod');
+    const $malf   = $('#malfunctions');
+    const $submitSelect = $('#submitSelect');
+    const baseApi = $prod.data('malfs-base');
+
+    // === Text form ===
+    const $search = $('#search_malf');
+    const $submitText = $('#submit_malf');
+
+    const $searchInput = $('#search_prod');
+    const $submitBtn   = $('#submit_prod');
+
+    function toggleButton() {
+        const hasValidText = $.trim($searchInput.val()).length > 0;
+        $submitBtn.prop('disabled', !hasValidText);
+    }
+
+    // Disabilita all'avvio se vuoto o solo spazi
+    toggleButton();
+
+    // Controlla a ogni modifica dell'input
+    $searchInput.on('input', toggleButton);
+
+    // Helper: reset malf
+    function resetMalf(message) {
+        $malf.prop('disabled', true).empty()
+        .append($('<option>', { value: '', text: message || '— Seleziona prima un prodotto —' }));
+    }
+
+    // Abilita submit del form SELECT solo se prodotto + malfunzionamento selezionati
+    function refreshSubmitSelect() {
+        const ok = ($prod.val() && $malf.val());
+        $submitSelect.prop('disabled', !ok);
+    }
+
+    // Abilita submit del form TESTO solo se c'è testo
+    function refreshSubmitText() {
+        const ok = ($search.val() && $search.val().trim() !== '');
+        $submitText.prop('disabled', !ok);
+    }
+
+    // === MUTUA ESCLUSIONE ===
+    // Digitando testo → disabilita il form select
+    $search.on('input', function() {
+        const hasText = $(this).val().trim() !== '';
+        if (hasText) {
+        $prod.val('').prop('disabled', true);
+        resetMalf();
+        refreshSubmitSelect();
+        } else {
+        $prod.prop('disabled', false);
+        }
+        refreshSubmitText();
+    });
+
+    // Cambio prodotto → disabilita il form testo e carica malfunzionamenti
+    $prod.on('change', function() {
+        const productId = $(this).val();
+
+        // svuota e disabilita text form
+        $search.val('').prop('disabled', !!productId);
+        refreshSubmitText();
+
+        if (!productId) {
+            // deselezione prodotto
+            resetMalf();
+            refreshSubmitSelect();
+            return;
+        }
+
+        resetMalf('Caricamento…');
+        refreshSubmitSelect(); // durante il load resta disabilitato
+
+        $.getJSON(`${baseApi}/${productId}/malfunctions`)
+        .done(function(data) {
+            // Prima opzione vuota obbligatoria
+            $malf.empty().append($('<option>', { value: '', text: '— Seleziona un malfunzionamento —' }));
+
+            if (Array.isArray(data) && data.length) {
+            // NB: usa 'tipologia' per il testo (coerente con il tuo codice)
+            data.forEach(function(m) {
+                $malf.append($('<option>', { value: m.id, text: m.tipologia }));
+            });
+            $malf.prop('disabled', false);
+            } else {
+            resetMalf('Nessun malfunzionamento registrato');
+            }
+            refreshSubmitSelect();
+        })
+        .fail(function() {
+            resetMalf('Errore nel caricamento');
+            refreshSubmitSelect();
+        });
+    });
+
+    // Cambio malfunzionamento → ricalcola
+    $malf.on('change', refreshSubmitSelect);
+
+    // Stato iniziale
+    (function init() {
+        // Se arrivi con ricerca testuale già valorizzata
+        if ($search.val() && $search.val().trim() !== '') {
+        $prod.prop('disabled', true).val('');
+        resetMalf();
+        } else {
+        // Se arrivi con prodotto preselezionato (da query string), scatena il change per popolare i malf
+        if ($prod.val()) {
+            $search.prop('disabled', true).val('');
+            $prod.trigger('change');
+        } else {
+            resetMalf();
+        }
+        }
+        refreshSubmitText();
+        refreshSubmitSelect();
+    })();
+})();
+

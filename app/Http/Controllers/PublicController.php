@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catalog;
+use App\Models\Resources\Prodotto;
+use App\Models\Resources\Malfunzionamento;
 use App\Models\Resources;
 use Illuminate\Http\Request;
 
@@ -13,20 +15,27 @@ class PublicController extends Controller
     public function showHome(Request $request)
     {
         
-        $prodotti = Catalog::getPaginatedProds($request);
+        $prodottiPaginati = Catalog::getPaginatedProds($request);
+        
         $centri = Catalog::getPaginatedCenters($request);
         
+        $prodottiAll = Catalog::prodsAll();
         
         return view('home', [
-            'prodotti' => $prodotti,
+            'prodotti' => $prodottiPaginati,
             'centri' => $centri,
+            'prodotti_select' => $prodottiAll,
         ]);
     }
 
     //SEZIONE (***DA IMPLEMENTARE***) PER LIVELLO 2-3
-    /*public function showMalfunctionsPerProds()
+    // Endpoint AJAX: malfunzionamenti di un prodotto
+    public function malfunctionsByProduct(Prodotto $product)
     {
-        $malfunzionamenti = Catalog::getMalfunctionsByProds();
-        return view('view_malfuncs', compact('malfunc_prods'));
-    }*/
+        $malf = Malfunzionamento::where('id_prodotto', $product->id)
+            ->orderBy('tipologia')
+            ->get(['id', 'tipologia']); 
+
+        return response()->json($malf);
+    }
 }

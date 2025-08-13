@@ -1,3 +1,4 @@
+/* ***DEFINZIONE CSS BASE PER HOMEPAGE*** */
 html {
     scroll-behavior: smooth;
 }
@@ -145,7 +146,7 @@ footer {
     background-color: #1565c0;
 }
 
-/* Navbar sticky */
+/* STICKY NAVBAR */
 nav.sticky {
     position: fixed;
     top: 0;
@@ -156,7 +157,7 @@ nav.sticky {
 
 /* STYLE PER PAGINATOR E SINGOLI ITEM */
 #paginator {
-    flex: 0 0 31.5%; 
+    flex: 0 0 31.2%; 
     background: white; 
     padding: 10px;
     border-radius: 8px; 
@@ -195,16 +196,16 @@ nav.sticky {
 /* ***FINE STYLE PAGINATOR*** */
 
 
-/*SEARCHBAR PRODOTTI*/
+/* ***SEARCHBAR PRODOTTI PER HOMEPAGE E TECNICO*** */
 #searchFormProducts {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     background: #f1f6fb;
-    padding: 12px 18px;
-    border-radius: 12px;
+    padding: 8px 14px;
+    border-radius: 8px;
     box-shadow: 0 2px 10px rgba(13, 71, 161, 0.04);
-    max-width: 520px;
+    max-width: 540px;
     margin: 24px auto 32px auto;
 }
 
@@ -242,7 +243,148 @@ nav.sticky {
     background: #0d47a1;
     box-shadow: 0 3px 9px rgba(13,71,161,0.16);
 }
-/* ***FINE STYLE SEARCHBAR*** */
+
+#label_prod{
+    font-size: 10px;
+    color: #1565c0;
+}
+
+#searchFormProducts ::placeholder{
+    font-size:12px;
+}
+/* ***FINE STYLE SEARCHBAR PER HOMEPAGE E TECNICO*** */
+
+/* === Layout del form: 2 colonne (campi a sinistra in colonna, bottone a destra centrato) === */
+.mf-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 16px;
+  align-items: center;                      /* centra verticalmente il bottone */
+  background: #f1f6fb;
+  padding: 8px 14px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(13, 71, 161, 0.04);
+  max-width: 540px;
+  margin: 24px auto 32px auto;
+}
+
+/* Colonna sinistra: campi impilati */
+.mf-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 10px;                            /* distanza verticale fra etichetta/select */
+}
+
+/* Label sopra le select */
+.mf-label {
+  display: block;
+  font-size: 0.95rem;
+  color: #1565c0;
+  margin-bottom: 4px;
+}
+
+/* Select coerenti con la searchbar standard */
+.mf-select {
+  appearance: none;
+  width: 100%;
+  padding: 10px 16px;
+  border: 1.5px solid #1565c0;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform .04s ease;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02) inset;
+}
+
+.mf-select:focus {
+  border-color: #0d47a1;
+  box-shadow: 0 0 0 2px #bbdefb;
+}
+
+.mf-select:disabled {
+  background: #f7f7fb;
+  color: #8a8fa3;
+  cursor: not-allowed;
+}
+
+/* Colonna destra: bottone centrato */
+.mf-actions {
+  align-self: center;                       /* centra verticalmente rispetto alle select */
+}
+
+/* Bottone come nella searchbar standard */
+.mf-btn {
+  padding: 10px 26px;
+  background: #1565c0;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform .06s;
+  font-size: 1rem;
+  box-shadow: 0 3px 5px rgba(13,71,161,0.09);
+}
+
+.mf-btn:hover,
+.mf-btn:focus {
+  background: #0d47a1;
+  box-shadow: 0 3px 9px rgba(13,71,161,0.16);
+}
+
+.mf-btn:active { transform: translateY(1px); }
+
+.mf-btn:disabled {
+  background: #a7abbd;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Responsivo: su mobile metti tutto in colonna e il bottone va sotto, allineato a destra */
+@media (max-width: 600px) {
+  .mf-form {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+  .mf-actions {
+    justify-self: end;                      /* bottone a destra sotto le select */
+  }
+}
+/* ***FINE SEZIONE SEARCHBAR PER TECNICO E STAFF (RICERCA MALFUNZIONAMENTI)*** */
+
+/* ***BOTTONE DI REFRESH PER PRODOTTI*** */
+/* Bottone ritorno: piena larghezza del contenitore form */
+.mf-return {
+  grid-column: 1 / -1; /* occupa tutta la larghezza nel grid della form */
+  margin-top: 10px;
+}
+
+.mf-btn-return {
+  display: block;
+  width: 100%;
+  padding: 10px 26px;
+  text-align: center;
+  background: #1565c0;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.18s, box-shadow 0.18s, transform .06s;
+  box-shadow: 0 3px 5px rgba(13,71,161,0.09);
+}
+
+.mf-btn-return:hover,
+.mf-btn-return:focus {
+  background: #0d47a1;
+  box-shadow: 0 3px 9px rgba(13,71,161,0.16);
+}
+
+.mf-btn-return:active {
+  transform: translateY(1px);
+}
+/* ***FINE BOTTONE REFRESH****/
 
 /* ***STYLE PER FORM DI LOGIN*** */
 /* Layout generale del form */
@@ -272,7 +414,7 @@ nav.sticky {
 /* Campi di input */
 .login-container input[type="username"],
 .login-container input[type="password"] {
-    width: 93%;
+    width: 100%;
     padding: 0.75rem;
     margin-top: 0.25rem;
     margin-bottom: 1rem;
@@ -307,24 +449,11 @@ nav.sticky {
     background-color: #4338ca; /* indigo-700 */
 }
 
-/* Link "forgot password" */
-.login-container a {
-    display: inline-block;
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
-    color: #4b5563;
-    text-decoration: none;
-    transition: color 0.2s ease-in-out;
-}
-
-.login-container a:hover {
-    color: #1f2937;
-}
-
 /* Background solo per la sezione login */
 body.login-page {
     background: url('images/bg-login.jpg') no-repeat center center fixed;
     background-size: cover;
+
 }
 
 /* Sfocatura dietro il contenitore */
@@ -340,7 +469,7 @@ body.login-page .login-container {
 /* ***FINE STYLE FORM DI LOGIN*** */
 
 
-/*INIZIO STYLE DASHBOARD UTENTI*/
+/* ***INIZIO STYLE DASHBOARD UTENTI*** */
 :root{
   --indigo:#0d47a1;
   --bg:#f7f7f7;
@@ -351,40 +480,92 @@ body.login-page .login-container {
 *{box-sizing:border-box}
 
 .dash-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;background:var(--indigo);color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 20px;
+  background:var(--indigo);
+  color:#fff;
 }
 
-.dash-header h1{margin:0;font-size:1.25rem}
+.dash-header h1{
+    margin:0;
+    font-size:1.25rem
+}
 
 .dash-user{display:flex;gap:12px;align-items:center}
 .chip-role{
-  background:rgba(255,255,255,.2);padding:6px 10px;border-radius:999px;font-weight:700;letter-spacing:.5px
+  background:rgba(255,255,255,.2);
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:700;
+  letter-spacing:.5px
 }
 
-.btn-logout{
-  background:#fff;color:var(--indigo);border:none;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer
+.btn-dashboard{
+  background:#fff;color:var(--indigo);
+  border:none;
+  border-radius:8px;
+  padding:8px 12px;
+  font-weight:600;
+  cursor:pointer
 }
 
-.btn-logout:hover{opacity:.95}
+.btn-dashboard:hover{opacity:.95}
 
-.dash-wrapper{max-width:1100px;margin:28px auto;padding:0 16px}
+.dash-wrapper{
+    max-width:500px;
+    margin:28px auto;
+    padding:0 16px
+}
+
 .card{
   background:var(--card);border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.08);
   padding:22px;margin-bottom:20px
 }
-.grid-3{display:grid;grid-template-columns:180px 1fr 1fr;gap:22px}
-.grid-2{display:grid;grid-template-columns:1fr 220px;gap:16px}
+
+.grid-3{
+    display:grid;
+    grid-template-columns:180px 1fr 1fr;
+    gap:22px
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:auto;
+    gap:18px
+}
 
 .avatar img{
-  width:180px;height:180px;object-fit:cover;border-radius:12px;border:1px solid #e5e7eb;background:#f9fafb
+  width:180px;
+  height:180px;
+  object-fit:cover;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+  background:#f9fafb
 }
-.block h2{margin:0 0 10px 0;color:var(--indigo);font-size:1.1rem}
-.list{list-style:none;margin:0;padding:0}
-.list li{margin:6px 0}
 
-.foto-centro img{
-  width:100%;height:160px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;background:#f9fafb
+.block h2{
+    margin:0 0 10px 0;
+    color:var(--indigo);
+    font-size:1.1rem
+}
+.list{
+    list-style:none;
+    margin:0;padding:0
+}
+.list li{
+    margin:6px 0
+}
+
+.foto-centro{
+  width:auto;
+  height:auto;
+  object-position: 0%;
+  object-fit:contain;
+  border-radius:8px;
+  border:1px solid #e5e7eb;
+  background:#f9fafb
 }
 
 @media (max-width: 900px){
@@ -392,4 +573,5 @@ body.login-page .login-container {
   .grid-2{grid-template-columns:1fr}
   .avatar img{width:140px;height:140px}
 }
-/*FINE STYLE DASHBOARD UTENTE*/
+/* ***FINE STYLE DASHBOARD UTENTE*** */
+

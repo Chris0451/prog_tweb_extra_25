@@ -5,7 +5,6 @@
 
     @include('layouts.home_layouts.structures.header')
 
-    <button class="menu-toggle" onclick="toggleMenu()">☰ Sezioni Home</button>
     @include('layouts.home_layouts.structures.navbar')
 
     @yield('content')

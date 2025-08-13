@@ -21,4 +21,9 @@ Route::get('/dashboard/admin', [DashboardController::class, 'index'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('dashboard.admin');
 
+//ROUTE PER ESTRAZIONE MALFUNZIONAMENTI PRODOTTI TRAMITE SELECT
+Route::get('/api/products/{product}/malfunctions', [PublicController::class, 'malfunctionsByProduct'])
+    ->name('api.product.malfunctions');
+
+
 require __DIR__.'/auth.php';
