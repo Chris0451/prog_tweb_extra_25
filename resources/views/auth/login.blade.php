@@ -35,6 +35,10 @@
                 <x-primary-button class="ms-3">
                     {{ __('Log in') }}
                 </x-primary-button>
+
+                <a href="{{ url('/') }}" class="x-primary-button-like">
+                    {{ __('Torna alla home') }}
+                </a>
                 
             </div>
         </form>

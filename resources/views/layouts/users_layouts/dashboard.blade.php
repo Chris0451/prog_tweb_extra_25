@@ -29,7 +29,6 @@
 
             <section class="card grid-3">
                 
-                
                 <div class="block">
                     <div class="avatar">
                         <img src="{{ asset('images/user_placeholder.jpg') }}" alt="Foto tecnico">
@@ -110,19 +109,7 @@
                         </ul>
                     <div>
                 @endif
-
-
             </section>
-            
-
-        <!-- SEZIONE STAFF (CRUD MALFUNZIONAMENTI E SOLUZIONI ASSOCIATE A PRODOTTI ASSEGNATI) -->
-        {{-- @if ($user->role === 'staff')
-            <div class="block">
-            <div>
-        @endif --}}
-
-        <!-- SEZIONE ADMIN (CRUD PRODOTTI (SENZA MALFUNZIONAMENTI E SOLUZIONI), UTENTI (TECNICI E STAFF) E CENTRI DI ASSISTENZA) -->        
-        
 
 
     </main>

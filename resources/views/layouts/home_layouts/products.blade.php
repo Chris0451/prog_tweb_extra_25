@@ -4,6 +4,7 @@
             <p>Scopri la gamma di computer, stampanti e accessori. Ogni scheda contiene foto, note d'uso e modalità di installazione.</p>
             
             <!-- SEARCHBAR PER PRODOTTI TRAMITE RICERCA PAROLA NELLA DESCRIZIONE -->
+            
             <form id="searchFormProducts" method="GET" action="#prodotti">
                 <input id="search_prod" name="search_prod" type="text" value="{{ request('search_prod') }}" placeholder="Parola descrizione prodotto (es. Telefono o Tel*)" required>
                 <input id="submit_prod" type="submit" value="Ricerca">
@@ -16,37 +17,43 @@
                     <input id="submit_malf" type="submit" value="Ricerca">
                 </form>
 
-                <form id="selectProducts" method="GET" action="#prodotti" class="mf-form">
-                    <!-- SELECT PER PRODOTTO -->
-                    <div class="mf-fields">
-                        <label for="prod" class="mf-label">Prodotto</label>
-                        <select id="prod" name="prod_id" class="mf-select" data-malfs-base="{{ url('/api/products') }}">
-                        <option value="">— Nessun prodotto selezionato —</option>
-                        @foreach($prodotti_select as $prodotto)
-                            <option value="{{ $prodotto->id }}" 
-                                @selected((int)($selected_product_id ?? 0) === $prodotto->id)>
-                            {{ $prodotto->nome }}
-                            </option>
-                        @endforeach
-                        </select>
+                <div>
+                    <form id="selectProducts" method="GET" action="#prodotti" class="mf-form">
+                        <!-- SELECT PER PRODOTTO -->
+                        <div class="mf-fields">
+                            <label for="prod" class="mf-label">Prodotto</label>
+                            <select id="prod" name="prod_id" class="mf-select" data-malfs-base="{{ url('/api/products') }}">
+                            <option value="">— Nessun prodotto selezionato —</option>
+                            @foreach($prodotti_select as $prodotto)
+                                <option value="{{ $prodotto->id }}" 
+                                    @selected((int)($selected_product_id ?? 0) === $prodotto->id)>
+                                {{ $prodotto->nome }}
+                                </option>
+                            @endforeach
+                            </select>
 
-                        <label for="malfunctions" class="mf-label">Malfunzionamento</label>
-                        <select id="malfunctions" name="malf_id" class="mf-select" disabled>
-                            <option value="">— Seleziona un malfunzionamento —</option>
-                        </select>
-                    </div>
+                            <label for="malfunctions" class="mf-label">Malfunzionamento</label>
+                            <select id="malfunctions" name="malf_id" class="mf-select" disabled>
+                                <option value="">— Seleziona un malfunzionamento —</option>
+                            </select>
+                        </div>
 
-                    <div class="mf-actions">
-                        <input id="submitSelect" type="submit" value="Ricerca" class="mf-btn" disabled>
-                    </div>
+                        <div class="mf-actions">
+                            <input id="submitSelect" type="submit" value="Ricerca" class="mf-btn" disabled>
+                        </div>
 
-                    {{-- Bottone separato per tornare a tutti i prodotti --}}
-                    <div class="mf-return">
-                        <a href="{{ route('home') }}#prodotti" class="mf-btn-return">Ritorna tutti i prodotti</a>
-                    </div>
-                </form>
+                        {{-- Bottone separato per tornare a tutti i prodotti --}}
+                        <div class="mf-return">
+                            <a href="{{ route('home') }}#prodotti" class="mf-btn-return">Ritorna tutti i prodotti</a>
+                        </div>
+                    </form>
+                </div>
 
             @endif
+
+            <div style="margin-bottom: 20px;">
+                {{ $prodotti->links('pagination::default-prodotti') }}
+            </div>
 
             <div class="row" style="display: flex; flex-wrap: wrap; gap: 20px;"> 
                 @foreach($prodotti as $prodotto)
