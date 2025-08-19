@@ -21,4 +21,5 @@ class DashboardController extends Controller
             'centro'  => $user->tecnico->centro ?? null,
         ]);
     }
+    
 }

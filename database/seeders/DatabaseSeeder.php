@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductSeeder::class);
         $this->call(MalfunctionSeeder::class);
         $this->call(SolutionSeeder::class);
+        $this->call(AssegnazioneProdottoSeeder::class);
     }
 }

@@ -9,7 +9,7 @@
 
     @yield('content')
 
-    <!-- Pulsante Torna su -->
+    {{-- Pulsante Torna su --}}
     <button id="backToTop" title="Torna su">↑</button>
 
     @include('layouts.home_layouts.structures.footer')

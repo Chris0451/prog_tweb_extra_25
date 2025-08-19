@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('malfunzionamento', function (Blueprint $table) {
             $table->id();
-            $table->string('tipologia');
+            $table->string('tipologia',100);
             $table->string('descrizione', 1000);  
             $table->unsignedBigInteger('id_prodotto');
             

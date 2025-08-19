@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'showHome'])->name('home');
 
 //ROUTER PER DASHBOARD TECNICO
-Route::get('/dashboard/tecnico', [DashboardController::class, 'index'])
+Route::get('/tecnico/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', RoleMiddleware::class . ':tecnico'])
     ->name('dashboard.tecnico');
 
 //ROUTER PER DASHBOARD STAFF
-Route::get('/dashboard/staff', [DashboardController::class, 'index'])
+Route::get('/staff/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', RoleMiddleware::class . ':staff'])
     ->name('dashboard.staff');
 
 //ROUTER PER DASHBOARD ADMIN
-Route::get('/dashboard/admin', [DashboardController::class, 'index'])
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('dashboard.admin');
 

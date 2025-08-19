@@ -26,5 +26,8 @@ class Prodotto extends Model
         return $this->hasMany(Malfunzionamento::class, 'id_prodotto', 'id');
     }
 
-    
+    public function staff()
+    {
+        return $this->belongsToMany(Staff::class, 'assegnazione_prodotto', 'id_prodotto', 'id_staff_associato');
+    }
 }

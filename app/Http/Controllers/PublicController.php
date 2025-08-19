@@ -28,7 +28,7 @@ class PublicController extends Controller
         ]);
     }
 
-    //SEZIONE (***DA IMPLEMENTARE***) PER LIVELLO 2-3
+    //SEZIONE PER LIVELLO 2-3
     // Endpoint AJAX: malfunzionamenti di un prodotto
     public function malfunctionsByProduct(Prodotto $product)
     {

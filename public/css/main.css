@@ -92,6 +92,8 @@ nav a:hover {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-bottom: 30px;
+    max-width: 1100px;
+    margin: 0 auto 20px auto;
 }
 
 .map-container {
@@ -167,7 +169,6 @@ nav.sticky {
 .nav_pagination{
     background-color: #1565c0;
     border-radius: 10px;
-    
 }
 
 .pagination {
@@ -178,6 +179,7 @@ nav.sticky {
     gap: 8px;
     list-style: none;
     padding-left: 0;
+    font-size: 25px;
 }
 
 .page-item {
@@ -403,18 +405,24 @@ nav.sticky {
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
+.mt-4{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  
+}
+
 /* Titolo */
 .login-container h2 {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     font-size: 1.5rem;
     color: #1f2937; /* grigio scuro Tailwind */
 }
 
 /* Etichette */
 .login-container label {
-    font-weight: 500;
-    color: #374151;
+    font-weight: 200;
+  font-size: large;
 }
 
 /* Campi di input */
@@ -505,6 +513,23 @@ body.login-page .login-container {
 
 *{box-sizing:border-box}
 
+.card-db {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+}
+
+.card-db.grid-3 {
+    display: grid;
+    grid-template-columns: 320px minmax(0,1fr); /* colonna sinistra fissa, destra fluida */
+    gap: 24px;
+    align-items: start;
+}
+
 .dash-header{
   display:flex;
   justify-content:space-between;
@@ -557,16 +582,11 @@ body.login-page .login-container {
 .card.grid-3 > .block {
   min-width: 0;                /* evita overflow testi nella colonna destra */
 }
-@media (max-width: 980px){
-  .card.grid-3{ grid-template-columns: 1fr; } /* mobile: impila */
-}
-
-
 
 /* --- Card / blocchi interni più leggibili --- */
 .block{
-  background: #ffffff;
-  border: 1px solid #e6ecf5;
+  background: #ebeaea;
+  border: 3px solid #e6ecf5;
   border-radius: 12px;
   padding: 16px 18px;
 }
@@ -618,11 +638,7 @@ body.login-page .login-container {
   align-items: start;
 }
 
-/* La card stessa viene ristretta e centrata */
-.card{
-  max-width: 1100px;   /* larghezza massima della card */
-  margin: 0 auto 20px auto; /* centra orizzontalmente e mantiene margine basso */
-}
+
 
 /* Griglia interna della card */
 .card.grid-3{
@@ -646,7 +662,7 @@ body.login-page .login-container {
 }
 
 /*STILE APPLICABILE PER MOBILE*/
-@media (max-width: 980px){
+@media (max-width: 680px){
   .avatar img{ width: 180px; height: 180px; margin: 0 auto 10px; }
   .list li{ grid-template-columns: 1fr; }
   .card.grid-3{ max-width: 100%; grid-template-columns: 1fr; }
