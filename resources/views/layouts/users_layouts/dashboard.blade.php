@@ -38,8 +38,7 @@
                 @if ($user->role === 'admin')
                     <div class="block">
                         <h2><a href="">SEZIONE PRODOTTI</a></h2>
-                        <h2><a href="">SEZIONE TECNICI</a></h2>
-                        <h2><a href="">SEZIONE STAFF</a></h2>
+                        <h2><a href="">SEZIONE UTENTI (TECNICI E STAFF)</a></h2>
                         <h2><a href="">SEZIONE CENTRI ASSISTENZA</a></h2>
                     <div>
                 @endif

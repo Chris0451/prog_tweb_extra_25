@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('centro_assistenza', function (Blueprint $table) {
             $table->id();
-            $table->string("nome");
-            $table->string("indirizzo");
-            $table->string("foto");
+            $table->string("nome",100);
+            $table->string("indirizzo",100);
+            $table->string("foto",200);
         });
     }
 
