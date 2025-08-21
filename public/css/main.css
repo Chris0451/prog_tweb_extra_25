@@ -356,7 +356,7 @@ nav.sticky {
     row-gap: 10px;
   }
   .mf-actions {
-    justify-self: end;                      /* bottone a destra sotto le select */
+    justify-self: end;
   }
 }
 /* ***FINE SEZIONE SEARCHBAR PER TECNICO E STAFF (RICERCA MALFUNZIONAMENTI)*** */
@@ -599,6 +599,21 @@ body.login-page .login-container {
   line-height: 1.25;
 }
 
+.block ul li{
+  list-style-type: none;  
+  margin: 0px;
+  margin-top: 5px;  
+  margin-bottom: 5px;
+  padding: 0px;
+}
+
+.block ul li a{
+  color: #2665bd9c;
+  font-size: medium;
+  font-style: italic;
+}
+
+
 /* --- Colonna sinistra (avatar + dati) --- */
 .avatar img{
   display: block;
@@ -619,6 +634,7 @@ body.login-page .login-container {
   display: grid;
   gap: 8px;
 }
+
 .list li{
   display: grid;
   grid-template-columns: 170px 1fr;  /* larghezza costante etichette */
@@ -661,13 +677,365 @@ body.login-page .login-container {
   margin-top: 8px;
 }
 
-/*STILE APPLICABILE PER MOBILE*/
+/*STILE DASHBOARD APPLICABILE PER MOBILE*/
 @media (max-width: 680px){
   .avatar img{ width: 180px; height: 180px; margin: 0 auto 10px; }
   .list li{ grid-template-columns: 1fr; }
   .card.grid-3{ max-width: 100%; grid-template-columns: 1fr; }
 }
 
-
 /* ***FINE STYLE DASHBOARD UTENTE*** */
 
+/* ***STILE TABELLA PRODOTTI ADMIN*** */
+.table-prods {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin: 30px auto;
+  max-width: 1100px;
+  overflow-x: auto; /* scroll orizzontale su schermi piccoli */
+}
+
+.table-prods caption {
+  caption-side: top;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0d47a1;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.table-prods table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table-prods th,
+.table-prods td {
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table-prods thead th {
+  background-color: #f1f6fb;
+  color: #0d47a1;
+  font-weight: bold;
+  position: sticky;
+  top: 0; /* intestazione appiccicosa se scrolli */
+  z-index: 1;
+}
+
+.table-prods tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.table-prods tbody tr:hover {
+  background-color: #f3f8ff;
+}
+
+.table-prods td a {
+  text-decoration: none;
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.table-prods td a:hover {
+  background: rgba(13,71,161,0.08);
+}
+
+/* Colonna azioni: centra i contenuti */
+.table-prods td:last-child {
+  text-align: center;   /* centra tutto il contenuto orizzontalmente */
+  vertical-align: middle; /* centra verticalmente rispetto alla riga */
+}
+
+/* Allinea le icone come pulsanti */
+.table-prods td:last-child a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px; /* spazio tra icone */
+  font-size: 22px;
+}
+
+@media (max-width: 700px) {
+  .table-prods table {
+    font-size: 0.85rem;
+  }
+  .table-prods th,
+  .table-prods td {
+    padding: 8px;
+  }
+}
+
+/* === Paginazione sotto tabella prodotti === */
+.pag-prods {
+  max-width: 1100px;
+  margin: 16px auto 32px auto;  /* distanza dalla tabella */
+}
+
+.pag-prods nav {               /* wrapper generato da Laravel */
+  display: block;
+  border-radius: 8px;
+}
+
+.pag-prods .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;                    /* spazio tra bottoni */
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 0.95rem;          /* coerente con tabella */
+}
+
+/* Bottoni (link e span dell'attivo) */
+.pag-prods .page-link,
+.pag-prods .page-item > span {
+  display: inline-flex;
+  min-width: 40px;
+  height: 38px;
+  padding: 0 12px;
+  align-items: center;
+  justify-content: center;
+  background: #1565c0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(13,71,161,0.12);
+  transition: background .18s, box-shadow .18s, transform .06s;
+}
+
+/* Hover / Focus */
+.pag-prods .page-link:hover,
+.pag-prods .page-link:focus {
+  background: #0d47a1;
+  box-shadow: 0 3px 9px rgba(13,71,161,0.16);
+  outline: none;
+}
+
+/* Attivo (Laravel usa <span class="page-link" aria-current="page"> o .active > span) */
+.pag-prods .page-item.active > .page-link,
+.pag-prods .page-item.active > span,
+.pag-prods .page-link[aria-current="page"] {
+  background: #0d47a1;
+  cursor: default;
+}
+
+/* Disabilitati (prev/next ai bordi) */
+.pag-prods .page-item.disabled .page-link,
+.pag-prods .page-item.disabled span {
+  background: #a7abbd;
+  color: #f1f1f1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Frecce/etichette più sottili */
+.pag-prods .page-item:first-child .page-link,
+.pag-prods .page-item:last-child .page-link {
+  padding: 0 10px;
+}
+
+/* Compattezza su mobile */
+@media (max-width: 600px) {
+  .pag-prods .pagination { gap: 6px; }
+  .pag-prods .page-link,
+  .pag-prods .page-item > span {
+    min-width: 36px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 7px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ***FINE STILE TABELLA PRODOTTI ADMIN*** */
+
+/* ***STILE PER INSERIMENTO PRODOTTO LATO ADMIN*** */
+/* ==== INSERT FORM (coerente con card/tabella/palette) ==== */
+.insert-form {
+  max-width: 1100px;
+  margin: 30px auto;
+}
+
+.insert-form .container-form {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
+  padding: 20px;
+}
+
+.insert-form h3 {
+  margin: 0 0 16px 0;
+  color: #0d47a1;
+  font-size: 1.25rem;
+}
+
+/* Griglia a 2 colonne con posizionamento esplicito per riga */
+.insert-form .wrap-form form{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto auto; /* 4 righe di campi */
+  column-gap: 24px;
+  row-gap: 14px;
+  align-items: start;
+  grid-auto-flow: dense;
+}
+
+.wrap-input.rs1-wrap-input textarea{
+  min-height: 100px;
+  max-height: 180px;
+  resize: vertical;
+}
+
+/* Contenitore riga input + immagine */
+.file-preview-row {
+    display: flex;
+    align-items: center; /* allinea input e img verticalmente */
+    gap: 16px; /* spazio tra input e immagine */
+}
+
+/* Immagine piccola e ben centrata */
+.file-preview-row img {
+    max-width: 60px;
+    max-height: 60px;
+    object-fit: contain;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+    padding: 2px;
+}
+    
+
+/* Mappatura riga/colonna (senza cambiare l'HTML):
+   1: Nome          -> col 1, riga 1
+   2: Descrizione   -> col 1, riga 2
+   3: Tecniche      -> col 1, riga 3
+   4: Installazione -> col 1, riga 4
+   5: Modello       -> col 2, riga 1
+   6: Marca         -> col 2, riga 2
+   7: Immagine      -> col 2, riga 3
+*/
+.insert-form .wrap-form form > .wrap-input:nth-of-type(1){ grid-column:1; grid-row:1; }
+.insert-form .wrap-form form > .wrap-input:nth-of-type(2){ grid-column:1; grid-row:2; }
+.insert-form .wrap-form form > .wrap-input:nth-of-type(3){ grid-column:1; grid-row:3; }
+.insert-form .wrap-form form > .wrap-input:nth-of-type(4){ grid-column:1; grid-row:4; }
+.insert-form .wrap-form form > .wrap-input:nth-of-type(5){ grid-column:2; grid-row:1; }
+.insert-form .wrap-form form > .wrap-input:nth-of-type(6){ grid-column:2; grid-row:2; }
+.insert-form .wrap-form form > .wrap-input:nth-of-type(7){ grid-column:2; grid-row:3; }
+
+/* Spacer virtuale per colonna destra riga 4 (allineamento) */
+.insert-form .wrap-form form::after{
+  content: "";
+  display: block;
+  grid-column: 2;
+  grid-row: 4;
+}
+
+/* Submit a tutta larghezza e centrato */
+.insert-form .wrap-form form > .container-form-btn{
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* --- Stile dei campi coerente con le searchbar/select --- */
+.insert-form .label-input{
+  display: block;
+  font-size: .95rem;
+  color: #1565c0;
+  margin-bottom: 6px;
+}
+
+.insert-form .input{
+  width: 100%;
+  padding: 10px 16px;
+  border: 1.5px solid #1565c0;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s, transform .04s;
+  box-shadow: 0 1px 0 rgba(0,0,0,.02) inset;
+}
+.insert-form .input:focus{
+  border-color: #0d47a1;
+  box-shadow: 0 0 0 2px #bbdefb;
+}
+
+/* Input file coerente */
+.insert-form input[type="file"].input{
+  padding: 8px 12px;
+}
+
+/* Errori */
+.insert-form .errors{
+  list-style: none;
+  margin: 6px 0 0 0;
+  padding: 0;
+}
+.insert-form .errors li{
+  color: #c62828;
+  font-size: .9rem;
+  line-height: 1.3;
+}
+
+/* Pulsante */
+.insert-form .form-btn1{
+  padding: 10px 26px;
+  background: #1565c0;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .18s, box-shadow .18s, transform .06s;
+  font-size: 1rem;
+  box-shadow: 0 3px 5px rgba(13,71,161,0.09);
+}
+.insert-form .form-btn1:hover,
+.insert-form .form-btn1:focus{
+  background: #0d47a1;
+  box-shadow: 0 3px 9px rgba(13,71,161,0.16);
+}
+
+/* Divider visivo “soft” (opzionale) */
+@media (min-width: 701px){
+  .insert-form .wrap-form form > .wrap-input,
+  .insert-form .wrap-form form > .container-form-btn{
+    padding-inline: 6px;
+  }
+}
+
+/* Mobile: una colonna */
+@media (max-width: 700px){
+  .insert-form .wrap-form form{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    background: none;
+  }
+  .insert-form .wrap-form form::after{ display: none; }
+  .insert-form .wrap-form form > .wrap-input:nth-of-type(n){
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+  .insert-form .form-btn1{
+    width: 100%;
+  }
+}
+
+
+/* ***FINE STILE PER INSERIMENTO PRODOTTO LATO ADMIN*** */

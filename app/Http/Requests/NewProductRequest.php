@@ -11,7 +11,7 @@ class NewProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,13 +22,13 @@ class NewProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required',
+            'nome' => 'required|string',
             'descrizione' => 'required|max:1000',
             'tecniche_uso' => 'required|max:1000',
             'mod_installazione' => 'required|max:1000',
             'modello' => 'required|max:100',
             'marca' => 'required|max:100',
-            'foto' => 'required|max:500'
+            'foto' => 'nullable|max:500'
         ];
     }
 }

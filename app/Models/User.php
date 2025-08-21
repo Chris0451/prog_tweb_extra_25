@@ -84,4 +84,9 @@ class User extends Authenticatable
 
         return in_array($this->role, $roles);
     }
+
+    public function getRoles()
+    {
+        return User::pluck('role')->unique();
+    }
 }

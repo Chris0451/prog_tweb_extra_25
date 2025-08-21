@@ -20,7 +20,8 @@ class Admin extends Model
     }
 
     //ESTRAZIONE PRODOTTO TRAMITE IL PROPRIO ID
-    public function getProductsById(int $prodId){
+    public function getProductById(int $prodId)
+    {
         return Prodotto::find($prodId);
     }
 
@@ -33,7 +34,8 @@ class Admin extends Model
     }
 
     //ESTRAZIONE TECNICO TRAMITE IL PROPRIO ID
-    public function getTechnicsById(int $technicId){
+    public function getTechnicsById(int $technicId)
+    {
         return Tecnico::find($technicId);
     }
 
@@ -46,7 +48,8 @@ class Admin extends Model
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID
-    public function getStaffById(int $staffId){
+    public function getStaffById(int $staffId)
+    {
         return Staff::find($staffId);
     }
 
@@ -59,7 +62,8 @@ class Admin extends Model
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID
-    public function getCentersById(int $centerId){
+    public function getCentersById(int $centerId)
+    {
         return CentroAssistenza::find($centerId);
     }
 

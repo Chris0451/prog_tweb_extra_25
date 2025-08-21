@@ -15,7 +15,7 @@ class DashboardController extends Controller
             $user->load(['tecnico.centro']);
         }
 
-        return view('layouts.users_layouts.dashboard', [
+        return view('dashboard', [
             'user' => $user,
             'tecnico' => $user->tecnico ?? null,
             'centro'  => $user->tecnico->centro ?? null,
