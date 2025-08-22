@@ -971,15 +971,13 @@ body.login-page .login-container {
   transition: border-color .2s, box-shadow .2s, transform .04s;
   box-shadow: 0 1px 0 rgba(0,0,0,.02) inset;
 }
+
 .insert-form .input:focus{
   border-color: #0d47a1;
   box-shadow: 0 0 0 2px #bbdefb;
 }
 
-/* Input file coerente */
-.insert-form input[type="file"].input{
-  padding: 8px 12px;
-}
+
 
 /* Errori */
 .insert-form .errors{

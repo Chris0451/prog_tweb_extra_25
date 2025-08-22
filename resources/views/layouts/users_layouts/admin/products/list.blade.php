@@ -1,6 +1,33 @@
 @extends('layouts.users_layouts.dashboard')
 
 @section('content')
+    @section('scripts')
+        @parent
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+        <script src="{{ asset('js/script.js') }}" ></script>
+
+        <script>
+        $(function () {
+            const pattern = "{{ route('product.delete', ':id') }}";
+            const $deleteForm = $('#delete-form');
+
+            // event delegation: funziona anche se la riga viene aggiunta dopo
+            $(document).on('click', 'a.delete', function (e) {
+                e.preventDefault();
+
+                const id   = $(this).data('id');
+                const name = $(this).closest('tr').find('.name').text().trim();
+
+                if (confirm(`Sei sicuro di cancellare ${name}?`)) {
+                const action = pattern.replace(':id', id);
+                $deleteForm.attr('action', action).trigger('submit');
+                }
+            });
+        });
+        </script>
+
+    @endsection
 <div class="table-prods">
     <table>
         <caption>Lista prodotti</caption>
@@ -37,7 +64,7 @@
                     <a href="{{ route('product.edit', [$prodotto->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
-                    <a href="" class="delete" data-id="{{ $prodotto->id }}" style="border-bottom: 0px; color:red">
+                    <a href="#" class="delete" data-id="{{ $prodotto->id }}" style="border-bottom: 0px; color:red">
                         <span class="material-icons">delete</span>
                     </a>
                 </td>
@@ -45,7 +72,7 @@
             @endforeach
 
             <form id="delete-form" method="POST" style="display: none;">
-                {{ csrf_field() }}
+                @csrf
                 @method('DELETE')
             </form>
         </tbody>

@@ -86,7 +86,7 @@
                     {{ html()->label('Immagine','foto')->class(['label-input']) }}
                     
                     <div class="file-preview-row">
-                        {{ html()->input('file','foto')->class(['input'])->id('foto')->attribute('accept', 'image/png,image/jpeg,image/jpg,image/gif,image/webp') }}
+                        {{ html()->input('file','foto')->class(['input'])->id('foto')->attribute('accept', 'image/png,image/jpeg,image/jpg') }}
                         
                         <div class="wrap-input rs2-wrap-input">
                             @include('layouts.users_layouts.admin.helpers.productImg', [

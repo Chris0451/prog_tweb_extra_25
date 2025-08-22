@@ -77,7 +77,7 @@ class AdminController extends Controller
         $foto = $prodotto->foto;
         $prodotto->delete();
         if (!is_null($foto)) {
-            Storage::disk('public')->delete('images/products' . $foto);
+            Storage::delete('public/images/products' . $foto);
         }
         return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
     }

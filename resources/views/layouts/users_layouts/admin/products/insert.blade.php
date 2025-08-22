@@ -21,7 +21,7 @@
 
                 <div  class="wrap-input  rs1-wrap-input">
                     {{ html()->label('Descrizione Prodotto', 'descrizione')->class(['label-input']) }}
-                    {{ html()->text('descrizione')->class(['input'])->id('descrizione') }}
+                    {{ html()->textarea('descrizione')->class(['input'])->id('descrizione') }}
                     @if ($errors->first('descrizione'))
                     <ul class="errors">
                         @foreach ($errors->get('descrizione') as $message)
@@ -80,16 +80,16 @@
                 </div>
 
                 <div  class="wrap-input  rs1-wrap-input">
-                {{ html()->label('Immagine','foto')->class(['label-input']) }}
-                {{ html()->input('file','foto')->class(['input'])->id('foto') }}
-                @if ($errors->first('foto'))
-                <ul class="errors">
-                    @foreach ($errors->get('foto') as $message)
-                    <li>{{ $message }}</li>
-                    @endforeach
-                </ul>
-                @endif
-            </div>
+                    {{ html()->label('Immagine','foto')->class(['label-input']) }}
+                    {{ html()->input('file','foto')->class(['input'])->id('foto')->attribute('accept', 'image/png,image/jpeg,image/jpg') }}
+                    @if ($errors->first('foto'))
+                    <ul class="errors">
+                        @foreach ($errors->get('foto') as $message)
+                        <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                    @endif
+                </div>
 
                 <div class="container-form-btn">
                     {{ html()->submit('Aggiungi Prodotto')->class(['form-btn1']) }}

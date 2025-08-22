@@ -159,35 +159,4 @@ backToTopBtn.addEventListener("click", function() {
 })();
 
 
-//FUNZIONE PER CANCELLAZIONE PRODOTTO
-function delProd(prod) {
-    event.preventDefault();
-    const idProd = prod.attr('id');
-    const nameProd = prod.closest('tr').find('td.name').html();
-    const route = $('#delete-form').attr('action') + '/';
-    if (confirm("Sei sicuro di cancellare " + nameProd + "?")) {
-        $('#delete-form').attr('action', route + idProd).trigger('submit');
-    };
-};
-
-
-//JQUERY PER AVVIO FUNZIONE CANCELLAZIONE AL CLICK DEL BOTTONE
-$(function () {
-    // Al click sull’icona di cancellazione
-    $('.delete').on('click', function (event) {
-        event.preventDefault();
-
-        const idProd = $(this).data('id'); // id prodotto
-        const nameProd = $(this).closest('tr').find('td.name').text(); // nome prodotto
-
-        // Sostituiamo :id con l'id reale
-        const action = window.deleteRoutePattern.replace(':id', idProd);
-
-        if (confirm("Sei sicuro di cancellare " + nameProd + "?")) {
-            // Imposta action del form nascosto e invialo
-            $('#delete-form').attr('action', action).trigger('submit');
-        }
-    });
-});
-
 
