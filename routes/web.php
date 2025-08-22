@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 //ROUTER PER HOMEPAGE
 Route::get('/', [PublicController::class, 'showHome'])->name('home');
 
+//------------------------------//
+
 //ROUTER PER DASHBOARD TECNICO
 Route::get('/tecnico/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', RoleMiddleware::class . ':tecnico'])
@@ -25,9 +27,13 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('dashboard.admin');
 
+//------------------------------//
+
 //ROUTE PER ESTRAZIONE MALFUNZIONAMENTI PRODOTTI TRAMITE SELECT
 Route::get('/api/products/{product}/malfunctions', [PublicController::class, 'malfunctionsByProduct'])
     ->name('api.product.malfunctions');
+
+//------------------------------//
 
 //ROUTE PER LISTA PRODOTTI (LATO ADMIN)
 Route::get('/admin/product/list', [AdminController::class,'listProducts'])
@@ -58,5 +64,17 @@ Route::put('admin/product/update', [AdminController::class, 'updateProduct'])
 Route::delete('admin/product/delete/{prodId}', [AdminController::class, 'deleteProduct'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('product.delete');
+
+//------------------------------//
+
+//ROUTE PER LISTA DI CENTRI DI ASSISTENZA (LATO ADMIN)
+Route::get('admin/center/list', [AdminController::class, 'listCenters'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('center.list');
+
+//ROUTE PER FORM ALLA MODIFICA DEL PRODOTTO SELEZIONATO DALLA LISTA PRODOTTI
+Route::get('/admin/center/update/{centerId}', [AdminController::class, 'editCenter'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('center.edit');
 
 require __DIR__.'/auth.php';

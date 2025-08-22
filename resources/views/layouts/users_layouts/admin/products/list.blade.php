@@ -28,7 +28,7 @@
         </script>
 
     @endsection
-<div class="table-prods">
+<div class="table-items">
     <table>
         <caption>Lista prodotti</caption>
         <colgroup>

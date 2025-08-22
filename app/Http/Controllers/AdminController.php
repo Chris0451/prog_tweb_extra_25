@@ -122,20 +122,24 @@ class AdminController extends Controller
         // return view('admin.centers')
     }
 
-    public function listCenters() //:View
-    {
-        //return view(centers.list);
-    }
-
     //INSERIMENTO UTENTE (TECNICO, STAFF) NEL DATABASE DOPO CONFERMA DEL FORM
     public function storeCenter(NewCenterRequest $request)
     {
         //
     }
 
-    public function editCenter(NewCenterRequest $request)//: RedirectResponse
+    public function listCenters() :View
     {
-        //return redirect()->route('listcenters'); //NOME DELLA ROUTE CHE UTILIZZA listCenters
+        $user = Auth::user();
+        $centers = $this->_adminModel->getPagedCenters();
+        return view('layouts.users_layouts.admin.centers.list',['user' => $user, 'centri' => $centers]);
+    }
+
+    public function editCenter(int $centerId): View
+    {
+        $user = Auth::user();
+        $centro = $this->_adminModel->getCenterById($centerId);
+        return view('layouts.users_layouts.admin.centers.update', ['centro' => $centro, 'user' => $user]);
     }
 
     public function deleteCenter(NewCenterRequest $request)//: RedirectResponse
