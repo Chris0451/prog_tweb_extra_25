@@ -27,7 +27,7 @@
         <tbody>
             @foreach($prodotti as $prodotto)
             <tr>
-                <td>{{$prodotto->nome}}</td>
+                <td class="name">{{$prodotto->nome}}</td>
                 <td>{{$prodotto->descrizione}}</td>
                 <td>{{$prodotto->tecniche_uso}}</td>
                 <td>{{$prodotto->mod_installazione}}</td>
@@ -37,13 +37,14 @@
                     <a href="{{ route('product.edit', [$prodotto->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
-                    <a href="" class="delete" id="{{ $prodotto->id }}" style="border-bottom: 0px; color:red">
+                    <a href="" class="delete" data-id="{{ $prodotto->id }}" style="border-bottom: 0px; color:red">
                         <span class="material-icons">delete</span>
                     </a>
                 </td>
             </tr>
             @endforeach
-            <form id="delete-form" action="{{-- route('deleteproduct', ['']) --}}" method="POST" style="display: none;">
+
+            <form id="delete-form" method="POST" style="display: none;">
                 {{ csrf_field() }}
                 @method('DELETE')
             </form>

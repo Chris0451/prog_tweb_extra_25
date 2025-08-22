@@ -30,7 +30,7 @@ Route::get('/api/products/{product}/malfunctions', [PublicController::class, 'ma
     ->name('api.product.malfunctions');
 
 //ROUTE PER LISTA PRODOTTI (LATO ADMIN)
-Route::get('/admin/listProd', [AdminController::class,'listProducts'])
+Route::get('/admin/product/list', [AdminController::class,'listProducts'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('product.list');
 
@@ -53,5 +53,10 @@ Route::get('/admin/product/update/{prodId}', [AdminController::class, 'editProdu
 Route::put('admin/product/update', [AdminController::class, 'updateProduct'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('product.update');
+
+//ROUTE PER CANCELLAZIONE PRODOTTO DALLA LISTA
+Route::delete('admin/product/delete/{prodId}', [AdminController::class, 'deleteProduct'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('product.delete');
 
 require __DIR__.'/auth.php';

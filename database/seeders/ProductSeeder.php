@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
                 'mod_installazione' => 'Inserire SIM, avviare, seguire le istruzioni.',
                 'modello' => 'SA0980',
                 'marca' => 'Phony',
-                'foto' => 'images/products/iphone.jpg'
+                'foto' => 'iphone.jpg'
             ],
             [
                 'nome' => 'Laptop Pro 15',
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
                 'mod_installazione' => 'Collegare l\'alimentatore, accendere.',
                 'modello' => 'LP1500',
                 'marca' => 'Pear',
-                'foto' => 'images/products/laptop.jpg'
+                'foto' => 'laptop.jpg'
             ],
             [
                 'nome' => 'Smart TV Ultra',
@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
                 'mod_installazione' => 'Fissare al muro, collegare alimentazione.',
                 'modello' => 'STU400',
                 'marca' => 'VisionTech',
-                'foto' => 'images/placeholder.jpg'//'images/products/tv.jpg'
+                'foto' => 'tv.jpg'//'images/placeholder.jpg'
             ],
             [
                 'nome' => 'Auricolari Wireless',
@@ -48,7 +48,7 @@ class ProductSeeder extends Seeder
                 'mod_installazione' => 'Associare via bluetooth al dispositivo.',
                 'modello' => 'AW2024',
                 'marca' => 'SoundBeat',
-                'foto' => 'images/placeholder.jpg'//'images/products/earbuds.jpg'
+                'foto' => 'earbuds.jpg'//'images/placeholder.jpg'
             ],
             [
                 'nome' => 'Action Cam X2',
@@ -57,7 +57,7 @@ class ProductSeeder extends Seeder
                 'mod_installazione' => 'Montare su supporto, inserire microSD.',
                 'modello' => 'ACX2',
                 'marca' => 'GoMovie',
-                'foto' => 'images/placeholder.jpg'//'images/products/actioncam.jpg'
+                'foto' => 'actioncam.jpg'//'images/placeholder.jpg'
             ],
             [
                 'nome' => 'Stampante Jet 3000',
@@ -66,7 +66,7 @@ class ProductSeeder extends Seeder
                 'mod_installazione' => 'Collegare Wi-Fi, installare software.',
                 'modello' => 'JET3000',
                 'marca' => 'PrintMaster',
-                'foto' => 'images/placeholder.jpg'//'images/products/printer.jpg'
+                'foto' => 'printer.jpg'//'images/placeholder.jpg'
             ],
             [
                 'nome' => 'Smartwatch Fit',
@@ -75,7 +75,7 @@ class ProductSeeder extends Seeder
                 'mod_installazione' => 'Indossare, associare a smartphone.',
                 'modello' => 'SWF100',
                 'marca' => 'FitNow',
-                'foto' => 'images/placeholder.jpg'//'images/products/smartwatch.jpg'
+                'foto' => 'smartwatch.jpg'//'images/placeholder.jpg'
             ],
         ]);
     }

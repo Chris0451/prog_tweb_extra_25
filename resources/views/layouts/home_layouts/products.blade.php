@@ -58,7 +58,7 @@
             <div class="row" style="display: flex; flex-wrap: wrap; gap: 20px;"> 
                 @foreach($prodotti as $prodotto)
                     <div id="paginator">
-                        <img src="{{ asset($prodotto->foto ?? 'images/placeholder.jpg') }}" alt="Immagine prodotto" style="width: 100%; height: auto; border-radius: 8px;">
+                        <img src="{{ asset('storage/images/products/'.$prodotto->foto ?? 'images/placeholder.jpg') }}" alt="Immagine prodotto" style="width: 100%; height: auto; border-radius: 8px;">
                         <h3>{{ $prodotto->nome }}</h3>
                         {{-- SI NASCONDONO LE DESCRIZIONI GENERALI DEL PRODOTTO QUANDO SI RICERCA NELLA HOME IL MALFUNZIONAMENTO DI UN PRODOTOT TRAMITE SELECT O TRAMITE SEARCH BAR--}}
                         @if (!(request()->filled('prod_id') && request()->filled('malf_id')) && !(request()->filled('search_malf')))

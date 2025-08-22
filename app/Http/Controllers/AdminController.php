@@ -63,17 +63,23 @@ class AdminController extends Controller
         $oldImg = $prodotto->foto;
         $prodotto->update($request->validated());
         if (!is_null($request->file('image'))) {
-            $prodotto->update(['foto' => basename($request->file('foto')->store('public/prodImg'))]);
+            $prodotto->update(['foto' => basename($request->file('foto')->store('public/images/products'))]);
             if (!is_null($oldImg)) {
                 Storage::delete('public/prodImg/' . $oldImg);
             }
         }
-        return redirect()->route('product.list');
+        return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
     }
 
-    public function deleteProduct(NewProductRequest $request)//: RedirectResponse
+    public function deleteProduct(int $prodId): RedirectResponse
     {
-        //return redirect()->route('listprod'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
+        $prodotto = $this->_adminModel->getProductById($prodId);
+        $foto = $prodotto->foto;
+        $prodotto->delete();
+        if (!is_null($foto)) {
+            Storage::disk('public')->delete('images/products' . $foto);
+        }
+        return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
     }
 
     //-----------------------------------//
