@@ -51,24 +51,24 @@ Route::post('/admin/product', [AdminController::class, 'storeProduct'])
     ->name('product.store');
 
 //ROUTE PER FORM ALLA MODIFICA DEL PRODOTTO SELEZIONATO DALLA LISTA PRODOTTI
-Route::get('/admin/product/update/{prodId}', [AdminController::class, 'editProduct'])
+Route::get('/admin/product/edit/{prodId}', [AdminController::class, 'editProduct'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('product.edit');
 
 //ROUTE PER IMPOSTAZIONE MODIFICHE DEL NUOVO PRODOTTO NEL DATABASE
-Route::put('admin/product/update', [AdminController::class, 'updateProduct'])
+Route::put('/admin/product/update', [AdminController::class, 'updateProduct'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('product.update');
 
 //ROUTE PER CANCELLAZIONE PRODOTTO DALLA LISTA
-Route::delete('admin/product/delete/{prodId}', [AdminController::class, 'deleteProduct'])
+Route::delete('/admin/product/delete/{prodId}', [AdminController::class, 'deleteProduct'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('product.delete');
 
 //------------MANIPOLAZIONE CENTRI DI ASSISTENZA [ADMIN]------------//
 
 //ROUTE PER LISTA DI CENTRI DI ASSISTENZA (LATO ADMIN)
-Route::get('admin/center/list', [AdminController::class, 'listCenters'])
+Route::get('/admin/center/list', [AdminController::class, 'listCenters'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('center.list');
 
@@ -83,28 +83,33 @@ Route::post('/admin/center', [AdminController::class, 'storeCenter'])
     ->name('center.store');
 
 //ROUTE PER FORM ALLA MODIFICA DEL CENTRO DI ASSISTENZA SELEZIONATO DALLA LISTA DEI CENTRI
-Route::get('/admin/center/update/{centerId}', [AdminController::class, 'editCenter'])
+Route::get('/admin/center/edit/{centerId}', [AdminController::class, 'editCenter'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('center.edit');
 
 //ROUTE PER IMPOSTAZIONE MODIFICHE DEL NUOVO CENTRO DI ASSISTENZA NEL DATABASE
-Route::put('admin/center/update', [AdminController::class, 'updateCenter'])
+Route::put('/admin/center/update', [AdminController::class, 'updateCenter'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('center.update');
 
-//ROUTE PER FORM ALLA MODIFICA DEL CENTRO DI ASSISTENZA SELEZIONATO DALLA LISTA DEI CENTRI
-Route::get('/admin/center/update/{centerId}', [AdminController::class, 'editCenter'])
-    ->middleware(['auth', RoleMiddleware::class . ':admin'])
-    ->name('center.edit');
-
 //ROUTE PER CANCELLAZIONE CENTRO DI ASSISTENZA DALLA LISTA DEI CENTRI
-Route::delete('admin/center/delete/{centerId}', [AdminController::class, 'deleteCenter'])
+Route::delete('/admin/center/delete/{centerId}', [AdminController::class, 'deleteCenter'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('center.delete');
 
 //------------MANIPOLAZIONE UTENTI(TECNICI E STAFF) [ADMIN]------------//
 
+Route::get('/admin/users/list', [AdminController::class, 'listUsers'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('users.list');
 
+Route::get('/admin/user/edit/userId/{userId}/role/{role}/id/{id}', [AdminController::class, 'editUser'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('users.edit');
+
+Route::put('/admin/user/update', [AdminController::class, 'updateUser'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('users.update');
 
 //------------MANIPOLAZIONE MALFUNZIONAMENTI [STAFF]------------//
 

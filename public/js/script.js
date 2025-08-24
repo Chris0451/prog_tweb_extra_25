@@ -86,11 +86,11 @@ backToTopBtn.addEventListener("click", function() {
     $search.on('input', function() {
         const hasText = $(this).val().trim() !== '';
         if (hasText) {
-        $prod.val('').prop('disabled', true);
-        resetMalf();
-        refreshSubmitSelect();
+            $prod.val('').prop('disabled', true);
+            resetMalf();
+            refreshSubmitSelect();
         } else {
-        $prod.prop('disabled', false);
+            $prod.prop('disabled', false);
         }
         refreshSubmitText();
     });
@@ -119,13 +119,13 @@ backToTopBtn.addEventListener("click", function() {
             $malf.empty().append($('<option>', { value: '', text: '— Seleziona un malfunzionamento —' }));
 
             if (Array.isArray(data) && data.length) {
-            // NB: usa 'tipologia' per il testo (coerente con il tuo codice)
-            data.forEach(function(m) {
-                $malf.append($('<option>', { value: m.id, text: m.tipologia }));
-            });
-            $malf.prop('disabled', false);
+                // NB: usa 'tipologia' per il testo (coerente con il tuo codice)
+                data.forEach(function(m) {
+                    $malf.append($('<option>', { value: m.id, text: m.tipologia }));
+                });
+                $malf.prop('disabled', false);
             } else {
-            resetMalf('Nessun malfunzionamento registrato');
+                resetMalf('Nessun malfunzionamento registrato');
             }
             refreshSubmitSelect();
         })

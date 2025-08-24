@@ -31,7 +31,7 @@ class Staff extends Model
 
     public function getPagedMalfunctions(): LengthAwarePaginator
     {
-        return Malfunzionamento::orderBy('id','asc')->paginate(5);
+        return Malfunzionamento::with('prodotto')->orderBy('id','asc')->paginate(5);
     }
 
     public function getMalfunctionById(int $malfId)
@@ -43,7 +43,7 @@ class Staff extends Model
 
     public function getPagedSolutions(): LengthAwarePaginator
     {
-        return SoluzioneTecnica::orderBy('id','asc')->paginate(5);
+        return SoluzioneTecnica::with('malfunzionamento')->orderBy('id','asc')->paginate(5);
     }
 
     public function getSolutionsById(int $solId)

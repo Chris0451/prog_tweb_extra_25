@@ -14,7 +14,7 @@
             </form>
 
             <!-- SEARCHBAR PER MALFUNZIONAMENTI TRAMITE RICERCA PAROLA NELLA DESCRIZIONE -->
-            @if(auth()->user()?->role === 'tecnico' || auth()->user()?->role === 'staff')
+            @if(auth()->user()?->role === 'tecnico')
                 <form id="searchFormProducts" method="GET" action="#prodotti">
                     <input id="search_malf" name="search_malf" type="text" value="{{ request('search_malf') }}" placeholder="Parola descrizione malfunzionamento (es. Display)">
                     <input id="submit_malf" type="submit" value="Ricerca">

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger("id_centro_assistenza")->nullable();
             $table->foreign("id_utente")->references('id')->on("users")->onDelete("cascade")->onUpdate("cascade");
             $table->foreign("id_centro_assistenza")->references('id')->on('centro_assistenza')->onDelete('set null')->onUpdate('cascade');
-            $table->timestamps();
         });
     }
 

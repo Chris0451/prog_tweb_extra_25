@@ -19,6 +19,16 @@ class Admin extends Model
         return Prodotto::orderBy('id', 'asc')->paginate(5);
     }
 
+    public function getAllProducts()
+    {
+        return Prodotto::all();
+    }
+
+    public function getOrderProds()
+    {
+        return Prodotto::orderBy('nome')->get(['id','nome']);
+    }
+
     //ESTRAZIONE PRODOTTO TRAMITE IL PROPRIO ID
     public function getProductById(int $prodId)
     {
@@ -30,13 +40,13 @@ class Admin extends Model
     //ESTRAZIONE TECNICI ORDINATI PER ID E PAGINATI A 5 ELEMENTI
     public function getPagedTechnics(): LengthAwarePaginator
     {
-        return Tecnico::with('users')->orderBy('id', 'asc')->paginate(5);
+        return Tecnico::with(['utente', 'centro'])->orderBy('id', 'asc')->paginate(5);
     }
 
     //ESTRAZIONE TECNICO TRAMITE IL PROPRIO ID
-    public function getTechnicById(int $technicId)
+    public function getTechnicById(int $userId)
     {
-        return Tecnico::find($technicId);
+        return Tecnico::with('utente')->where('id_utente', $userId)->first();
     }
 
     //-----------------------------------//
@@ -44,21 +54,35 @@ class Admin extends Model
     //ESTRAZIONE STAFF ORDINATI PER ID E PAGINATI A 5 ELEMENTI
     public function getPagedStaff(): LengthAwarePaginator
     {
-        return Staff::with('users')->orderBy('id', 'asc')->paginate(5);
+        return Staff::with(['utente', 'prodotti'])->orderBy('id', 'asc')->paginate(5);
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID
-    public function getStaffById(int $staffId)
+    public function getStaffById(int $userId)
     {
-        return Staff::find($staffId);
+        return Staff::with(['utente', 'prodotti'])->where('id_utente', $userId)->first();
+    }
+
+    public function getStaffWithProds(int $staffId){
+        return Staff::with('prodotti:id')->findOrFail($staffId);
     }
 
     //-----------------------------------//
+
+    public function getUserById(int $userId)
+    {
+        return User::find($userId);
+    }
 
     //ESTRAZIONE STAFF ORDINATI PER ID E PAGINATI A 5 ELEMENTI
     public function getPagedCenters(): LengthAwarePaginator
     {
         return CentroAssistenza::orderBy('id', 'asc')->paginate(5);
+    }
+
+    public function getAllCenters()
+    {
+        return CentroAssistenza::orderBy('nome')->pluck('nome', 'id')->toArray();
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID

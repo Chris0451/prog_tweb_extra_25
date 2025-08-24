@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdminController extends Controller
 {
@@ -98,21 +99,44 @@ class AdminController extends Controller
     }
 
     //RESTITUZIONE VIEW CON TABELLA UTENTI (TECNICO, STAFF)
-    public function listUsers() //:View
+    public function listUsers(): View
     {
-        //return view(admin.users);
+        $user = Auth::user();
+        $tecnici = $this->_adminModel->getPagedTechnics();
+        $staffs = $this->_adminModel->getPagedStaff();
+        return view('layouts.users_layouts.admin.users.list', ['user' => $user, 'tecnici' => $tecnici, 'staffs' => $staffs]);
     }
 
     //RESTITUZIONE VIEW PER FORM DI MODIFICA UTENTE (TECNICO, STAFF) 
-    public function editUser(NewUserRequest $request)//: RedirectResponse
+    public function editUser(int $userId, string $role, int $id): View
     {
-        //return redirect()->route(''); //NOME DELLA ROUTE CHE UTILIZZA listUsers
+        $user = Auth::user();
+        switch ($role) {
+            case 'tecnico':
+                $utente_selezionato = $this->_adminModel->getTechnicById($userId);
+                $centri = $this->_adminModel->getAllCenters();
+                return view('layouts.users_layouts.admin.users.update', ['user' => $user, 'utente_selezionato' => $utente_selezionato, 'role' => $role, 'centri' => $centri]);
+                break;
+
+            case 'staff':
+                $utente_selezionato = $this->_adminModel->getStaffWithProds($id);
+                $prodotti = $this->_adminModel->getOrderProds();
+                $prodotti_assegnati = $utente_selezionato->prodotti->pluck('id')->toArray();
+                return view('layouts.users_layouts.admin.users.update', ['user' => $user, 'utente_selezionato' => $utente_selezionato, 'role' => $role, 'prodotti' => $prodotti, 'prodotti_assegnati' => $prodotti_assegnati]);
+                break;
+
+            default:
+                abort(404);
+        }
+        return view('layouts.users_layouts.admin.users.update', ['user' => $user, 'utente_selezionato' => $utente_selezionato, 'role' => $role]);
     }
 
     //AZIONE DI CANCELLAZIONE DI UN UTENTE (TECNICO, STAFF) SELEZIONATO
-    public function deleteUser(NewUserRequest $request)//: RedirectResponse
+    public function deleteUser(int $userId): RedirectResponse
     {
-        //return redirect()->route('listusers'); //NOME DELLA ROUTE CHE UTILIZZA listUsers
+        $utente_selezionato = $this->_adminModel->getUserById($userId);
+        $utente_selezionato->delete();
+        return redirect()->route('users.list'); //NOME DELLA ROUTE CHE UTILIZZA listUsers
     }
 
     //-----------------------------------//
