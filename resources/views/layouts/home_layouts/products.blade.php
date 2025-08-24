@@ -8,6 +8,9 @@
             <form id="searchFormProducts" method="GET" action="#prodotti">
                 <input id="search_prod" name="search_prod" type="text" value="{{ request('search_prod') }}" placeholder="Parola descrizione prodotto (es. Telefono o Tel*)" required>
                 <input id="submit_prod" type="submit" value="Ricerca">
+                <div class="mf-return">
+                    <a href="{{ route('home') }}#prodotti" class="mf-btn-return">Ritorna tutti i prodotti</a>
+                </div>
             </form>
 
             <!-- SEARCHBAR PER MALFUNZIONAMENTI TRAMITE RICERCA PAROLA NELLA DESCRIZIONE -->
@@ -43,9 +46,7 @@
                         </div>
 
                         {{-- Bottone separato per tornare a tutti i prodotti --}}
-                        <div class="mf-return">
-                            <a href="{{ route('home') }}#prodotti" class="mf-btn-return">Ritorna tutti i prodotti</a>
-                        </div>
+                        
                     </form>
                 </div>
 

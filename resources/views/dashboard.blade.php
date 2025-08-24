@@ -15,7 +15,8 @@
                             <div>
                                 <p><strong>Nome:</strong> {{ $centro->nome }}</p>
                                 <p><strong>Indirizzo:</strong> {{ $centro->indirizzo }}</p>
-                                <img class="foto-centro" src="{{ $centro->foto ? asset($centro->foto) : asset('images/placeholder.jpg') }}" alt="Foto centro assistenza">
+                                <p><strong>ID Centro Assistenza:</strong> {{ $tecnico?->id_centro_assistenza ?? '—' }}</p>
+                                <img class="foto-centro {{ $centro->id }}" src="{{ $centro->foto_url }}" alt="Foto centro assistenza">
                             </div>
                         </div>
                     @else
@@ -52,8 +53,8 @@
                     </ul>
                     <h2>SEZIONE CENTRI ASSISTENZA</h2>
                     <ul>
-                        <li><strong><a href="">CREA NUOVO CENTRO DI ASSISTENZA</a></strong></li>
-                        <li><strong><a href="">VISUALIZZA, MODIFICA O CANCELLA CENTRI DI ASSISTENZA</a></strong></li>
+                        <li><strong><a href="{{ route('center.add') }}">CREA NUOVO CENTRO DI ASSISTENZA</a></strong></li>
+                        <li><strong><a href="{{ route('center.list') }}">VISUALIZZA, MODIFICA O CANCELLA CENTRI DI ASSISTENZA</a></strong></li>
                     </ul>
                 <div>
             @endif

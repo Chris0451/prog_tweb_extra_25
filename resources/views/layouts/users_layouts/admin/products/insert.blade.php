@@ -1,7 +1,7 @@
 @extends('layouts.users_layouts.dashboard')
 
 @section('content')
-<div class="insert-form">
+<div class="insert-product-form">
     <h3>Inserisci un nuovo prodotto</h3>
 
     <div class="container-form">

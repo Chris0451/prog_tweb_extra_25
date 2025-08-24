@@ -6,6 +6,7 @@ use App\Http\Requests\NewCenterRequest;
 use App\Http\Requests\NewProductRequest;
 use App\Http\Requests\NewUserRequest;
 use App\Models\Admin;
+use App\Models\Resources\CentroAssistenza;
 use App\Models\Resources\Prodotto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,14 +30,6 @@ class AdminController extends Controller
         return view('layouts.users_layouts.admin.products.insert', ['user' => $user]);
     }
 
-    //RESTITUZIONE VIEW PER LISTA PRODOTTI PAGNIATA
-    public function listProducts() //:View
-    {
-        $user = Auth::user();
-        $prods = $this->_adminModel->getPagedProducts();
-        return view('layouts.users_layouts.admin.products.list', ['user' => $user,'prodotti' => $prods]);
-    }
-
     //INSERIMENTO PRODOTTO NEL DATABASE DOPO CONFERMA DEL FORM
     public function storeProduct(NewProductRequest $request): RedirectResponse
     {
@@ -44,10 +37,18 @@ class AdminController extends Controller
         $prodotto->fill($request->validated());
 
         if (!is_null($request->file('foto'))) {
-            $prodotto->foto = basename($request->file('foto')->store('public/images/products'));
+            $prodotto->foto = basename($request->file('foto')->store('images/products', 'public'));
         }
         $prodotto->save();
         return redirect()->action([DashboardController::class, 'index']);
+    }
+
+    //RESTITUZIONE VIEW PER LISTA PRODOTTI PAGNIATA
+    public function listProducts() //:View
+    {
+        $user = Auth::user();
+        $prods = $this->_adminModel->getPagedProducts();
+        return view('layouts.users_layouts.admin.products.list', ['user' => $user,'prodotti' => $prods]);
     }
 
     public function editProduct(int $prodId): View
@@ -62,10 +63,10 @@ class AdminController extends Controller
         $prodotto = $this->_adminModel->getProductById($request->input('id'));
         $oldImg = $prodotto->foto;
         $prodotto->update($request->validated());
-        if (!is_null($request->file('image'))) {
-            $prodotto->update(['foto' => basename($request->file('foto')->store('public/images/products'))]);
+        if (!is_null($request->file('foto'))) {
+            $prodotto->update(['foto' => basename($request->file('foto')->store('images/products', 'public'))]);
             if (!is_null($oldImg)) {
-                Storage::delete('public/prodImg/' . $oldImg);
+                Storage::disk('public')->delete('images/products/'.$oldImg);
             }
         }
         return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
@@ -77,7 +78,7 @@ class AdminController extends Controller
         $foto = $prodotto->foto;
         $prodotto->delete();
         if (!is_null($foto)) {
-            Storage::delete('public/images/products' . $foto);
+            Storage::disk('public')->delete('images/products/'.$foto);
         }
         return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
     }
@@ -90,22 +91,22 @@ class AdminController extends Controller
         //return view('admin.users');
     }
 
-    //RESTITUZIONE VIEW CON TABELLA UTENTI (TECNICO, STAFF)
-    public function listUsers() //:View
-    {
-        //return view(admin.users);
-    }
-
     //INSERIMENTO UTENTE (TECNICO, STAFF) NEL DATABASE DOPO CONFERMA DEL FORM
     public function storeUser(NewUserRequest $request)
     {
         //
     }
 
+    //RESTITUZIONE VIEW CON TABELLA UTENTI (TECNICO, STAFF)
+    public function listUsers() //:View
+    {
+        //return view(admin.users);
+    }
+
     //RESTITUZIONE VIEW PER FORM DI MODIFICA UTENTE (TECNICO, STAFF) 
     public function editUser(NewUserRequest $request)//: RedirectResponse
     {
-        //return redirect()->route('listusers'); //NOME DELLA ROUTE CHE UTILIZZA listUsers
+        //return redirect()->route(''); //NOME DELLA ROUTE CHE UTILIZZA listUsers
     }
 
     //AZIONE DI CANCELLAZIONE DI UN UTENTE (TECNICO, STAFF) SELEZIONATO
@@ -117,15 +118,23 @@ class AdminController extends Controller
     //-----------------------------------//
 
     //RESTITUZIONE VIEW PER L'INSERIMENTO DEL CENTRO DI ASSISTENZA NEL DATABASE
-    public function addCenter() //:View
+    public function addCenter(): View
     {
-        // return view('admin.centers')
+        $user = Auth::user();
+        return view('layouts.users_layouts.admin.centers.insert', ['user' => $user]);
     }
 
-    //INSERIMENTO UTENTE (TECNICO, STAFF) NEL DATABASE DOPO CONFERMA DEL FORM
-    public function storeCenter(NewCenterRequest $request)
+    //INSERIMENTO CENTRO ASSISTENZA NEL DATABASE DOPO CONFERMA DEL FORM
+    public function storeCenter(NewCenterRequest $request): RedirectResponse
     {
-        //
+        $centro = new CentroAssistenza;
+        $centro->fill($request->validated());
+
+        if (!is_null($request->file('foto'))) {
+            $centro->foto = basename($request->file('foto')->store('images/assistance_centers', 'public'));
+        }
+        $centro->save();
+        return redirect()->action([DashboardController::class, 'index']);
     }
 
     public function listCenters() :View
@@ -142,8 +151,28 @@ class AdminController extends Controller
         return view('layouts.users_layouts.admin.centers.update', ['centro' => $centro, 'user' => $user]);
     }
 
-    public function deleteCenter(NewCenterRequest $request)//: RedirectResponse
+    public function updateCenter(NewCenterRequest $request): RedirectResponse
     {
-        //return redirect()->route('listcenters'); //NOME DELLA ROUTE CHE UTILIZZA listCenters
+        $centro = $this->_adminModel->getCenterById($request->input('id'));
+        $oldImg = $centro->foto;
+        $centro->update($request->validated());
+        if (!is_null($request->file('foto'))) {
+            $centro->update(['foto' => basename($request->file('foto')->store('images/assistance_centers', 'public'))]);
+            if (!is_null($oldImg)) {
+                Storage::disk('public')->delete('images/assistance_centers/'.$oldImg);
+            }
+        }
+        return redirect()->route('center.list'); //NOME DELLA ROUTE CHE UTILIZZA listCenters
+    }
+
+    public function deleteCenter(int $centerId): RedirectResponse
+    {
+        $centro = $this->_adminModel->getCenterById($centerId);
+        $foto = $centro->foto;
+        $centro->delete();
+        if (!is_null($foto)) {
+            Storage::disk('public')->delete('images/assistance_centers/'.$foto);
+        }
+        return redirect()->route('center.list'); //NOME DELLA ROUTE CHE UTILIZZA listCenters
     }
 }

@@ -42,6 +42,7 @@
                 <th>Nome centro</th>
                 <th>Indirizzo</th>
                 <th>Fotografia</th>
+                <th>Modifica/Cancella</th>
             </tr>
         </thead>
         <tbody>
@@ -49,12 +50,12 @@
             <tr>
                 <td class="name">{{$centro->nome}}</td>
                 <td>{{$centro->indirizzo}}</td>
-                <td><img src="{{ asset($centro->foto ?? 'images/placeholder.jpg') }}" alt="Imagine centro {{ $centro->id }}" style="width: 30%; height: auto; border-radius: 8px;"></td>
+                <td style="text-align:center;"><img src="{{ asset('storage/images/assistance_centers/'.$centro->foto ?? 'images/placeholder.jpg') }}" alt="Immagine centro {{ $centro->id }}" style="width: 30%; height: auto; border-radius: 8px;"></td>
                 <td>
-                    <a href="{{ route('center.edit', [$prodotto->id])  }}" style="border-bottom: 0px; color:green">
+                    <a href="{{ route('center.edit', [$centro->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
-                    <a href="#" class="delete" data-id="{{ $prodotto->id }}" style="border-bottom: 0px; color:red">
+                    <a href="#" class="delete" data-id="{{ $centro->id }}" style="border-bottom: 0px; color:red">
                         <span class="material-icons">delete</span>
                     </a>
                 </td>
@@ -69,6 +70,6 @@
     </table>
 </div>
 <div class="pag-prods">
-    {{ $prodotti->links('pagination::default') }}
+    {{ $centri->links('pagination::default') }}
 </div>
 @endsection

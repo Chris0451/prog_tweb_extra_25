@@ -9,7 +9,6 @@
         <li><strong>Cognome:</strong> {{ $user->cognome }}</li>
         @if($user->role === 'tecnico')
             <li><strong>Data di nascita:</strong> {{ $tecnico?->data_nascita ?? '—' }}</li>
-            <li><strong>ID Centro Assistenza:</strong> {{ $tecnico?->id_centro_assistenza ?? '—' }}</li>
         @endif
     </ul>
 </div>

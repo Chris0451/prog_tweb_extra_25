@@ -23,12 +23,12 @@ class NewProductRequest extends FormRequest
     {
         return [
             'nome' => 'required|string',
-            'descrizione' => 'required|max:1000',
-            'tecniche_uso' => 'required|max:1000',
-            'mod_installazione' => 'required|max:1000',
-            'modello' => 'required|max:100',
-            'marca' => 'required|max:100',
-            'foto' => 'nullable|max:500'
+            'descrizione' => 'required|string|max:1000',
+            'tecniche_uso' => 'required|string|max:1000',
+            'mod_installazione' => 'required|string|max:1000',
+            'modello' => 'required|string|max:100',
+            'marca' => 'required|string|max:100',
+            'foto' => 'nullable|string|max:500'
         ];
     }
 }

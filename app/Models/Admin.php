@@ -34,7 +34,7 @@ class Admin extends Model
     }
 
     //ESTRAZIONE TECNICO TRAMITE IL PROPRIO ID
-    public function getTechnicsById(int $technicId)
+    public function getTechnicById(int $technicId)
     {
         return Tecnico::find($technicId);
     }
@@ -62,7 +62,7 @@ class Admin extends Model
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID
-    public function getCentersById(int $centerId)
+    public function getCenterById(int $centerId)
     {
         return CentroAssistenza::find($centerId);
     }

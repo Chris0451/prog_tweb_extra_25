@@ -22,9 +22,9 @@ class NewCenterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|max:100',
-            'indirizzo' => 'required|max:100',
-            'foto' => 'required|max:200'
+            'nome' => 'required|string|max:100',
+            'indirizzo' => 'required||string|max:100',
+            'foto' => 'required|max:1000'
         ];
     }
 }
