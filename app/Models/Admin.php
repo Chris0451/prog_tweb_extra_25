@@ -14,52 +14,44 @@ class Admin extends Model
 {
 
     //ESTRAZIONE PRODOTTI ORDINATI PER ID E PAGINATI A 5 ELEMENTI
-    public function getPagedProducts(): LengthAwarePaginator
-    {
+    public function getPagedProducts(): LengthAwarePaginator{
         return Prodotto::orderBy('id', 'asc')->paginate(5);
     }
 
-    public function getAllProducts()
-    {
+    public function getAllProducts(){
         return Prodotto::all();
     }
 
-    public function getOrderProds()
-    {
+    public function getOrderProds(){
         return Prodotto::orderBy('id')->get(['id','nome']);
     }
 
     //ESTRAZIONE PRODOTTO TRAMITE IL PROPRIO ID
-    public function getProductById(int $prodId)
-    {
+    public function getProductById(int $prodId){
         return Prodotto::find($prodId);
     }
 
     //-----------------------------------//
 
     //ESTRAZIONE TECNICI ORDINATI PER ID E PAGINATI A 5 ELEMENTI
-    public function getPagedTechnics(): LengthAwarePaginator
-    {
+    public function getPagedTechnics(): LengthAwarePaginator{
         return Tecnico::with(['utente', 'centro'])->orderBy('id', 'asc')->paginate(5);
     }
 
     //ESTRAZIONE TECNICO TRAMITE IL PROPRIO ID
-    public function getTechnicById(int $userId)
-    {
+    public function getTechnicById(int $userId){
         return User::with('tecnico')->where('id', $userId)->first();
     }
 
     //-----------------------------------//
 
     //ESTRAZIONE STAFF ORDINATI PER ID E PAGINATI A 5 ELEMENTI
-    public function getPagedStaff(): LengthAwarePaginator
-    {
+    public function getPagedStaff(): LengthAwarePaginator{
         return Staff::with(['utente', 'prodotti'])->orderBy('id', 'asc')->paginate(5);
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID
-    public function getStaffById(int $userId)
-    {
+    public function getStaffById(int $userId){
         return User::with(['staff.prodotti'])->where('id', $userId)->first();
     }
 
@@ -69,25 +61,21 @@ class Admin extends Model
 
     //-----------------------------------//
 
-    public function getUserById(int $userId)
-    {
-        return User::find($userId);
+    public function getUserById(int $userId){
+        return User::with(['tecnico','staff'])->findOrFail($userId);
     }
 
     //ESTRAZIONE STAFF ORDINATI PER ID E PAGINATI A 5 ELEMENTI
-    public function getPagedCenters(): LengthAwarePaginator
-    {
+    public function getPagedCenters(): LengthAwarePaginator{
         return CentroAssistenza::orderBy('id', 'asc')->paginate(5);
     }
 
-    public function getAllCenters()
-    {
+    public function getAllCenters(){
         return CentroAssistenza::orderBy('id')->pluck('nome', 'id')->toArray();
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID
-    public function getCenterById(int $centerId)
-    {
+    public function getCenterById(int $centerId){
         return CentroAssistenza::find($centerId);
     }
 

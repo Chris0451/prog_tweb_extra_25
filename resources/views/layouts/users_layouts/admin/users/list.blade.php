@@ -9,7 +9,7 @@
 
         <script>
         $(function () {
-            const pattern = "{{ route('product.delete', ':id') }}";
+            const pattern = "{{ route('user.delete', ':id') }}";
             const $deleteForm = $('#delete-form');
 
             // event delegation: funziona anche se la riga viene aggiunta dopo
@@ -65,7 +65,7 @@
                     <a href="{{ route('users.edit', [$tecnico->utente->id, $tecnico->utente->role, $tecnico->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
-                    <a href="#" class="delete" data-id="{{ $tecnico->id }}" style="border-bottom: 0px; color:red">
+                    <a href="#" class="delete" data-id="{{ $tecnico->utente->id }}" style="border-bottom: 0px; color:red">
                         <span class="material-icons">delete</span>
                     </a>
                 </td>
@@ -119,7 +119,7 @@
                     <a href="{{ route('users.edit', [$staff->utente->id, $staff->utente->role, $staff->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
-                    <a href="#" class="delete" data-id="{{ $staff->id }}" style="border-bottom: 0px; color:red">
+                    <a href="#" class="delete" data-id="{{ $staff->utente->id }}" style="border-bottom: 0px; color:red">
                         <span class="material-icons">delete</span>
                     </a>
                 </td>

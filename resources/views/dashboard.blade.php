@@ -29,7 +29,7 @@
                     <h2>SEZIONE MALFUNZIONAMENTI</h2>
                     <ul>
                         <li><strong><a href="">AGGIUNGI NUOVO MALFUNZIONAMENTO</a></strong></li>
-                        <li><strong><a href="">VISUALIZZA, MODIFICA O CANCELLA MALFUNZIONAMENTO</a></strong></li>
+                        <li><strong><a href="{{ route('malfunctions.list') }}">VISUALIZZA, MODIFICA O CANCELLA MALFUNZIONAMENTO</a></strong></li>
                     </ul>
                     <h2>SEZIONE SOLUZIONI</h2>
                     <ul>

@@ -29,9 +29,13 @@ class Staff extends Model
 
     //-----------------------------------//
 
+    public function getAssignedProducts(){
+        return Prodotto::with('staff');
+    }
+
     public function getPagedMalfunctions(): LengthAwarePaginator
     {
-        return Malfunzionamento::with('prodotto')->orderBy('id','asc')->paginate(5);
+        return Malfunzionamento::with('prodotto.staff.prodotti')->orderBy('id','asc')->paginate(5);
     }
 
     public function getMalfunctionById(int $malfId)
@@ -43,7 +47,7 @@ class Staff extends Model
 
     public function getPagedSolutions(): LengthAwarePaginator
     {
-        return SoluzioneTecnica::with('malfunzionamento')->orderBy('id','asc')->paginate(5);
+        return Malfunzionamento::with('soluzione')->orderBy('id','asc')->paginate(5);
     }
 
     public function getSolutionsById(int $solId)

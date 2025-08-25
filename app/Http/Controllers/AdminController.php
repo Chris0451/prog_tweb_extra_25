@@ -7,6 +7,7 @@ use App\Http\Requests\NewProductRequest;
 use App\Http\Requests\NewStaffRequest;
 use App\Http\Requests\NewTechnicRequest;
 use App\Http\Requests\NewUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Admin;
 use App\Models\Resources\CentroAssistenza;
 use App\Models\Resources\Prodotto;
@@ -43,7 +44,7 @@ class AdminController extends Controller
             $prodotto->foto = basename($request->file('foto')->store('images/products', 'public'));
         }
         $prodotto->save();
-        return redirect()->action([DashboardController::class, 'index']);
+        return redirect()->action([DashboardController::class, 'index'])->with('success', 'Prodotto inserito correttamente');
     }
 
     //RESTITUZIONE VIEW PER LISTA PRODOTTI PAGNIATA
@@ -72,7 +73,7 @@ class AdminController extends Controller
                 Storage::disk('public')->delete('images/products/'.$oldImg);
             }
         }
-        return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
+        return redirect()->route('product.list')->with('success', 'Prodotto aggiornato'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
     }
 
     public function deleteProduct(int $prodId): RedirectResponse
@@ -133,27 +134,35 @@ class AdminController extends Controller
         return view('layouts.users_layouts.admin.users.update', ['user' => $user, 'utente_selezionato' => $utente_selezionato, 'role' => $role]);
     }
 
-    public function updateUser(NewUserRequest $request, string $role): RedirectResponse
+    public function updateUser(UpdateUserRequest $request, string $role): RedirectResponse
     {
+
+        $utente_selezionato = $this->_adminModel->getUserById($request->id);
+
+        $utente_selezionato->fill($request->only(['username','nome','cognome','role']));
+
+        if ($request->filled('password')) {
+            $utente_selezionato->password = Hash::make($request->input('new_password'));
+        }
+
+        $utente_selezionato->save();
+
         switch ($role){
             case 'tecnico':
-                $tecnico = $this->_adminModel->getTechnicById($request->input('id'));
-                $techData = $request->validated();
-                $techData['password'] = Hash::make($techData['password']);
-                $tecnico->update($techData);
+                $tecnico = $utente_selezionato->tecnico;
+                $tecnico->fill($request->only(['data_nascita','id_centro_assistenza']));
+                $tecnico->save();
                 break;
 
             case 'staff':
-                $staff = $this->_adminModel->getStaffById($request->input('id'));
-                $staffData = $request->validated();
-                $staffData['password'] = Hash::make($staffData['password']);
-                $staff->update($staffData);
+                $staff = $utente_selezionato->staff;
+                $staff->save();
                 break;
 
             default:
                 abort(404);
         }
-        return redirect()->route('users.list');
+        return redirect()->route('users.list')->with('success','Utente aggiornato');
     }
 
     //AZIONE DI CANCELLAZIONE DI UN UTENTE (TECNICO, STAFF) SELEZIONATO
@@ -183,7 +192,7 @@ class AdminController extends Controller
             $centro->foto = basename($request->file('foto')->store('images/assistance_centers', 'public'));
         }
         $centro->save();
-        return redirect()->action([DashboardController::class, 'index']);
+        return redirect()->action([DashboardController::class, 'index'])->with('success', 'Centro inserito correttamente');
     }
 
     public function listCenters() :View
@@ -211,7 +220,7 @@ class AdminController extends Controller
                 Storage::disk('public')->delete('images/assistance_centers/'.$oldImg);
             }
         }
-        return redirect()->route('center.list'); //NOME DELLA ROUTE CHE UTILIZZA listCenters
+        return redirect()->route('center.list')->with('success', 'Centro aggiornato'); //NOME DELLA ROUTE CHE UTILIZZA listCenters
     }
 
     public function deleteCenter(int $centerId): RedirectResponse

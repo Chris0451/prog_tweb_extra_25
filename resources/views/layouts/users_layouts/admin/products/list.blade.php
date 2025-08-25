@@ -19,7 +19,7 @@
                 const id   = $(this).data('id');
                 const name = $(this).closest('tr').find('.name').text().trim();
 
-                if (confirm(`Sei sicuro di cancellare ${name}?`)) {
+                if (confirm(`Sei sicuro di cancellare il prodotto: ${name}?`)) {
                 const action = pattern.replace(':id', id);
                 $deleteForm.attr('action', action).trigger('submit');
                 }

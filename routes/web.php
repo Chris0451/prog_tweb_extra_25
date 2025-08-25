@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\StaffController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -119,11 +120,19 @@ Route::put('/admin/user/update/{role}', [AdminController::class, 'updateUser'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('users.update');
 
-Route::delete('/admin/user/delete/{userId}', [AdminController::class, 'deleteuser'])
+Route::delete('/admin/user/delete/{userId}', [AdminController::class, 'deleteUser'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('user.delete');
 
 //------------MANIPOLAZIONE MALFUNZIONAMENTI [STAFF]------------//
+
+Route::get('/staff/malfunctions/list', [StaffController::class, 'listMalfunctions'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('malfunctions.list');
+
+Route::delete('/staff/malfunction/delete/{malfId}', [StaffController::class, 'deleteMalfunction'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('malfunction.delete');
 
 //------------MANIPOLAZIONE SOLUZIONI [STAFF]------------//
 
