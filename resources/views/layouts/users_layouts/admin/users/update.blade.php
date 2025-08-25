@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="insert-user-form">
-    <h3>Modifica i dati dell'utente {{ $utente_selezionato->utente->role }}</h3>
+    <h3>Modifica i dati dell'utente {{ $utente_selezionato->role }}</h3>
 
     <div class="container-form">
         <div class="wrap-form">
-            {{ html()->modelForm($utente_selezionato->utente, 'PUT', route('users.update', $utente_selezionato->utente))->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
+            {{ html()->modelForm($utente_selezionato, 'PUT', route('users.update', $utente_selezionato, $utente_selezionato->role))->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
                 
-                {{ html()->hidden('id') }}
+                {{ html()->hidden('id', $utente_selezionato->id) }}
 
                 <div  class="wrap-input  rs1-wrap-input">
                     {{ html()->label('Nome utente', 'nome')->class(['label-input']) }}
@@ -47,12 +47,12 @@
                 </div>
 
                 <div  class="wrap-input  rs1-wrap-input">
-                    {{ html()->label('Nuova password', 'new_password')->class(['label-input']) }}
-                    {{ html()->password('new_password')->class(['input'])->id('new_password') }}
+                    {{ html()->label('Nuova password', 'password')->class(['label-input']) }}
+                    {{ html()->password('password')->class(['input'])->id('password') }}
                     <small>Lascia vuoto se non vuoi cambiare password</small>
-                    @if ($errors->first('new_password'))
+                    @if ($errors->first('password'))
                     <ul class="errors">
-                        @foreach ($errors->get('new_password') as $message)
+                        @foreach ($errors->get('password') as $message)
                         <li>{{ $message }}</li>
                         @endforeach
                     </ul>
@@ -72,10 +72,10 @@
                     @endif
                 </div>
 
-                @if ($utente_selezionato->utente->role === 'tecnico')
+                @if ($utente_selezionato->role === 'tecnico')
                     <div class="wrap-input rs1-wrap-input">
                         {{ html()->label('Data di nascita', 'data_nascita')->class(['label-input']) }}
-                        {{ html()->date('data_nascita', $utente_selezionato->data_nascita)->class(['input'])->id('data_nascita') }}
+                        {{ html()->date('data_nascita', $utente_selezionato->tecnico->data_nascita)->class(['input'])->id('data_nascita') }}
 
                         @if ($errors->first('data_nascita'))
                         <ul class="errors">
@@ -87,25 +87,25 @@
                     </div>
 
                     <div class="wrap-input rs1-wrap-input">
-                        {{ html()->label('Nome del centro assistenza associato', 'id_nome_centro_assistenza')->class(['label-input']) }}
-                        {{ html()->select('id_nome_centro_assistenza', $centri,  old('id_centro_assistenza', (int) $utente_selezionato->id_centro_assistenza))->class(['input'])->id('id_nome_centro_assistenza') }}
-
-                        @if ($errors->first('id_nome_centro_assistenza'))
+                        {{ html()->label('Nome del centro assistenza associato', 'id_centro_assistenza')->class(['label-input']) }}
+                        {{ html()->select('id_centro_assistenza', $centri,  old('id_centro_assistenza', (int) $utente_selezionato->id_centro_assistenza))->class(['input'])->id('id_nome_centro_assistenza') }}
+                        
+                        @if ($errors->first('id_centro_assistenza'))
                         <ul class="errors">
-                            @foreach ($errors->get('id_nome_centro_assistenza') as $message)
+                            @foreach ($errors->get('id_centro_assistenza') as $message)
                                 <li>{{ $message }}</li>
                             @endforeach
                         </ul>
                         @endif
+                    
                     </div>
-
                 @endif
 
                 
 
-                @if ($utente_selezionato->utente->role === 'staff')
+                @if ($utente_selezionato->role === 'staff')
                     @php
-                        $checkedIds = old('products', $prodotti_assegnati); //SELEZIONI MANTENTUTE DOPO ERRORE VALIDAZIONE
+                        $checkedIds = old('prodotti', $prodotti_assegnati); //SELEZIONI MANTENTUTE DOPO ERRORE VALIDAZIONE
                     @endphp
                     <div class="wrap-input rs1-wrap-input">
                         {{ html()->label('Nome dei prodotti associati', 'id_nome_prodotto')->class(['label-input']) }}

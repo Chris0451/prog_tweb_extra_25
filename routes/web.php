@@ -46,7 +46,7 @@ Route::get('/admin/product/insert', [AdminController::class, 'addProduct'])
     ->name('product.add');
 
 //ROUTE PER AGGIUNTA DEL PRODOTTO AL DATABASE
-Route::post('/admin/product', [AdminController::class, 'storeProduct'])
+Route::post('/admin/product/store', [AdminController::class, 'storeProduct'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('product.store');
 
@@ -78,7 +78,7 @@ Route::get('/admin/center/insert', [AdminController::class, 'addCenter'])
     ->name('center.add');
 
 //ROUTE PER AGGIUNTA DEL CENTRO DI ASSISTENZA AL DATABASE
-Route::post('/admin/center', [AdminController::class, 'storeCenter'])
+Route::post('/admin/center/store', [AdminController::class, 'storeCenter'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('center.store');
 
@@ -103,13 +103,25 @@ Route::get('/admin/users/list', [AdminController::class, 'listUsers'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('users.list');
 
+Route::get('/admin/user/insert', [AdminController::class, 'addUser'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('user.add');
+
+Route::post('/admin/user/store', [AdminController::class, 'storeUser'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('user.store');
+
 Route::get('/admin/user/edit/userId/{userId}/role/{role}/id/{id}', [AdminController::class, 'editUser'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('users.edit');
 
-Route::put('/admin/user/update', [AdminController::class, 'updateUser'])
+Route::put('/admin/user/update/{role}', [AdminController::class, 'updateUser'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('users.update');
+
+Route::delete('/admin/user/delete/{userId}', [AdminController::class, 'deleteuser'])
+    ->middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->name('user.delete');
 
 //------------MANIPOLAZIONE MALFUNZIONAMENTI [STAFF]------------//
 

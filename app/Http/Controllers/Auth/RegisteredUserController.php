@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -30,16 +31,19 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nome' => ['required', 'string', 'max:255'],
-            'cognnome' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'username' => ['required', 'string', 'unique:users,username'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'nome' => ['required', 'string', 'max:100'],
+            'cognome' => ['required', 'string', 'max:100'],
+            'role' => ['required', Rule::in(['tecnico','staff','admin'])]
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'username' => $request->username,
             'password' => Hash::make($request->password),
+            'nome' => $request->nome,
+            'cognome' => $request->cognome,
+            'role' => $request->role
         ]);
 
         event(new Registered($user));

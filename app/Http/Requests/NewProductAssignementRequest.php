@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewProductRequest extends FormRequest
+class NewProductAssignementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,13 +22,8 @@ class NewProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string',
-            'descrizione' => 'required|string|max:1000',
-            'tecniche_uso' => 'required|string|max:1000',
-            'mod_installazione' => 'required|string|max:1000',
-            'modello' => 'required|string|max:100',
-            'marca' => 'required|string|max:100',
-            'foto' => 'nullable|max:500'
+            'id_staff_associato' => 'required|exists:staff,id',
+            'id_prodotto' => 'required|exists:prodotto,id'
         ];
     }
 }

@@ -8,7 +8,7 @@
         <div class="wrap-form">
             {{ html()->modelForm($prodotto, 'PUT', route('product.update', $prodotto))->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
                 
-                {{ html()->hidden('id') }}
+                {{ html()->hidden('id', $prodotto->id) }}
                 
                 <div  class="wrap-input  rs1-wrap-input">
                     {{ html()->label('Nome Prodotto', 'nome')->class(['label-input']) }}

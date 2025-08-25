@@ -25,10 +25,10 @@ class NewUserRequest extends FormRequest
     {
         $rules = [
             'username' => ['required', 'string', 'unique:users,username'],
-            'password' => ['required', 'string', 'confirmed', Password::min(8)->letters()->numbers()],
-            'nome' => ['required', 'string', 'max:100'],
-            'cognome' => ['required', 'string'],
-            'role' => ['required', Rule::in(['tecnico', 'staff','admin'])]
+            'password' => ['sometimes', 'string', 'confirmed', Password::min(8)->letters()->numbers()],
+            'nome' => ['required', 'string', 'max: 100'],
+            'cognome' => ['required', 'string', 'max: 100'],
+            'role' => ['required', Rule::in(['tecnico','staff','admin'])]
         ];
 
         return $rules;

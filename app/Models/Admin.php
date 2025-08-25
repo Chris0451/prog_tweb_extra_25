@@ -26,7 +26,7 @@ class Admin extends Model
 
     public function getOrderProds()
     {
-        return Prodotto::orderBy('nome')->get(['id','nome']);
+        return Prodotto::orderBy('id')->get(['id','nome']);
     }
 
     //ESTRAZIONE PRODOTTO TRAMITE IL PROPRIO ID
@@ -46,7 +46,7 @@ class Admin extends Model
     //ESTRAZIONE TECNICO TRAMITE IL PROPRIO ID
     public function getTechnicById(int $userId)
     {
-        return Tecnico::with('utente')->where('id_utente', $userId)->first();
+        return User::with('tecnico')->where('id', $userId)->first();
     }
 
     //-----------------------------------//
@@ -60,11 +60,11 @@ class Admin extends Model
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID
     public function getStaffById(int $userId)
     {
-        return Staff::with(['utente', 'prodotti'])->where('id_utente', $userId)->first();
+        return User::with(['staff.prodotti'])->where('id', $userId)->first();
     }
 
     public function getStaffWithProds(int $staffId){
-        return Staff::with('prodotti:id')->findOrFail($staffId);
+        return User::with('staff.prodotti:id')->findOrFail($staffId);
     }
 
     //-----------------------------------//
@@ -82,7 +82,7 @@ class Admin extends Model
 
     public function getAllCenters()
     {
-        return CentroAssistenza::orderBy('nome')->pluck('nome', 'id')->toArray();
+        return CentroAssistenza::orderBy('id')->pluck('nome', 'id')->toArray();
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID

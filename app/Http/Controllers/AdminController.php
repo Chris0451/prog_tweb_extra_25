@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NewCenterRequest;
 use App\Http\Requests\NewProductRequest;
+use App\Http\Requests\NewStaffRequest;
+use App\Http\Requests\NewTechnicRequest;
 use App\Http\Requests\NewUserRequest;
 use App\Models\Admin;
 use App\Models\Resources\CentroAssistenza;
@@ -11,9 +13,9 @@ use App\Models\Resources\Prodotto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdminController extends Controller
 {
@@ -129,6 +131,29 @@ class AdminController extends Controller
                 abort(404);
         }
         return view('layouts.users_layouts.admin.users.update', ['user' => $user, 'utente_selezionato' => $utente_selezionato, 'role' => $role]);
+    }
+
+    public function updateUser(NewUserRequest $request, string $role): RedirectResponse
+    {
+        switch ($role){
+            case 'tecnico':
+                $tecnico = $this->_adminModel->getTechnicById($request->input('id'));
+                $techData = $request->validated();
+                $techData['password'] = Hash::make($techData['password']);
+                $tecnico->update($techData);
+                break;
+
+            case 'staff':
+                $staff = $this->_adminModel->getStaffById($request->input('id'));
+                $staffData = $request->validated();
+                $staffData['password'] = Hash::make($staffData['password']);
+                $staff->update($staffData);
+                break;
+
+            default:
+                abort(404);
+        }
+        return redirect()->route('users.list');
     }
 
     //AZIONE DI CANCELLAZIONE DI UN UTENTE (TECNICO, STAFF) SELEZIONATO

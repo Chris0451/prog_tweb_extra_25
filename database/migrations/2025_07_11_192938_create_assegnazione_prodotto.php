@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger("id_prodotto");
             $table->foreign("id_prodotto")->references("id")->on("prodotto")->onDelete("cascade")->onUpdate("cascade");
             $table->foreign("id_staff_associato")->references("id")->on("staff_tecnico")->onDelete("cascade")->onUpdate("cascade");
-            $table->timestamps();
             $table->primary(["id_prodotto","id_staff_associato"]);
         });
     }
