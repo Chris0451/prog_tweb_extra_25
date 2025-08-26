@@ -19,7 +19,7 @@
                 const id   = $(this).data('id');
                 const name = $(this).closest('tr').find('.name').text().trim();
 
-                if (confirm(`Sei sicuro di cancellare ${name}?`)) {
+                if (confirm(`Sei sicuro di cancellare l'utente ${name}?`)) {
                 const action = pattern.replace(':id', id);
                 $deleteForm.attr('action', action).trigger('submit');
                 }
@@ -33,8 +33,9 @@
     <table>
         <caption>Lista Tecnici</caption>
         <colgroup>
-            <col width="15%">
-            <col width="15%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
             <col width="15%">
             <col width="10%">
             <col width="15%">
@@ -46,6 +47,7 @@
                 <th>Nome</th>
                 <th>Cognome</th>
                 <th>Username</th>
+                <th>Specializzazione</th>
                 <th>Data di nascita</th>
                 <th>Nome centro associato</th>
                 <th>Indirizzo centro</th>
@@ -53,19 +55,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($tecnici as $tecnico)
+            @foreach($tecnici as $utente)
             <tr>
-                <td class="name">{{$tecnico->utente->nome}}</td>
-                <td>{{$tecnico->utente->cognome}}</td>
-                <td>{{$tecnico->utente->username}}</td>
-                <td>{{$tecnico->data_nascita}}</td>
-                <td>{{$tecnico->centro->nome}}</td>
-                <td>{{$tecnico->centro->indirizzo}}</td>
+                <td>{{$utente->nome}}</td>
+                <td>{{$utente->cognome}}</td>
+                <td class="name">{{$utente->username}}</td>
+                <td>{{$utente->tecnico?->specializzazione}}</td>
+                <td>{{$utente->tecnico?->data_nascita}}</td>
+                <td>{{$utente->tecnico?->centro?->nome}}</td>
+                <td>{{$utente->tecnico?->centro?->indirizzo}}</td>
                 <td>
-                    <a href="{{ route('users.edit', [$tecnico->utente->id, $tecnico->utente->role, $tecnico->id])  }}" style="border-bottom: 0px; color:green">
+                    <a href="{{ route('users.edit', [$utente->id, $utente->role, $utente->tecnico?->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
-                    <a href="#" class="delete" data-id="{{ $tecnico->utente->id }}" style="border-bottom: 0px; color:red">
+                    <a href="#" class="delete" data-id="{{ $utente->id }}" style="border-bottom: 0px; color:red">
                         <span class="material-icons">delete</span>
                     </a>
                 </td>
@@ -103,23 +106,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($staffs as $staff)
+            @foreach($staffs as $utente)
             <tr>
-                <td class="name">{{$staff->utente->nome}}</td>
-                <td>{{$staff->utente->cognome}}</td>
-                <td>{{$staff->utente->username}}</td>
+                <td>{{$utente->nome}}</td>
+                <td>{{$utente->cognome}}</td>
+                <td class="name">{{$utente->username}}</td>
                 <td>
                     <ul>
-                        @foreach ($staff->prodotti as $prodotto)
+                        @foreach ($utente->staff?->prodotti as $prodotto)
                             <li>{{$prodotto->nome}}</li>
                         @endforeach
                     </ul>
                 </td>
                 <td>
-                    <a href="{{ route('users.edit', [$staff->utente->id, $staff->utente->role, $staff->id])  }}" style="border-bottom: 0px; color:green">
+                    <a href="{{ route('users.edit', [$utente->id, $utente->role, $utente->staff?->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
-                    <a href="#" class="delete" data-id="{{ $staff->utente->id }}" style="border-bottom: 0px; color:red">
+                    <a href="#" class="delete" data-id="{{ $utente->id }}" style="border-bottom: 0px; color:red">
                         <span class="material-icons">delete</span>
                     </a>
                 </td>

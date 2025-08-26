@@ -10,13 +10,15 @@
                 
                 {{ html()->hidden('id', $utente_selezionato->id) }}
 
+                {{ html()->hidden('role', $utente_selezionato->role) }}
+
                 <div  class="wrap-input  rs1-wrap-input">
                     {{ html()->label('Nome utente', 'nome')->class(['label-input']) }}
                     {{ html()->text('nome')->class(['input'])->id('nome') }}
                     @if ($errors->first('nome'))
                     <ul class="errors">
                         @foreach ($errors->get('nome') as $message)
-                        <li>{{ $message }}</li>
+                            <li>{{ $message }}</li>
                         @endforeach
                     </ul>
                     @endif
@@ -86,9 +88,21 @@
                         @endif
                     </div>
 
+                    <div  class="wrap-input  rs1-wrap-input">
+                        {{ html()->label('Specializzazione', 'specializzazione')->class(['label-input']) }}
+                        {{ html()->text('specializzazione', $utente_selezionato->tecnico->specializzazione)->class(['input'])->id('specializzazione') }}
+                        @if ($errors->first('specializzazione'))
+                        <ul class="errors">
+                            @foreach ($errors->get('specializzazione') as $message)
+                            <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    </div>
+
                     <div class="wrap-input rs1-wrap-input">
                         {{ html()->label('Nome del centro assistenza associato', 'id_centro_assistenza')->class(['label-input']) }}
-                        {{ html()->select('id_centro_assistenza', $centri,  old('id_centro_assistenza', (int) $utente_selezionato->id_centro_assistenza))->class(['input'])->id('id_nome_centro_assistenza') }}
+                        {{ html()->select('id_centro_assistenza', $centri,  old('id_centro_assistenza', (int) $utente_selezionato->tecnico->id_centro_assistenza))->class(['input'])->id('id_nome_centro_assistenza') }}
                         
                         @if ($errors->first('id_centro_assistenza'))
                         <ul class="errors">
@@ -106,12 +120,14 @@
                 @if ($utente_selezionato->role === 'staff')
                     @php
                         $checkedIds = old('prodotti', $prodotti_assegnati); //SELEZIONI MANTENTUTE DOPO ERRORE VALIDAZIONE
+                        $inputId = 'prod_' . $prodotto->id;
                     @endphp
                     <div class="wrap-input rs1-wrap-input">
                         {{ html()->label('Nome dei prodotti associati', 'id_nome_prodotto')->class(['label-input']) }}
                         @foreach ($prodotti as $prodotto)
+                            {{ html()->label() }}
                             {{ html()->checkbox('prodotti[]', $prodotto->id, in_array($prodotto->id, $checkedIds))->class(['input'])->id('id_nome_prodotto') }}
-                            {{ html()->span($prodotto->nome)->class(['span'])->id('id_nome_prodotto') }}
+                            {{ html()->span($prodotto->nome)->class(['product-name'])->id('id_nome_prodotto') }}
                         @endforeach
 
                         @error('prodotti')

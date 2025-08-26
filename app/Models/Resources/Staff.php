@@ -24,18 +24,13 @@ class Staff extends Model
 
     public function prodotti()
     {
-        return $this->belongsToMany(Prodotto::class, 'assegnazione_prodotto', 'id_staff_associato', 'id_prodotto');
+        return $this->belongsToMany(Prodotto::class, 'assegnazione_prodotto', 'id_staff_associato', 'id_prodotto')->using(AssegnazioneProdotto::class);
     }
 
     //-----------------------------------//
 
-    public function getAssignedProducts(){
-        return Prodotto::with('staff');
-    }
-
-    public function getPagedMalfunctions(): LengthAwarePaginator
-    {
-        return Malfunzionamento::with('prodotto.staff.prodotti')->orderBy('id','asc')->paginate(5);
+    public function getPagedAssignedMalfunctions(){
+        return $this->prodotti()->with(['malfunzionamento', 'staff'])->orderBy('prodotto.id', 'asc')->paginate(3);
     }
 
     public function getMalfunctionById(int $malfId)
@@ -45,13 +40,14 @@ class Staff extends Model
 
     //-----------------------------------//
 
-    public function getPagedSolutions(): LengthAwarePaginator
+    public function getPagedAssignedSolutions(): LengthAwarePaginator
     {
-        return Malfunzionamento::with('soluzione')->orderBy('id','asc')->paginate(5);
+        return $this->prodotti()->with(['malfunzionamento.soluzione_tecnica', 'staff'])->orderBy('prodotto.id', 'asc')->paginate(3);
     }
 
-    public function getSolutionsById(int $solId)
+    public function getSolutionById(int $solId)
     {
         return SoluzioneTecnica::find($solId);
     }
+    
 }

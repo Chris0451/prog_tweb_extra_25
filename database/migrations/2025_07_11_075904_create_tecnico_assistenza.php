@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tecnico_assistenza', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("id_utente");
+            $table->string("specializzazione");
             $table->date("data_nascita");
             $table->unsignedBigInteger("id_centro_assistenza")->nullable();
             $table->foreign("id_utente")->references('id')->on("users")->onDelete("cascade")->onUpdate("cascade");

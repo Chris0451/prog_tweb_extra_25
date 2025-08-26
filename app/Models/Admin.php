@@ -35,24 +35,24 @@ class Admin extends Model
 
     //ESTRAZIONE TECNICI ORDINATI PER ID E PAGINATI A 5 ELEMENTI
     public function getPagedTechnics(): LengthAwarePaginator{
-        return Tecnico::with(['utente', 'centro'])->orderBy('id', 'asc')->paginate(5);
+        return User::with(['tecnico.centro'])->whereHas('tecnico')->orderBy('id', 'asc')->paginate(5);
     }
 
-    //ESTRAZIONE TECNICO TRAMITE IL PROPRIO ID
+    //ESTRAZIONE TECNICO TRAMITE ID UTENTE
     public function getTechnicById(int $userId){
-        return User::with('tecnico')->where('id', $userId)->first();
+        return User::with(['tecnico.centro'])->whereHas('tecnico')->where('id', $userId)->first();
     }
 
     //-----------------------------------//
 
     //ESTRAZIONE STAFF ORDINATI PER ID E PAGINATI A 5 ELEMENTI
     public function getPagedStaff(): LengthAwarePaginator{
-        return Staff::with(['utente', 'prodotti'])->orderBy('id', 'asc')->paginate(5);
+        return User::with(['staff.prodotti'])->whereHas('staff')->orderBy('id', 'asc')->paginate(5);
     }
 
     //ESTRAZIONE STAFF TRAMITE IL PROPRIO ID
     public function getStaffById(int $userId){
-        return User::with(['staff.prodotti'])->where('id', $userId)->first();
+        return User::with(['staff.prodotti'])->whereHas('staff')->where('id', $userId)->first();
     }
 
     public function getStaffWithProds(int $staffId){

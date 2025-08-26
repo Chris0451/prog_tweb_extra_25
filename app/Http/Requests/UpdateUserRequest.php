@@ -25,19 +25,17 @@ class UpdateUserRequest extends FormRequest
     {
         $userId = $this->input('id'); // hidden nel form
 
+        $userRole = $this->input('role');
+
         return [
-            'id'       => ['required','integer','exists:users,id'],
             'username' => ['required','string', Rule::unique('users','username')->ignore($userId)],
             'nome'     => ['required','string','max:100'],
             'cognome'  => ['required','string','max:100'],
-            'role'     => ['required', Rule::in(['tecnico','staff','admin'])],
 
-            // password opzionale
-            'password' => ['nullable','string','confirmed', Password::min(8)->letters()->numbers()],
+            'password' => ['sometimes','nullable','string','confirmed', Password::min(8)->letters()->numbers()],
 
-            // campi opzionali per tecnico/staff
-            'data_nascita'          => ['nullable','date'],
-            'id_centro_assistenza'  => ['nullable','integer','exists:centro_assistenza,id'],
+            'data_nascita'          => ['sometimes','nullable','date','after:1940-01-01', 'before:today'],
+            'id_centro_assistenza'  => ['sometimes','nullable','integer','exists:centro_assistenza,id'],
         ];
     }
 }

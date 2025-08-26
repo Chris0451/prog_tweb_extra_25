@@ -34,7 +34,7 @@
                     <h2>SEZIONE SOLUZIONI</h2>
                     <ul>
                         <li><strong><a href="">CREA NUOVA SOLUZIONE</a></strong></li>
-                        <li><strong><a href="">VISUALIZZA, MODIFICA O CANCELLA SOLUZIONE</a></strong></li>
+                        <li><strong><a href="{{ route('solutions.list') }}">VISUALIZZA, MODIFICA O CANCELLA SOLUZIONE</a></strong></li>
                     </ul>
                 <div>
             @endif

@@ -42,7 +42,7 @@ Route::get('/admin/product/list', [AdminController::class,'listProducts'])
     ->name('product.list');
 
 //ROUTE PER FORM DI INSERIMENTO DEL PRODOTTO
-Route::get('/admin/product/insert', [AdminController::class, 'addProduct'])
+Route::get('/admin/product/add', [AdminController::class, 'addProduct'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('product.add');
 
@@ -74,7 +74,7 @@ Route::get('/admin/center/list', [AdminController::class, 'listCenters'])
     ->name('center.list');
 
 //ROUTE PER FORM DI INSERIMENTO DEL CENTRO DI ASSISTENZA
-Route::get('/admin/center/insert', [AdminController::class, 'addCenter'])
+Route::get('/admin/center/add', [AdminController::class, 'addCenter'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('center.add');
 
@@ -104,7 +104,7 @@ Route::get('/admin/users/list', [AdminController::class, 'listUsers'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('users.list');
 
-Route::get('/admin/user/insert', [AdminController::class, 'addUser'])
+Route::get('/admin/user/add', [AdminController::class, 'addUser'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('user.add');
 
@@ -130,11 +130,52 @@ Route::get('/staff/malfunctions/list', [StaffController::class, 'listMalfunction
     ->middleware(['auth', RoleMiddleware::class . ':staff'])
     ->name('malfunctions.list');
 
+Route::get('/staff/malfunction/insert', [StaffController::class, 'insertMalfunction'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('malfunction.add');
+
+Route::post('/staff/malfunction/store', [StaffController::class, 'storeMalfunction'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('malfunction.store');
+
+Route::get('/staff/malfunction/edit/{malfId}', [StaffController::class, 'editMalfunction'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('malfunction.edit');
+
+Route::put('/staff/malfunction/update', [StaffController::class, 'updateMalfunction'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('malfunction.update');
+
 Route::delete('/staff/malfunction/delete/{malfId}', [StaffController::class, 'deleteMalfunction'])
     ->middleware(['auth', RoleMiddleware::class . ':staff'])
     ->name('malfunction.delete');
 
 //------------MANIPOLAZIONE SOLUZIONI [STAFF]------------//
+
+Route::get('/staff/solutions/list', [StaffController::class, 'listSolutions'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('solutions.list');
+
+Route::get('/staff/solution/insert', [StaffController::class, 'insertSolution'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('solution.add');
+
+Route::post('/staff/solution/store', [StaffController::class, 'storeSolution'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('solution.store');
+
+Route::get('/staff/solution/edit/{solId}', [StaffController::class, 'editSolution'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('solution.edit');
+
+Route::put('/staff/solution/update', [StaffController::class, 'updateSolution'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('solution.update');
+
+Route::delete('/staff/solution/delete/{solId}', [StaffController::class, 'deleteSolution'])
+    ->middleware(['auth', RoleMiddleware::class . ':staff'])
+    ->name('solution.delete');
+
 
 
 require __DIR__.'/auth.php';

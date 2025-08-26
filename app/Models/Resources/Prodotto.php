@@ -28,6 +28,6 @@ class Prodotto extends Model
 
     public function staff()
     {
-        return $this->belongsToMany(Staff::class, 'assegnazione_prodotto', 'id_prodotto', 'id_staff_associato');
+        return $this->belongsToMany(Staff::class, 'assegnazione_prodotto', 'id_prodotto', 'id_staff_associato')->using(AssegnazioneProdotto::class);
     }
 }

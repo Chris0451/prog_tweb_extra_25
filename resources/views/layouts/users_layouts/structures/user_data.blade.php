@@ -8,6 +8,7 @@
         <li><strong>Nome:</strong> {{ $user->nome }}</li>
         <li><strong>Cognome:</strong> {{ $user->cognome }}</li>
         @if($user->role === 'tecnico')
+            <li><strong>Specializzazione:</strong> {{ $tecnico?->specializzazione ?? '—' }}</li>
             <li><strong>Data di nascita:</strong> {{ $tecnico?->data_nascita ?? '—' }}</li>
         @endif
     </ul>

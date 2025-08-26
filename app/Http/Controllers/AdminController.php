@@ -142,7 +142,7 @@ class AdminController extends Controller
         $utente_selezionato->fill($request->only(['username','nome','cognome','role']));
 
         if ($request->filled('password')) {
-            $utente_selezionato->password = Hash::make($request->input('new_password'));
+            $utente_selezionato->password = Hash::make($request->input('password'));
         }
 
         $utente_selezionato->save();
@@ -150,7 +150,7 @@ class AdminController extends Controller
         switch ($role){
             case 'tecnico':
                 $tecnico = $utente_selezionato->tecnico;
-                $tecnico->fill($request->only(['data_nascita','id_centro_assistenza']));
+                $tecnico->fill($request->only(['specializzazione','data_nascita','id_centro_assistenza']));
                 $tecnico->save();
                 break;
 

@@ -50,7 +50,7 @@
             <tr>
                 <td class="name">{{$centro->nome}}</td>
                 <td>{{$centro->indirizzo}}</td>
-                <td style="text-align:center;"><img src="{{ asset('storage/images/assistance_centers/'.$centro->foto ?? 'images/placeholder.jpg') }}" alt="Immagine centro {{ $centro->id }}" style="width: 30%; height: auto; border-radius: 8px;"></td>
+                <td style="text-align:center;"><img src="{{ asset('storage/images/assistance_centers/'.$centro->foto) }}" alt="Immagine centro {{ $centro->id }}" style="width: 30%; height: auto; border-radius: 8px;"></td>
                 <td>
                     <a href="{{ route('center.edit', [$centro->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
