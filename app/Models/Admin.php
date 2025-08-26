@@ -19,7 +19,7 @@ class Admin extends Model
     }
 
     public function getAllProducts(){
-        return Prodotto::all();
+        return Prodotto::orderBy('id')->get(['id', 'nome']);
     }
 
     public function getOrderProds(){
@@ -55,8 +55,8 @@ class Admin extends Model
         return User::with(['staff.prodotti'])->whereHas('staff')->where('id', $userId)->first();
     }
 
-    public function getStaffWithProds(int $staffId){
-        return User::with('staff.prodotti:id')->findOrFail($staffId);
+    public function getStaffWithProds(int $userId){
+        return User::with('staff.prodotti:id,nome')->findOrFail($userId);
     }
 
     //-----------------------------------//

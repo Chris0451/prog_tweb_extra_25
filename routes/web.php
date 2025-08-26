@@ -112,7 +112,7 @@ Route::post('/admin/user/store', [AdminController::class, 'storeUser'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('user.store');
 
-Route::get('/admin/user/edit/userId/{userId}/role/{role}/id/{id}', [AdminController::class, 'editUser'])
+Route::get('/admin/user/edit/userId/{userId}/role/{role}', [AdminController::class, 'editUser'])
     ->middleware(['auth', RoleMiddleware::class . ':admin'])
     ->name('users.edit');
 

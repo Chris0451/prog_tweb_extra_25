@@ -90,8 +90,12 @@ class AdminController extends Controller
     //-----------------------------------//
 
     //RESTITUZIONE VIEW PER L'INSERIMENTO DELL'UTENTE (TECNICO, STAFF) NEL DATABASE
-    public function addUser() //: View
+    public function addUser(): View
     {
+        $user = Auth::user();
+        $centri = $this->_adminModel->getAllCenters();
+        $prodotti = $this->_adminModel->getAllProducts();
+        return view('layouts.users_layouts.admin.users.insert', ['user' => $user, 'centri' => $centri]);
         //return view('admin.users');
     }
 
@@ -111,7 +115,7 @@ class AdminController extends Controller
     }
 
     //RESTITUZIONE VIEW PER FORM DI MODIFICA UTENTE (TECNICO, STAFF) 
-    public function editUser(int $userId, string $role, int $id): View
+    public function editUser(int $userId, string $role): View
     {
         $user = Auth::user();
         switch ($role) {
@@ -122,16 +126,15 @@ class AdminController extends Controller
                 break;
 
             case 'staff':
-                $utente_selezionato = $this->_adminModel->getStaffWithProds($id);
+                $utente_selezionato = $this->_adminModel->getStaffWithProds($userId);
+                $prodotti_assegnati = $utente_selezionato->staff?->prodotti->pluck('id')->toArray() ?? [];
                 $prodotti = $this->_adminModel->getOrderProds();
-                $prodotti_assegnati = $utente_selezionato->prodotti->pluck('id')->toArray();
                 return view('layouts.users_layouts.admin.users.update', ['user' => $user, 'utente_selezionato' => $utente_selezionato, 'role' => $role, 'prodotti' => $prodotti, 'prodotti_assegnati' => $prodotti_assegnati]);
                 break;
 
             default:
                 abort(404);
         }
-        return view('layouts.users_layouts.admin.users.update', ['user' => $user, 'utente_selezionato' => $utente_selezionato, 'role' => $role]);
     }
 
     public function updateUser(UpdateUserRequest $request, string $role): RedirectResponse
@@ -156,7 +159,9 @@ class AdminController extends Controller
 
             case 'staff':
                 $staff = $utente_selezionato->staff;
-                $staff->save();
+                //SALVATAGGIO NUOVI PRODOTTI SELEZIONATI
+                $prodotti_selezionati = $request->input('prodotti', []);
+                $staff->prodotti()->sync($prodotti_selezionati);
                 break;
 
             default:

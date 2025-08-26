@@ -863,7 +863,7 @@ body.login-page .login-container {
 
 /* ***FINE STILE TABELLA PRODOTTI ADMIN*** */
 
-/* ***STILE PER INSERIMENTO PRODOTTO LATO ADMIN*** */
+/* ***STILE PER INSERIMENTO/AGGIORNAMENTO PRODOTTO LATO ADMIN*** */
 /* ==== INSERT FORM (coerente con card/tabella/palette) ==== */
 .insert-product-form {
   max-width: 1100px;
@@ -932,10 +932,10 @@ body.login-page .login-container {
 .insert-product-form .wrap-form form > .wrap-input:nth-of-type(1){ grid-column:1; grid-row:1; }
 .insert-product-form .wrap-form form > .wrap-input:nth-of-type(2){ grid-column:1; grid-row:2; }
 .insert-product-form .wrap-form form > .wrap-input:nth-of-type(3){ grid-column:1; grid-row:3; }
-.insert-product-form .wrap-form form > .wrap-input:nth-of-type(4){ grid-column:1; grid-row:4; }
+.insert-product-form .wrap-form form > .wrap-input:nth-of-type(4){ grid-column:2; grid-row:3; }
 .insert-product-form .wrap-form form > .wrap-input:nth-of-type(5){ grid-column:2; grid-row:1; }
 .insert-product-form .wrap-form form > .wrap-input:nth-of-type(6){ grid-column:2; grid-row:2; }
-.insert-product-form .wrap-form form > .wrap-input:nth-of-type(7){ grid-column:2; grid-row:3; }
+.insert-product-form .wrap-form form > .wrap-input:nth-of-type(7){ grid-column:1; grid-row:4; }
 
 /* Spacer virtuale per colonna destra riga 4 (allineamento) */
 .insert-product-form .wrap-form form::after{
@@ -977,8 +977,6 @@ body.login-page .login-container {
   border-color: #0d47a1;
   box-shadow: 0 0 0 2px #bbdefb;
 }
-
-
 
 /* Errori */
 .insert-product-form .errors{
@@ -1035,9 +1033,9 @@ body.login-page .login-container {
     width: 100%;
   }
 }
-/* ***FINE STILE PER INSERIMENTO PRODOTTO LATO ADMIN*** */
+/* ***FINE STILE PER INSERIMENTO/AGGIORNAMENTO PRODOTTO LATO ADMIN*** */
 
-/* ***STILE PER FORM DI INSERIMENTO DI UN CENTRO DI ASSISTENZA*** */
+/* ***STILE PER FORM DI INSERIMENTO/AGGIORNAMENTO DI UN CENTRO DI ASSISTENZA*** */
 .insert-center-form {
   max-width: 600px;
   margin: 30px auto;
@@ -1123,8 +1121,9 @@ body.login-page .login-container {
   background: #0d47a1;
   box-shadow: 0 3px 9px rgba(13,71,161,0.16);
 }
-/* ***FINE STILE PER FORM DI INSERIMENTO DI UN CENTRO DI ASSISTENZA*** */
+/* ***FINE STILE PER FORM DI INSERIMENTO/AGGIORNAMENTO DI UN CENTRO DI ASSISTENZA*** */
 
+/* ***FORM DI INSERIMENTO/AGGIORNAMENTO DI UN UTENTE (TECNICO/STAFF) */
 .insert-user-form {
   max-width: 400px;
   margin: 30px auto;
@@ -1199,4 +1198,34 @@ body.login-page .login-container {
 .insert-user-form .form-btn1:focus{
   background: #0d47a1;
   box-shadow: 0 3px 9px rgba(13,71,161,0.16);
+}
+
+/* contenitore delle opzioni */
+.product-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #333;
+  transition: background 0.2s;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* checkbox visibile normalmente */
+.product-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* testo accanto alla checkbox */
+.product-name {
+  cursor: pointer;
+}
+
+/* hover: solo un effetto visivo leggero */
+.product-option:hover {
+  background: #f5faff;
 }

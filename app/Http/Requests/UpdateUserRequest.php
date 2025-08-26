@@ -36,6 +36,9 @@ class UpdateUserRequest extends FormRequest
 
             'data_nascita'          => ['sometimes','nullable','date','after:1940-01-01', 'before:today'],
             'id_centro_assistenza'  => ['sometimes','nullable','integer','exists:centro_assistenza,id'],
+
+            'prodotti'   => ['sometimes','array'],
+            'prodotti.*' => ['integer', 'exists:prodotto,id'],
         ];
     }
 }

@@ -65,7 +65,7 @@
                 <td>{{$utente->tecnico?->centro?->nome}}</td>
                 <td>{{$utente->tecnico?->centro?->indirizzo}}</td>
                 <td>
-                    <a href="{{ route('users.edit', [$utente->id, $utente->role, $utente->tecnico?->id])  }}" style="border-bottom: 0px; color:green">
+                    <a href="{{ route('users.edit', [$utente->id, $utente->role])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
                     <a href="#" class="delete" data-id="{{ $utente->id }}" style="border-bottom: 0px; color:red">
@@ -119,7 +119,7 @@
                     </ul>
                 </td>
                 <td>
-                    <a href="{{ route('users.edit', [$utente->id, $utente->role, $utente->staff?->id])  }}" style="border-bottom: 0px; color:green">
+                    <a href="{{ route('users.edit', [$utente->id, $utente->role])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
                     </a>
                     <a href="#" class="delete" data-id="{{ $utente->id }}" style="border-bottom: 0px; color:red">

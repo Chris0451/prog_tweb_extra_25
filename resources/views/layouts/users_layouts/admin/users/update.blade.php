@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="insert-user-form">
-    <h3>Modifica i dati dell'utente {{ $utente_selezionato->role }}</h3>
+    <h3>Modifica i dati dell'utente {{ $role }}</h3>
 
     <div class="container-form">
         <div class="wrap-form">
@@ -10,7 +10,7 @@
                 
                 {{ html()->hidden('id', $utente_selezionato->id) }}
 
-                {{ html()->hidden('role', $utente_selezionato->role) }}
+                {{ html()->hidden('role', $role) }}
 
                 <div  class="wrap-input  rs1-wrap-input">
                     {{ html()->label('Nome utente', 'nome')->class(['label-input']) }}
@@ -74,7 +74,7 @@
                     @endif
                 </div>
 
-                @if ($utente_selezionato->role === 'tecnico')
+                @if ($role === 'tecnico')
                     <div class="wrap-input rs1-wrap-input">
                         {{ html()->label('Data di nascita', 'data_nascita')->class(['label-input']) }}
                         {{ html()->date('data_nascita', $utente_selezionato->tecnico->data_nascita)->class(['input'])->id('data_nascita') }}
@@ -102,7 +102,7 @@
 
                     <div class="wrap-input rs1-wrap-input">
                         {{ html()->label('Nome del centro assistenza associato', 'id_centro_assistenza')->class(['label-input']) }}
-                        {{ html()->select('id_centro_assistenza', $centri,  old('id_centro_assistenza', (int) $utente_selezionato->tecnico->id_centro_assistenza))->class(['input'])->id('id_nome_centro_assistenza') }}
+                        {{ html()->select('id_centro_assistenza', $centri,  old('id_centro_assistenza', (int) $utente_selezionato->tecnico->id_centro_assistenza))->class(['input'])->id('id_centro_assistenza') }}
                         
                         @if ($errors->first('id_centro_assistenza'))
                         <ul class="errors">
@@ -117,17 +117,19 @@
 
                 
 
-                @if ($utente_selezionato->role === 'staff')
+                @if ($role === 'staff')
                     @php
                         $checkedIds = old('prodotti', $prodotti_assegnati); //SELEZIONI MANTENTUTE DOPO ERRORE VALIDAZIONE
-                        $inputId = 'prod_' . $prodotto->id;
                     @endphp
                     <div class="wrap-input rs1-wrap-input">
-                        {{ html()->label('Nome dei prodotti associati', 'id_nome_prodotto')->class(['label-input']) }}
+                        {{ html()->label('Nome dei prodotti associati', 'id_prodotto')->class(['label-input']) }}
                         @foreach ($prodotti as $prodotto)
-                            {{ html()->label() }}
-                            {{ html()->checkbox('prodotti[]', $prodotto->id, in_array($prodotto->id, $checkedIds))->class(['input'])->id('id_nome_prodotto') }}
-                            {{ html()->span($prodotto->nome)->class(['product-name'])->id('id_nome_prodotto') }}
+                        @php $inputId = 'prod_' . $prodotto->id; @endphp
+                            {{ html()->label(
+                                html()->checkbox('prodotti[]', in_array($prodotto->id, $checkedIds), $prodotto->id)->class(['product-checkbox'])->id('id_prodotto') 
+                                .
+                                html()->span($prodotto->nome)->class(['product-name'])->id('id_nome_prodotto')
+                            )->for($inputId)->class('product-option') }}
                         @endforeach
 
                         @error('prodotti')
@@ -137,7 +139,6 @@
                             <ul class="errors"><li>{{ $message }}</li></ul>
                         @enderror
                     </div>
-
                 @endif
 
                 <div class="container-form-btn">

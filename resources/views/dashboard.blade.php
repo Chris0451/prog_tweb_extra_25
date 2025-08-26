@@ -48,7 +48,7 @@
                     </ul>
                     <h2>SEZIONE UTENTI (TECNICI E STAFF)</h2>
                     <ul>
-                        <li><strong><a href="">CREA NUOVO UTENTE (TECNICO O STAFF)</a></strong></li>
+                        <li><strong><a href="{{ route('user.add') }}">CREA NUOVO UTENTE (TECNICO O STAFF)</a></strong></li>
                         <li><strong><a href="{{ route('users.list') }}">VISUALIZZA, MODIFICA O CANCELLA UTENTI</a></strong></li>
                     </ul>
                     <h2>SEZIONE CENTRI ASSISTENZA</h2>
