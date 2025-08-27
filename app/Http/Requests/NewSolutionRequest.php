@@ -22,9 +22,9 @@ class NewSolutionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipologia' => 'required|string',
+            'tipologia' => 'required|string|max:100',
             'descrizione' => 'required|string|max:1000',
-            'id_malfunzionamento' => 'required|exists:malfunzionamento,id'
+            'id_malfunzionamento' => 'exists:malfunzionamento,id'
         ];
     }
 }

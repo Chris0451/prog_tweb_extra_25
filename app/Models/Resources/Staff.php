@@ -29,8 +29,24 @@ class Staff extends Model
 
     //-----------------------------------//
 
-    public function getPagedAssignedMalfunctions(){
-        return $this->prodotti()->with(['malfunzionamento', 'staff'])->orderBy('prodotto.id', 'asc')->paginate(3);
+    public function getPagedAssignedProds(): LengthAwarePaginator{
+        return $this->prodotti()
+                    ->select('prodotto.id', 'prodotto.nome')
+                    ->orderBy('prodotto.id', 'asc')
+                    ->paginate(5, ['*'], 'prod_page');
+    }
+
+    public function getPagedProdsWithMalfs(): LengthAwarePaginator{
+        return $this->prodotti()
+                    ->with('malfunzionamento:id,id_prodotto,tipologia,descrizione')
+                    ->orderBy('prodotto.id', 'asc')
+                    ->paginate(5, ['*'], 'prod_page');
+    }
+
+    public function getPagedAssignedMalfunctions(int $prodId): LengthAwarePaginator{
+        return Malfunzionamento::where('id_prodotto', $prodId)
+                ->orderBy('id', 'asc')
+                ->paginate(5, ['*'], "malf_page_{$prodId}");
     }
 
     public function getMalfunctionById(int $malfId)
@@ -40,9 +56,11 @@ class Staff extends Model
 
     //-----------------------------------//
 
-    public function getPagedAssignedSolutions(): LengthAwarePaginator
+    public function getPagedAssignedSolutions(int $malfId): LengthAwarePaginator
     {
-        return $this->prodotti()->with(['malfunzionamento.soluzione_tecnica', 'staff'])->orderBy('prodotto.id', 'asc')->paginate(3);
+        return SoluzioneTecnica::where('id_malfunzionamento', $malfId)
+                ->orderBy('id', 'asc')
+                ->paginate(5, ['*'], "sol_page_{$malfId}");
     }
 
     public function getSolutionById(int $solId)

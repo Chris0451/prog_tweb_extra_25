@@ -1,40 +1,39 @@
 @extends('layouts.users_layouts.dashboard')
 
 @section('content')
-@section('scripts')
+    @section('scripts')
         @parent
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
-        <script src="{{ asset('js/script.js') }}" ></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+            <script src="{{ asset('js/script.js') }}" ></script>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-            var $tecnicoBlocks = $(".tecnico");      // tutti i blocchi tecnico
-            var $staffBlock    = $("#staff");        // blocco staff
-            var $role          = $("#role");
-            const time = 400;
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                var $tecnicoBlocks = $(".tecnico");      // tutti i blocchi tecnico
+                var $staffBlock    = $("#staff");        // blocco staff
+                var $role          = $("#role");
+                const time = 400;
 
-            function toggleByRole(val) {
-                if (val === "tecnico") {
-                    $tecnicoBlocks.fadeIn(time);  // transizione opacità
-                    $staffBlock.fadeOut(time);
-                } else if (val === "staff") {
-                    $staffBlock.fadeIn(time);
-                    $tecnicoBlocks.fadeOut(time);
-                } else {
-                    $tecnicoBlocks.fadeOut(time);
-                    $staffBlock.fadeOut(time);
+                function toggleByRole(val) {
+                    if (val === "tecnico") {
+                        $tecnicoBlocks.fadeIn(time);  // transizione opacità
+                        $staffBlock.fadeOut(time);
+                    } else if (val === "staff") {
+                        $staffBlock.fadeIn(time);
+                        $tecnicoBlocks.fadeOut(time);
+                    } else {
+                        $tecnicoBlocks.fadeOut(time);
+                        $staffBlock.fadeOut(time);
+                    }
                 }
-            }
 
-            $role.on("change", function () {
-                toggleByRole($(this).val());
+                $role.on("change", function () {
+                    toggleByRole($(this).val());
+                });
+
+                // imposta lo stato corretto all’avvio (utile con old('role'))
+                toggleByRole($role.val());
             });
-
-            // imposta lo stato corretto all’avvio (utile con old('role'))
-            toggleByRole($role.val());
-        });
-        </script>
-
+            </script>
     @endsection
 <div class="insert-user-form">
     <h3>Inserisci un nuovo utente</h3>

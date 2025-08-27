@@ -22,9 +22,9 @@ class NewMalfunctionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipologia' => 'required',
+            'tipologia' => 'required|string|max:100',
             'descrizione' => 'required|max:1000',
-            'id_prodotto' => 'required|exists:prodotto,id'
+            'id_prodotto' => 'exists:prodotto,id'
         ];
     }
 }

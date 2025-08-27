@@ -1,5 +1,5 @@
 <header class="dash-header">
-        <h1>Dashboard {{ $user->role ?? 'utente'}}</h1>
+        <h1>Dashboard </h1>
         <div class="dash-user">
             <span class="chip-role">
                 {{ strtoupper($user->role ?? 'utente') }}

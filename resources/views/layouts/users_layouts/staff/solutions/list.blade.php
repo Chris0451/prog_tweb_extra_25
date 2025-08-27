@@ -31,11 +31,17 @@
     @endsection
 
 @foreach ($prods as $p)
-@php $malfs = $malfPaginated[$p->id] ?? null; @endphp
+    <h2 style="text-align:center; color:#056df6a0">{{ $p->nome }}</h2>
+
     @foreach ($p->malfunzionamento as $m)
-        <div class="table-items">
+        @php
+            /** @var \Illuminate\Pagination\LengthAwarePaginator|null $sols */
+            $sols = $solPaginators[$m->id] ?? null;
+        @endphp
+
+        <div class="table-items" id="malf_{{ $m->id }}">
             <table>
-                <caption class="name" id="{{ $m->id }}">{{ $m->tipologia }} - {{ $p->nome }}</caption>
+                <caption class="name">{{ $m->tipologia }}</caption>
                 <colgroup>
                     <col width="20%">
                     <col width="65%">
@@ -49,38 +55,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($m->soluzione_tecnica as $s)
-                    <tr>
-                        <td class="sol_name">{{$s->tipologia}}</td>
-                        <td>{{$s->descrizione}}</td>
-                        <td>
-                            <a href="{{ route('solution.edit', [$s->id])  }}" style="border-bottom: 0px; color:green">
-                                <span class="material-icons">edit</span>&nbsp;
-                            </a>
-                            <a href="#" class="delete" data-id="{{ $s->id }}" style="border-bottom: 0px; color:red">
-                                <span class="material-icons">delete</span>
-                            </a>
-                        </td>
-                    </tr>
+                    @forelse ($sols as $s)
+                        <tr>
+                            <td class="sol_name">{{ $s->tipologia }}</td>
+                            <td>{{ $s->descrizione }}</td>
+                            <td>
+                                <a href="{{ route('solution.edit', [$s->id]) }}" style="border-bottom:0; color:green">
+                                    <span class="material-icons">edit</span>
+                                </a>
+                                <a href="#" class="delete" data-id="{{ $s->id }}" style="border-bottom:0; color:red">
+                                    <span class="material-icons">delete</span>
+                                </a>
+                            </td>
+                        </tr>
                     @empty
                         <tr><td colspan="3">Nessuna soluzione per questo malfunzionamento.</td></tr>
                     @endforelse
-                    @if ($malfs)
-                        <div class="pag-malfs">
-                            {{ $malfs->links('pagination::default') }}
-                        </div>
-                    @endif
                 </tbody>
             </table>
+
+            {{-- Paginazione delle SOLUZIONI per questo malfunzionamento --}}
+            @if ($sols)
+                <div class="pag-prods">
+                    {{ $sols
+                        ->appends(request()->except("sol_page_{$m->id}"))
+                        ->fragment("malf_{$m->id}")
+                        ->links('pagination::default') }}
+                </div>
+            @endif
         </div>
     @endforeach
 @endforeach
-<form id="delete-form" method="POST" style="display: none;">
+{{-- Paginazione PRODOTTI (esterna) --}}
+<div class="pag-prods">
+    {{ $prods->appends(request()->except('prod_page'))->links('pagination::default') }}
+</div>
+
+<form id="delete-form" method="POST" style="display:none;">
     @csrf
     @method('DELETE')
 </form>
 
-<div class="pag-prods">
-    {{ $prods->links('pagination::default') }}
-</div>
+
 @endsection

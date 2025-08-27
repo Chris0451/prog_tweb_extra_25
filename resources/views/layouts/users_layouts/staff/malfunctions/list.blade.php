@@ -31,7 +31,11 @@
     @endsection
 
 @foreach ($prods as $p)
-    <div class="table-items">
+    @php
+        /** @var \Illuminate\Pagination\LengthAwarePaginator $malfs */
+        $malfs = $malfPaginators[$p->id] ?? null;
+    @endphp
+    <div class="table-items" id="prod_{{ $p->id }}">
         <table>
             <caption class="name">{{ $p->nome }}</caption>
             <colgroup>
@@ -49,11 +53,11 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($p->malfunzionamento as $m)
+                @forelse ($malfs as $m)
                 <tr>
                     <td class="malf_name">{{$m->tipologia}}</td>
                     <td>{{$m->descrizione}}</td>
-                    <td><a href="{{ route('solutions.list') }}?page=(ValPagina)#{{ $m->id }}">Link alla soluzione</td>
+                    <td><a href="{{ route('solutions.list', ['sol_page_'.$m->id => $solPageForMalf[$m->id] ?? 1]) }}#malf_{{ $m->id }}">Link alla soluzione</a></td>
                     <td>
                         <a href="{{ route('malfunction.edit', [$m->id])  }}" style="border-bottom: 0px; color:green">
                             <span class="material-icons">edit</span>&nbsp;
@@ -68,15 +72,21 @@
                 @endforelse
             </tbody>
         </table>
+        <div class="pag-prods">
+            {{ $malfs->appends(request()->except("malf_page_{$p->id}"))
+                ->fragment("prod_{$p->id}")
+                ->links('pagination::default') }}
+        </div>
     </div>
     
 @endforeach
+<div class="pag-prods">
+        {{ $prods->appends(request()->except('prod_page'))->links('pagination::default') }}
+</div>
+
 <form id="delete-form" method="POST" style="display: none;">
     @csrf
     @method('DELETE')
 </form>
 
-<div class="pag-prods">
-        {{ $prods->links('pagination::default') }}
-</div>
 @endsection
