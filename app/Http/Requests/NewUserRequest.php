@@ -23,13 +23,30 @@ class NewUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $role = $this->input('role');
+
         $rules = [
             'username' => ['required', 'string', 'unique:users,username'],
-            'password' => ['sometimes', 'string', 'confirmed', Password::min(8)->letters()->numbers()],
+            'password' => ['required', 'string', 'confirmed', Password::min(8)->letters()->numbers()],
             'nome' => ['required', 'string', 'max: 100'],
             'cognome' => ['required', 'string', 'max: 100'],
-            'role' => ['required', Rule::in(['tecnico','staff','admin'])]
+            'role' => ['required', Rule::in(['tecnico','staff'])]
         ];
+
+        if ($role === 'tecnico') {
+            $rules += [
+                'specializzazione'      => ['required','string','max:100'],
+                'data_nascita'          => ['required','date','before:today','after:1940-01-01'],
+                'id_centro_assistenza'  => ['required','integer','exists:centro_assistenza,id'],
+            ];
+        }
+
+        if ($role === 'staff') {
+            $rules += [
+                'prodotti'   => ['required','array'],
+                'prodotti.*' => ['integer','exists:prodotto,id'],
+            ];
+        }
 
         return $rules;
     }

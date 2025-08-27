@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewCenterRequest;
+use App\Http\Requests\NewProductAssignementRequest;
 use App\Http\Requests\NewProductRequest;
 use App\Http\Requests\NewStaffRequest;
 use App\Http\Requests\NewTechnicRequest;
 use App\Http\Requests\NewUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Admin;
+use App\Models\Resources\AssegnazioneProdotto;
 use App\Models\Resources\CentroAssistenza;
 use App\Models\Resources\Prodotto;
+use App\Models\Resources\Staff;
+use App\Models\Resources\Tecnico;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class AdminController extends Controller
@@ -95,15 +102,43 @@ class AdminController extends Controller
         $user = Auth::user();
         $centri = $this->_adminModel->getAllCenters();
         $prodotti = $this->_adminModel->getAllProducts();
-        return view('layouts.users_layouts.admin.users.insert', ['user' => $user, 'centri' => $centri]);
+        return view('layouts.users_layouts.admin.users.insert', ['user' => $user, 'centri' => $centri, 'prodotti' => $prodotti]);
         //return view('admin.users');
     }
 
     //INSERIMENTO UTENTE (TECNICO, STAFF) NEL DATABASE DOPO CONFERMA DEL FORM
-    public function storeUser(NewUserRequest $request)
+    public function storeUser(NewUserRequest $request): RedirectResponse
     {
-        //
+        $data = $request->validated();
+
+        DB::transaction(function () use ($data) {
+            $user = new User();
+            $user->username = $data['username'];
+            $user->password = Hash::make($data['password']);
+            $user->nome     = $data['nome'];
+            $user->cognome  = $data['cognome'];
+            $user->role     = $data['role'];
+            $user->save();
+
+            if ($data['role'] === 'tecnico') {
+                Tecnico::create([
+                    'id_utente'            => $user->id,
+                    'specializzazione'     => $data['specializzazione'],
+                    'data_nascita'         => $data['data_nascita'],
+                    'id_centro_assistenza' => $data['id_centro_assistenza'],
+                ]);
+            }
+
+            if ($data['role'] === 'staff') {
+                $staff = Staff::create(['id_utente' => $user->id]);
+                $staff->prodotti()->sync($data['prodotti'] ?? []);
+            }
+        });
+
+        return redirect()->action([DashboardController::class, 'index'])
+            ->with('success','Utente inserito correttamente');
     }
+
 
     //RESTITUZIONE VIEW CON TABELLA UTENTI (TECNICO, STAFF)
     public function listUsers(): View

@@ -1,6 +1,41 @@
 @extends('layouts.users_layouts.dashboard')
 
 @section('content')
+@section('scripts')
+        @parent
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+        <script src="{{ asset('js/script.js') }}" ></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            var $tecnicoBlocks = $(".tecnico");      // tutti i blocchi tecnico
+            var $staffBlock    = $("#staff");        // blocco staff
+            var $role          = $("#role");
+            const time = 400;
+
+            function toggleByRole(val) {
+                if (val === "tecnico") {
+                    $tecnicoBlocks.fadeIn(time);  // transizione opacità
+                    $staffBlock.fadeOut(time);
+                } else if (val === "staff") {
+                    $staffBlock.fadeIn(time);
+                    $tecnicoBlocks.fadeOut(time);
+                } else {
+                    $tecnicoBlocks.fadeOut(time);
+                    $staffBlock.fadeOut(time);
+                }
+            }
+
+            $role.on("change", function () {
+                toggleByRole($(this).val());
+            });
+
+            // imposta lo stato corretto all’avvio (utile con old('role'))
+            toggleByRole($role.val());
+        });
+        </script>
+
+    @endsection
 <div class="insert-user-form">
     <h3>Inserisci un nuovo utente</h3>
 
@@ -85,7 +120,7 @@
 
                 {{-- FORM PER RUOLO TECNICO --}}
 
-                <div class="wrap-input rs1-wrap-input">
+                <div class="wrap-input rs1-wrap-input tecnico" hidden>
                     {{ html()->label('Data di nascita', 'data_nascita')->class(['label-input']) }}
                     {{ html()->date('data_nascita')->class(['input'])->id('data_nascita') }}
                     @if ($errors->first('data_nascita'))
@@ -96,7 +131,7 @@
                     </ul>
                     @endif
                 </div>
-                <div  class="wrap-input  rs1-wrap-input">
+                <div  class="wrap-input rs1-wrap-input tecnico" hidden>
                     {{ html()->label('Specializzazione', 'specializzazione')->class(['label-input']) }}
                     {{ html()->text('specializzazione')->class(['input'])->id('specializzazione') }}
                     @if ($errors->first('specializzazione'))
@@ -107,9 +142,9 @@
                     </ul>
                     @endif
                 </div>
-                <div class="wrap-input rs1-wrap-input">
+                <div class="wrap-input rs1-wrap-input tecnico" hidden>
                     {{ html()->label('Nome del centro assistenza associato', 'id_centro_assistenza')->class(['label-input']) }}
-                    {{ html()->select('id_centro_assistenza', $centri,  old('id_centro_assistenza', (int) $utente_selezionato->tecnico->id_centro_assistenza))->class(['input'])->id('id_centro_assistenza') }}
+                    {{ html()->select('id_centro_assistenza', $centri, old('id_centro_assistenza'))->class(['input'])->id('id_centro_assistenza') }}
                     
                     @if ($errors->first('id_centro_assistenza'))
                     <ul class="errors">
@@ -123,14 +158,17 @@
 
                 {{-- FORM PER RUOLO STAFF --}}
             
-                <div class="wrap-input rs1-wrap-input">
+                <div class="wrap-input rs1-wrap-input" id="staff" hidden>
                     {{ html()->label('Nome dei prodotti associati', 'id_prodotto')->class(['label-input']) }}
+                    @php
+                        $checkedIds = old('prodotti', []);
+                    @endphp
                     @foreach ($prodotti as $prodotto)
                     @php $inputId = 'prod_' . $prodotto->id; @endphp
                         {{ html()->label(
-                            html()->checkbox('prodotti[]', in_array($prodotto->id, $checkedIds), $prodotto->id)->class(['product-checkbox'])->id('id_prodotto') 
+                            html()->checkbox('prodotti[]', in_array($prodotto->id, $checkedIds), $prodotto->id)->class(['product-checkbox'])->id($inputId) 
                             .
-                            html()->span($prodotto->nome)->class(['product-name'])->id('id_nome_prodotto')
+                            html()->span($prodotto->nome)->class(['product-name'])
                         )->for($inputId)->class('product-option') }}
                     @endforeach
                     @error('prodotti')
@@ -142,7 +180,7 @@
                 </div>
 
                 <div class="container-form-btn">
-                    {{ html()->submit('Modifica utente')->class(['form-btn1']) }}
+                    {{ html()->submit('Aggiungi utente')->class(['form-btn1']) }}
                 </div>
 
             {{ html()->closeModelForm() }}
