@@ -18,7 +18,4 @@
                 <a href="{{ route('dashboard.admin') }}">Dashboard Admin</a>
             @endif
         @endauth
-
-
-        
-</nav>
+    </nav>

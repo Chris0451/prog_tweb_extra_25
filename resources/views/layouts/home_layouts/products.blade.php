@@ -8,9 +8,9 @@
             <form id="searchFormProducts" method="GET" action="#prodotti">
                 <input id="search_prod" name="search_prod" type="text" value="{{ request('search_prod') }}" placeholder="Parola descrizione prodotto (es. Telefono o Tel*)" required>
                 <input id="submit_prod" type="submit" value="Ricerca">
-                <div class="mf-return">
-                    <a href="{{ route('home') }}#prodotti" class="mf-btn-return">Ritorna tutti i prodotti</a>
-                </div>
+                <button type="button" class="mf-btn-return" onclick="window.location='{{ route('home') }}#prodotti'">
+                    Ritorna tutti i prodotti
+                </button>
             </form>
 
             <!-- SEARCHBAR PER MALFUNZIONAMENTI TRAMITE RICERCA PAROLA NELLA DESCRIZIONE -->
@@ -30,7 +30,7 @@
                             @foreach($prodotti_select as $prodotto)
                                 <option value="{{ $prodotto->id }}" 
                                     @selected((int)($selected_product_id ?? 0) === $prodotto->id)>
-                                {{ $prodotto->nome }}
+                                    {{ $prodotto->nome }}
                                 </option>
                             @endforeach
                             </select>
