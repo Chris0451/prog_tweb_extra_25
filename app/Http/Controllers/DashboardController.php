@@ -15,6 +15,10 @@ class DashboardController extends Controller
             $user->load(['tecnico.centro']);
         }
 
+        if($user->role === 'staff'){
+            $user->load(['staff.prodotti']);
+        }
+
         return view('dashboard', [
             'user' => $user,
             'tecnico' => $user->tecnico ?? null,

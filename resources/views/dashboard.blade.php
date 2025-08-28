@@ -28,12 +28,12 @@
                 <div class="block">
                     <h2>SEZIONE MALFUNZIONAMENTI</h2>
                     <ul>
-                        <li><strong><a href="">AGGIUNGI NUOVO MALFUNZIONAMENTO</a></strong></li>
+                        <li><strong><a href="{{ route('malfunction.insert') }}">AGGIUNGI NUOVO MALFUNZIONAMENTO</a></strong></li>
                         <li><strong><a href="{{ route('malfunctions.list') }}">VISUALIZZA, MODIFICA O CANCELLA MALFUNZIONAMENTO</a></strong></li>
                     </ul>
                     <h2>SEZIONE SOLUZIONI</h2>
                     <ul>
-                        <li><strong><a href="">CREA NUOVA SOLUZIONE</a></strong></li>
+                        <li><strong><a href="{{ route('solution.insert') }}">CREA NUOVA SOLUZIONE</a></strong></li>
                         <li><strong><a href="{{ route('solutions.list') }}">VISUALIZZA, MODIFICA O CANCELLA SOLUZIONE</a></strong></li>
                     </ul>
                 <div>

@@ -29,6 +29,13 @@ class Staff extends Model
 
     //-----------------------------------//
 
+    public function getAssignedProds(){
+        return $this->prodotti()
+                    ->orderBy('prodotto.id', 'asc')
+                    ->pluck('nome', 'id')
+                    ->toArray();
+    }
+
     public function getPagedAssignedProds(): LengthAwarePaginator{
         return $this->prodotti()
                     ->select('prodotto.id', 'prodotto.nome')
@@ -41,6 +48,19 @@ class Staff extends Model
                     ->with('malfunzionamento:id,id_prodotto,tipologia,descrizione')
                     ->orderBy('prodotto.id', 'asc')
                     ->paginate(5, ['*'], 'prod_page');
+    }
+
+    public function getAssignedMalfs(){
+        $prodIds = $this->prodotti()->pluck('prodotto.id');
+
+        return Malfunzionamento::with('prodotto')
+            ->whereIn('id_prodotto', $prodIds)
+            ->orderBy('id_prodotto','asc')
+            ->get()
+            ->mapWithKeys(function ($malf) {
+                    return [$malf->id => $malf->prodotto->nome . ' - ' . $malf->tipologia];
+                })
+            ->toArray();
     }
 
     public function getPagedAssignedMalfunctions(int $prodId): LengthAwarePaginator{

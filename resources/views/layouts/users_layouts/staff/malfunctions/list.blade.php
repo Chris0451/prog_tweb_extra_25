@@ -40,15 +40,13 @@
             <caption class="name">{{ $p->nome }}</caption>
             <colgroup>
                 <col width="20%">
-                <col width="45%">
-                <col width="20%">
+                <col width="65%">
                 <col width="15%">
             </colgroup>
             <thead>
                 <tr>
                     <th>Tipologia malfunzionamento</th>
                     <th>Descrizione</th>
-                    <th>Soluzione associata</th>
                     <th>Modifica/Cancella</th>
                 </tr>
             </thead>
@@ -57,7 +55,6 @@
                 <tr>
                     <td class="malf_name">{{$m->tipologia}}</td>
                     <td>{{$m->descrizione}}</td>
-                    <td><a href="{{ route('solutions.list', ['sol_page_'.$m->id => $solPageForMalf[$m->id] ?? 1]) }}#malf_{{ $m->id }}">Link alla soluzione</a></td>
                     <td>
                         <a href="{{ route('malfunction.edit', [$m->id])  }}" style="border-bottom: 0px; color:green">
                             <span class="material-icons">edit</span>&nbsp;
@@ -81,7 +78,7 @@
     
 @endforeach
 <div class="pag-prods">
-        {{ $prods->appends(request()->except('prod_page'))->links('pagination::default') }}
+    {{ $prods->appends(request()->except('prod_page'))->links('pagination::default') }}
 </div>
 
 <form id="delete-form" method="POST" style="display: none;">

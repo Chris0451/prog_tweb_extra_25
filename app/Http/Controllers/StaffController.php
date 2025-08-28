@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewMalfunctionRequest;
+use App\Http\Requests\NewSolutionRequest;
 use App\Models\Resources\Malfunzionamento;
 use App\Models\Resources\SoluzioneTecnica;
 use App\Models\Resources\Staff;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class StaffController extends Controller
 {
@@ -17,9 +20,26 @@ class StaffController extends Controller
         $this->_staffModel = new Staff();
     }
 
-    public function listMalfunctions(){
+    //-------------------------------//
+
+    public function insertMalfunction(): View{
         $user = Auth::user();
-        $staff = Staff::where('id_utente', $user->id)->firstOrFail();
+        $staff = $this->_staffModel->where('id_utente', $user->id)->firstOrFail();
+        $prods = $staff->getAssignedProds();
+
+        return view('layouts.users_layouts.staff.malfunctions.insert', ['prods' => $prods, 'user' => $user]);
+    }
+
+    public function storeMalfunction(NewMalfunctionRequest $request): RedirectResponse{
+        $malf = new Malfunzionamento;
+        $malf->fill($request->validated());
+        $malf->save();
+        return redirect()->route('dashboard.staff')->with('success', 'Malfunzionamento inserito correttamente');
+    }
+
+    public function listMalfunctions(): View{
+        $user = Auth::user();
+        $staff = $this->_staffModel->where('id_utente', $user->id)->firstOrFail();
         $prods = $staff->getPagedAssignedProds();
 
         $malfPaginators = [];
@@ -27,31 +47,19 @@ class StaffController extends Controller
             $malfPaginators[$p->id] = $staff->getPagedAssignedMalfunctions($p->id);
         }
 
-        $perPage = 5;
-        $solPageForMalf = [];
-        foreach ($prods as $p) {
-            /** @var \Illuminate\Pagination\LengthAwarePaginator $malfs */
-            $malfs = $malfPaginators[$p->id] ?? null;
-            if (!$malfs) continue;
-            foreach ($malfs as $m) {
-                $firstSolId = SoluzioneTecnica::where('id_malfunzionamento', $m->id)
-                    ->orderBy('id', 'asc')
-                    ->value('id');
+        return view('layouts.users_layouts.staff.malfunctions.list', ['prods' => $prods, 'malfPaginators' => $malfPaginators, 'user' => $user]);
+    }
 
-                if (!$firstSolId) { 
-                    $solPageForMalf[$m->id] = 1; 
-                    continue; 
-                }
+    public function editMalfunction(int $malfId): View{
+        $user = Auth::user();
+        $malfunzionamento = $this->_staffModel->getMalfunctionById($malfId);
+        return view('layouts.users_layouts.staff.malfunctions.update', ['malfunzionamento' => $malfunzionamento, 'user' => $user]);
+    }
 
-                $index = SoluzioneTecnica::where('id_malfunzionamento', $m->id)
-                            ->where('id', '<=', $firstSolId)
-                            ->count() - 1; // 0-based
-
-                $solPageForMalf[$m->id] = intdiv($index, $perPage) + 1; // qui sarà 1, ma resta generico
-            }
-        }
-
-        return view('layouts.users_layouts.staff.malfunctions.list', ['prods' => $prods, 'solPageForMalf' => $solPageForMalf, 'malfPaginators' => $malfPaginators, 'user' => $user]);
+    public function updateMalfunction(NewMalfunctionRequest $request){
+        $malf = $this->_staffModel->getMalfunctionById($request->input('id'));
+        $malf->update($request->validated());
+        return redirect()->route('malfunctions.list');
     }
 
     public function deleteMalfunction(int $malfId): RedirectResponse{
@@ -60,39 +68,57 @@ class StaffController extends Controller
         return redirect()->route('malfunctions.list');
     }
 
+    //-------------------------------//
+
+    public function insertSolution(): View{
+        $user = Auth::user();
+        $staff = $this->_staffModel->where('id_utente', $user->id)->firstOrFail();
+
+        $malfs = $staff->getAssignedMalfs();
+
+        return view('layouts.users_layouts.staff.solutions.insert', [
+            'malfs' => $malfs,
+            'user'  => $user
+        ]);
+    }
+
+    public function storeSolution(NewSolutionRequest $request): RedirectResponse{
+        $malf = new SoluzioneTecnica;
+        $malf->fill($request->validated());
+        $malf->save();
+        return redirect()->route('dashboard.staff')->with('success', 'Prodotto inserito correttamente');
+    }
+
     public function listSolutions(){
         $user = Auth::user();
-        $staff = Staff::where('id_utente', $user->id)->firstOrFail();
+        $staff = $this->_staffModel->where('id_utente', $user->id)->firstOrFail();
 
         $prods = $staff->getPagedProdsWithMalfs();
 
-        // Paginator soluzioni (per ciascun malfunzionamento)
         $solPaginators = [];
-        // Mappa soluzione->pagina per link diretti
-        $solutionPages = [];
-
-        $perPageSolutions = 5; // lo stesso valore usato nel paginate() delle soluzioni
 
         foreach ($prods as $p) {
             foreach ($p->malfunzionamento as $m) {
-                // paginator per le soluzioni di questo malfunzionamento
                 $solPaginators[$m->id] = $staff->getPagedAssignedSolutions($m->id);
-
-                // pre-calcolo: id soluzione -> pagina
-                $idsOrdinati = SoluzioneTecnica::where('id_malfunzionamento', $m->id)
-                    ->orderBy('id', 'asc')
-                    ->pluck('id')
-                    ->values(); // [12, 15, 22, 23, ...]
-
-                foreach ($idsOrdinati as $idx => $solId) {
-                    $solutionPages[$solId] = intdiv($idx, $perPageSolutions) + 1;
-                }
             }
         }
 
-        return view('layouts.users_layouts.staff.solutions.list', ['prods' => $prods, 'solPaginators' =>$solPaginators, 'solutionPages' => $solutionPages, 'user' => $user]);
+        return view('layouts.users_layouts.staff.solutions.list', ['prods' => $prods, 'solPaginators' =>$solPaginators, 'user' => $user]);
     }
 
+    public function editSolution(int $solId): View{
+        $user = Auth::user();
+        $soluzione = $this->_staffModel->getSolutionById($solId);
+        return view('layouts.users_layouts.staff.solutions.update',['soluzione' => $soluzione, 'user' => $user]);
+    }
+
+    public function updateSolution(NewSolutionRequest $request): RedirectResponse{
+        $sol = $this->_staffModel->getSolutionById($request->input('id'));
+        $sol->update($request->validated());
+        return redirect()->route('solutions.list');
+    }
+
+    
     public function deleteSolution(int $solId): RedirectResponse{
         $sol = $this->_staffModel->getSolutionById($solId);
         $sol->delete();

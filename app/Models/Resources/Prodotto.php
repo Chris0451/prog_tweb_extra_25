@@ -26,6 +26,18 @@ class Prodotto extends Model
         return $this->hasMany(Malfunzionamento::class, 'id_prodotto', 'id');
     }
 
+    public function soluzioni()
+    {
+        return $this->hasManyThrough(
+            SoluzioneTecnica::class,
+            Malfunzionamento::class,
+            'id_prodotto',
+            'id_malfunzionamento',
+            'id',
+            'id'
+        );
+    }
+
     public function staff()
     {
         return $this->belongsToMany(Staff::class, 'assegnazione_prodotto', 'id_prodotto', 'id_staff_associato')->using(AssegnazioneProdotto::class);

@@ -132,7 +132,7 @@ Route::get('/staff/malfunctions/list', [StaffController::class, 'listMalfunction
 
 Route::get('/staff/malfunction/insert', [StaffController::class, 'insertMalfunction'])
     ->middleware(['auth', RoleMiddleware::class . ':staff'])
-    ->name('malfunction.add');
+    ->name('malfunction.insert');
 
 Route::post('/staff/malfunction/store', [StaffController::class, 'storeMalfunction'])
     ->middleware(['auth', RoleMiddleware::class . ':staff'])
@@ -158,7 +158,7 @@ Route::get('/staff/solutions/list', [StaffController::class, 'listSolutions'])
 
 Route::get('/staff/solution/insert', [StaffController::class, 'insertSolution'])
     ->middleware(['auth', RoleMiddleware::class . ':staff'])
-    ->name('solution.add');
+    ->name('solution.insert');
 
 Route::post('/staff/solution/store', [StaffController::class, 'storeSolution'])
     ->middleware(['auth', RoleMiddleware::class . ':staff'])
