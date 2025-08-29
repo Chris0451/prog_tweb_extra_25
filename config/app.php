@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://tweban.dii.univpm.it/~grp_52/laraProject/public'),
+    'url' => 'https://tweban.dii.univpm.it/~grp_52/laraProject/public',
 
     /*
     |--------------------------------------------------------------------------
