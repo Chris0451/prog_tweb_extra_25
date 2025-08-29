@@ -28,7 +28,7 @@ class NewProductRequest extends FormRequest
             'mod_installazione' => 'required|string|max:1000',
             'modello' => 'required|string|max:100',
             'marca' => 'required|string|max:100',
-            'foto' => 'nullable|max:500'
+            'foto' => 'sometimes|max:500'
         ];
     }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('mod_installazione', 1000);
             $table->string('modello', 100);
             $table->string('marca',100);
-            $table->string('foto', 500)->nullable()->default('images/placeholder.jpg');
+            $table->string('foto', 500)->default('placeholder.jpg');
         });
     }
 
