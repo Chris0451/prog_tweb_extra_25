@@ -69,7 +69,7 @@
                             <p><strong>Tecniche d'uso:</strong> {{ $prodotto->tecniche_uso }}</p>
                             <p><strong>Installazione:</strong> {{ $prodotto->mod_installazione }}</p>
                         @endif
-                        @if(auth()->user()?->role === 'tecnico' || auth()->user()?->role === 'staff')
+                        @if(auth()->user()?->role === 'tecnico')
                             <!-- Contenuto per tecnico e staff:
                                  Mostrare i malfunzionamenti e le relative soluzioni di ogni prodotto
                             -->
