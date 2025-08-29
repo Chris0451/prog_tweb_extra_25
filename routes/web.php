@@ -7,6 +7,7 @@ use App\Http\Controllers\PublicController;
 use App\Http\Controllers\StaffController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 //ROUTE PER HOMEPAGE
 Route::get('/', [PublicController::class, 'showHome'])->name('home');
@@ -176,6 +177,23 @@ Route::delete('/staff/solution/delete/{solId}', [StaffController::class, 'delete
     ->middleware(['auth', RoleMiddleware::class . ':staff'])
     ->name('solution.delete');
 
+
+//------------------------------//
+
+Route::get('/debug-storage-test', function () {
+    $disk = config('filesystems.default');
+    $base = Storage::disk('public')->path('');
+    $file = 'images/products/_probe.txt';
+
+    $put = Storage::disk('public')->put($file, 'ok');
+    $existsAfterPut = Storage::disk('public')->exists($file);
+    $url = asset('storage/'.$file);
+
+    $del = Storage::disk('public')->delete($file);
+    $existsAfterDel = Storage::disk('public')->exists($file);
+
+    return response()->json(compact('disk','base','file','put','existsAfterPut','url','del','existsAfterDel'));
+});
 
 
 require __DIR__.'/auth.php';
