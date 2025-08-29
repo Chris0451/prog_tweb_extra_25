@@ -33,9 +33,10 @@
         <caption>Lista prodotti</caption>
         <colgroup>
             <col width="10%">
-            <col width="25%">
             <col width="15%">
             <col width="15%">
+            <col width="15%">
+            <col width="10%">
             <col width="10%">
             <col width="10%">
             <col width="15%">
@@ -48,6 +49,7 @@
                 <th>Modalità d'installazione</th>
                 <th>Modello</th>
                 <th>Marca</th>
+                <th>Foto</th>
                 <th>Modifica/Cancella</th>
             </tr>
         </thead>
@@ -60,6 +62,8 @@
                 <td>{{$prodotto->mod_installazione}}</td>
                 <td>{{$prodotto->modello}}</td>
                 <td>{{$prodotto->marca}}</td>
+                <td style="text-align: center;"><img src="{{ asset('storage/images/products/'.$prodotto->foto) }}" style="width: 70%; height: auto; border-radius: 8px;"></td>
+                
                 <td>
                     <a href="{{ route('product.edit', [$prodotto->id])  }}" style="border-bottom: 0px; color:green">
                         <span class="material-icons">edit</span>&nbsp;
