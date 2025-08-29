@@ -196,4 +196,14 @@ Route::get('/debug-storage-test', function () {
 });
 
 
+Route::get('/debug-assistance-centers', function () {
+    $file = 'images/assistance_centers/_probe.txt';
+    $put = Storage::disk('public')->put($file, 'ok');
+    $exists = Storage::disk('public')->exists($file);
+    $url = asset('storage/'.$file);
+    // pulizia (opzionale)
+    $del = Storage::disk('public')->delete($file);
+    return compact('put','exists','url','del');
+});
+
 require __DIR__.'/auth.php';
