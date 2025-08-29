@@ -380,11 +380,7 @@ nav.sticky {
 /* ***FINE SEZIONE SEARCHBAR PER TECNICO E STAFF (RICERCA MALFUNZIONAMENTI)*** */
 
 /* ***BOTTONE DI REFRESH PER PRODOTTI*** */
-/* Bottone ritorno: piena larghezza del contenitore form */
-.mf-btn-return {
-  grid-column: 1 / -1; /* occupa tutta la larghezza nel grid della form */
-  margin-top: 10px;
-}
+
 
 .mf-btn-return {
   display: block;
