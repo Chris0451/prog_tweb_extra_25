@@ -231,7 +231,7 @@ class AdminController extends Controller
             $centro->foto = basename($request->file('foto')->store('images/assistance_centers', 'public'));
         }
         $centro->save();
-        return redirect()->action([DashboardController::class, 'index'])->with('success', 'Centro inserito correttamente');
+        return redirect()->route('dashboard.admin')->with('success', 'Centro inserito correttamente');
     }
 
     public function listCenters() :View
