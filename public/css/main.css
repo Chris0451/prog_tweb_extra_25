@@ -48,7 +48,7 @@ nav a:hover {
 }
 
 @media (max-width: 550px) {
-    nav{
+    #navbar{
         display: none;
         flex-direction: column;
         align-items: center;
@@ -56,6 +56,7 @@ nav a:hover {
         padding: 10px 0;
     }
     nav.nav_pagination{
+      display: flex;
       flex-direction: column;
       align-items: center;
       gap: 15px;
@@ -68,7 +69,7 @@ nav a:hover {
         gap: 15px;
         padding: 10px 0;
     }
-    nav.active {
+    #navbar.active {
         display: flex;
     }
     .menu-toggle {
@@ -380,7 +381,7 @@ nav.sticky {
 
 /* ***BOTTONE DI REFRESH PER PRODOTTI*** */
 /* Bottone ritorno: piena larghezza del contenitore form */
-.mf-return {
+.mf-btn-return {
   grid-column: 1 / -1; /* occupa tutta la larghezza nel grid della form */
   margin-top: 10px;
 }
