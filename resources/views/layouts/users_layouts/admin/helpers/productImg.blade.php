@@ -1,6 +1,6 @@
 @php
         if (empty($imgFile)) {
-            $imgFile = 'images/placeholder.jpg';
+            $imgFile = 'placeholder.jpg';
         }
         if (null !== $attrs) {
             $attrs = 'class="' . $attrs . '"';

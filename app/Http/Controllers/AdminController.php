@@ -51,7 +51,7 @@ class AdminController extends Controller
             $prodotto->foto = basename($request->file('foto')->store('images/products', 'public'));
         }
         $prodotto->save();
-        return redirect()->action([DashboardController::class, 'index'])->with('success', 'Prodotto inserito correttamente');
+        return redirect()->route('dashboard.admin');
     }
 
     //RESTITUZIONE VIEW PER LISTA PRODOTTI PAGNIATA
@@ -80,7 +80,7 @@ class AdminController extends Controller
                 Storage::disk('public')->delete('images/products/'.$oldImg);
             }
         }
-        return redirect()->route('product.list')->with('success', 'Prodotto aggiornato'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
+        return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
     }
 
     public function deleteProduct(int $prodId): RedirectResponse
@@ -135,8 +135,7 @@ class AdminController extends Controller
             }
         });
 
-        return redirect()->action([DashboardController::class, 'index'])
-            ->with('success','Utente inserito correttamente');
+        return redirect()->route('dashboard.admin');
     }
 
 
@@ -150,7 +149,7 @@ class AdminController extends Controller
     }
 
     //RESTITUZIONE VIEW PER FORM DI MODIFICA UTENTE (TECNICO, STAFF) 
-    public function editUser(int $userId, string $role): View
+    public function editUser(int $userId, string $role)
     {
         $user = Auth::user();
         switch ($role) {
@@ -202,7 +201,7 @@ class AdminController extends Controller
             default:
                 abort(404);
         }
-        return redirect()->route('users.list')->with('success','Utente aggiornato');
+        return redirect()->route('users.list');
     }
 
     //AZIONE DI CANCELLAZIONE DI UN UTENTE (TECNICO, STAFF) SELEZIONATO

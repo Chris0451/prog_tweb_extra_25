@@ -34,7 +34,7 @@ class StaffController extends Controller
         $malf = new Malfunzionamento;
         $malf->fill($request->validated());
         $malf->save();
-        return redirect()->route('dashboard.staff')->with('success', 'Malfunzionamento inserito correttamente');
+        return redirect()->route('dashboard.staff');
     }
 
     public function listMalfunctions(): View{
@@ -56,7 +56,7 @@ class StaffController extends Controller
         return view('layouts.users_layouts.staff.malfunctions.update', ['malfunzionamento' => $malfunzionamento, 'user' => $user]);
     }
 
-    public function updateMalfunction(NewMalfunctionRequest $request){
+    public function updateMalfunction(NewMalfunctionRequest $request): RedirectResponse{
         $malf = $this->_staffModel->getMalfunctionById($request->input('id'));
         $malf->update($request->validated());
         return redirect()->route('malfunctions.list');
@@ -86,10 +86,10 @@ class StaffController extends Controller
         $malf = new SoluzioneTecnica;
         $malf->fill($request->validated());
         $malf->save();
-        return redirect()->route('dashboard.staff')->with('success', 'Prodotto inserito correttamente');
+        return redirect()->route('dashboard.staff');
     }
 
-    public function listSolutions(){
+    public function listSolutions(): View{
         $user = Auth::user();
         $staff = $this->_staffModel->where('id_utente', $user->id)->firstOrFail();
 
