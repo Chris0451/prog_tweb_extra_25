@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("nome",100);
             $table->string("indirizzo",100);
-            $table->string("foto",1000);
+            $table->string("foto",1000)->default('placeholder.jpg');
         });
     }
 
