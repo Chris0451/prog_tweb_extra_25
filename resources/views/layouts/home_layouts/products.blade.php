@@ -44,8 +44,6 @@
                         <div class="mf-actions">
                             <input id="submitSelect" type="submit" value="Ricerca" class="mf-btn" disabled>
                         </div>
-
-                        {{-- Bottone separato per tornare a tutti i prodotti --}}
                         
                     </form>
                 </div>

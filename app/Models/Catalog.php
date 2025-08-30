@@ -85,8 +85,4 @@ class Catalog
         return Malfunzionamento::with('prodotto')->get();
     }
 
-    /*public static function getSolutionsByMalfunc(){
-        return SoluzioneTecnica::with('malfunzionamento')->get();
-    }*/
-
 }
