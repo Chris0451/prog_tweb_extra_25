@@ -67,7 +67,7 @@
                             <p><strong>Installazione:</strong> {{ $prodotto->mod_installazione }}</p>
                         @endif
                         @if(auth()->user()?->role === 'tecnico')
-                            <!-- Contenuto per tecnico e staff:
+                            <!-- Contenuto per tecnico:
                                  Mostrare i malfunzionamenti e le relative soluzioni di ogni prodotto
                             -->
                             <hr>
@@ -106,12 +106,12 @@
                                             @endforeach
                                         </ol>
                                     @else
-                                        <em>Nessuna soluzione registrata</em>
+                                        <p><em>Nessuna soluzione registrata</em></p>
                                     @endif
                                 </div>
                             @endif
                             @empty
-                                <em>Nessun malfunzionamento registrato</em>
+                                <p><em>Nessun malfunzionamento registrato</em></p>
                             @endforelse
                         @endif
                     </div>
