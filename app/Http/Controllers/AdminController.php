@@ -77,7 +77,7 @@ class AdminController extends Controller
         if (!is_null($request->file('foto'))) {
             $prodotto->update(['foto' => basename($request->file('foto')->store('images/products', 'public'))]);
             if (!is_null($oldImg)) {
-                Storage::delete('public/images/products/'.$oldImg);
+                Storage::disk('public')->delete('images/products/'.$oldImg);
             }
         }
         return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
@@ -89,7 +89,7 @@ class AdminController extends Controller
         $foto = $prodotto->foto;
         $prodotto->delete();
         if (!is_null($foto)) {
-            Storage::delete('public/images/products/'.$foto);
+            Storage::disk('public')->delete('images/products/'.$foto);
         }
         return redirect()->route('product.list'); //NOME DELLA ROUTE CHE UTILIZZA listProducts
     }
@@ -256,7 +256,7 @@ class AdminController extends Controller
         if (!is_null($request->file('foto'))) {
             $centro->update(['foto' => basename($request->file('foto')->store('images/assistance_centers', 'public'))]);
             if (!is_null($oldImg)) {
-                Storage::delete('public/images/assistance_centers/'.$oldImg);
+                Storage::disk('public')->delete('images/assistance_centers/'.$oldImg);
             }
         }
         return redirect()->route('center.list')->with('success', 'Centro aggiornato'); //NOME DELLA ROUTE CHE UTILIZZA listCenters
@@ -268,7 +268,7 @@ class AdminController extends Controller
         $foto = $centro->foto;
         $centro->delete();
         if (!is_null($foto)) {
-            Storage::delete('public/images/assistance_centers/'.$foto);
+            Storage::disk('public')->delete('images/assistance_centers/'.$foto);
         }
         return redirect()->route('center.list'); //NOME DELLA ROUTE CHE UTILIZZA listCenters
     }

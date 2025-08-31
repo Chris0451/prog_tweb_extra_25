@@ -24,7 +24,7 @@ class NewCenterRequest extends FormRequest
         return [
             'nome' => 'required|string|max:100',
             'indirizzo' => 'required|string|max:100',
-            'foto' => 'required|max:1000'
+            'foto' => 'required|max:3000'
         ];
     }
 }
