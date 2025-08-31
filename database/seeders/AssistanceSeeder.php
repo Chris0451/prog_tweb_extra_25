@@ -15,29 +15,29 @@ class AssistanceSeeder extends Seeder
     {
         DB::table('centro_assistenza')->insert([
             [
-                'nome' => 'Centro Assistenza Falconara',
+                'nome' => 'Phone Store',
                 'indirizzo' => 'Via Roma, 30 - Falconara - Ancona',
-                'foto' => 'placeholder.jpg'
+                'foto' => 'centro_1.jpg'
             ],
             [
-                'nome' => 'Tech Support Ancona',
+                'nome' => 'Tech Support Informatica',
                 'indirizzo' => 'Viale della Vittoria, 12 - Ancona',
-                'foto' => 'placeholder.jpg'
+                'foto' => 'centro_2.jpg'
             ],
             [
-                'nome' => 'Servizi Tecnici Jesi',
+                'nome' => 'CAM Jesi',
                 'indirizzo' => 'Piazza Federico II, 5 - Jesi - Ancona',
-                'foto' => 'placeholder.jpg'
+                'foto' => 'centro_3.jpg'
             ],
             [
                 'nome' => 'Centro Riparazioni Senigallia',
                 'indirizzo' => 'Corso 2 Giugno, 45 - Senigallia - Ancona',
-                'foto' => 'placeholder.jpg'
+                'foto' => 'centro_4.jpg'
             ],
             [
-                'nome' => 'Assistenza Marche Sud',
+                'nome' => 'Computer Mania Marche',
                 'indirizzo' => 'Via Dante Alighieri, 18 - Osimo - Ancona',
-                'foto' => 'placeholder.jpg'
+                'foto' => 'centro_5.jpg'
             ],
         ]);
     }
