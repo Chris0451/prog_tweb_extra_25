@@ -28,8 +28,7 @@
                             <select id="prod" name="prod_id" class="mf-select" data-malfs-base="{{ url('/api/products') }}">
                             <option value="">— Nessun prodotto selezionato —</option>
                             @foreach($prodotti_select as $prodotto)
-                                <option value="{{ $prodotto->id }}" 
-                                    @selected((int)($selected_product_id ?? 0) === $prodotto->id)>
+                                <option value="{{ $prodotto->id }}">
                                     {{ $prodotto->nome }}
                                 </option>
                             @endforeach

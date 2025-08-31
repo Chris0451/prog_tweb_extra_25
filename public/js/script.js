@@ -63,13 +63,13 @@ backToTopBtn.addEventListener("click", function() {
     // Controlla a ogni modifica dell'input
     $searchInput.on('input', toggleButton);
 
-    // Helper: reset malf
+    // Helper: reset malf (ripristina la lista select di prodotti e malfunzionamenti)
     function resetMalf(message) {
         $malf.prop('disabled', true).empty()
         .append($('<option>', { value: '', text: message || '— Seleziona prima un prodotto —' }));
     }
 
-    // Abilita submit del form SELECT solo se prodotto + malfunzionamento selezionati
+    // Abilita submit del form SELECT solo se prodotto e malfunzionamento sono selezionati
     function refreshSubmitSelect() {
         const ok = ($prod.val() && $malf.val());
         $submitSelect.prop('disabled', !ok);
@@ -81,8 +81,7 @@ backToTopBtn.addEventListener("click", function() {
         $submitText.prop('disabled', !ok);
     }
 
-    // === MUTUA ESCLUSIONE ===
-    // Digitando testo → disabilita il form select
+    // Digitando testo si disabilita il form select
     $search.on('input', function() {
         const hasText = $(this).val().trim() !== '';
         if (hasText) {
@@ -95,7 +94,7 @@ backToTopBtn.addEventListener("click", function() {
         refreshSubmitText();
     });
 
-    // Cambio prodotto → disabilita il form testo e carica malfunzionamenti
+    // Cambiando prodotto si disabilita il form testo e carica malfunzionamenti
     $prod.on('change', function() {
         const productId = $(this).val();
 
@@ -119,7 +118,6 @@ backToTopBtn.addEventListener("click", function() {
             $malf.empty().append($('<option>', { value: '', text: '— Seleziona un malfunzionamento —' }));
 
             if (Array.isArray(data) && data.length) {
-                // NB: usa 'tipologia' per il testo (coerente con il tuo codice)
                 data.forEach(function(m) {
                     $malf.append($('<option>', { value: m.id, text: m.tipologia }));
                 });
@@ -135,17 +133,17 @@ backToTopBtn.addEventListener("click", function() {
         });
     });
 
-    // Cambio malfunzionamento → ricalcola
+    // Cambio malfunzionamento => ricalcolo
     $malf.on('change', refreshSubmitSelect);
 
     // Stato iniziale
     (function init() {
-        // Se arrivi con ricerca testuale già valorizzata
+        // Ricerca testuale già valorizzata
         if ($search.val() && $search.val().trim() !== '') {
-        $prod.prop('disabled', true).val('');
-        resetMalf();
+            $prod.prop('disabled', true).val('');
+            resetMalf();
         } else {
-        // Se arrivi con prodotto preselezionato (da query string), scatena il change per popolare i malf
+        // Prodotto preselezionato (da query string), si popolano i malfunzionamenti
         if ($prod.val()) {
             $search.prop('disabled', true).val('');
             $prod.trigger('change');
