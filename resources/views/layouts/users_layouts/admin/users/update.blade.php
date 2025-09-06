@@ -7,7 +7,7 @@
     <div class="container-form">
         <div class="wrap-form">
             {{ html()->modelForm($utente_selezionato, 'PUT', route('users.update', ['role' => $role]))->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
-                
+                @csrf
                 {{ html()->hidden('id', $utente_selezionato->id) }}
 
                 {{ html()->hidden('role', $role) }}

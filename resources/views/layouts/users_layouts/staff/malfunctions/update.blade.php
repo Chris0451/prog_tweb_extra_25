@@ -7,7 +7,7 @@
     <div class="container-form">
         <div class="wrap-form">
             {{ html()->modelForm($malfunzionamento, 'PUT', route('malfunction.update', $malfunzionamento))->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
-
+            @csrf
             {{ html()->hidden('id', $malfunzionamento->id) }}
 
             <div  class="wrap-input  rs1-wrap-input">
@@ -38,6 +38,7 @@
                 {{ html()->submit('Modifica malfunzionamento')->class(['form-btn1']) }}
             </div>
 
+            {{ html()->closeModelForm() }}
         </div>
     </div>
 </div>

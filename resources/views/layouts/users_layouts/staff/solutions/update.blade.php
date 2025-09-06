@@ -7,7 +7,7 @@
     <div class="container-form">
         <div class="wrap-form">
             {{ html()->modelForm($soluzione, 'PUT', route('solution.update', $soluzione))->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
-
+            @csrf
             {{ html()->hidden('id', $soluzione->id) }}
 
             <div  class="wrap-input  rs1-wrap-input">
@@ -38,6 +38,7 @@
                 {{ html()->submit('Modifica soluzione')->class(['form-btn1']) }}
             </div>
 
+            {{ html()->closeModelForm() }}
         </div>
     </div>
 </div>

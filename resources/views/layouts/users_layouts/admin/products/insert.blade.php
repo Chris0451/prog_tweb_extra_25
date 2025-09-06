@@ -7,6 +7,7 @@
     <div class="container-form">
         <div class="wrap-form">
             {{ html()->form()->method('POST')->route('product.store')->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
+                @csrf
                 <div  class="wrap-input  rs1-wrap-input">
                     {{ html()->label('Nome Prodotto', 'nome')->class(['label-input']) }}
                     {{ html()->text('nome')->class(['input'])->id('nome') }}

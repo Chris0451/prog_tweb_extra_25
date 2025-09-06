@@ -41,7 +41,7 @@
     <div class="container-form">
         <div class="wrap-form">
             {{ html()->form()->method('POST')->route('user.store')->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
-
+                @csrf
                 <div  class="wrap-input  rs1-wrap-input">
                     {{ html()->label('Nome utente', 'nome')->class(['label-input']) }}
                     {{ html()->text('nome')->class(['input'])->id('nome') }}
@@ -182,7 +182,7 @@
                     {{ html()->submit('Aggiungi utente')->class(['form-btn1']) }}
                 </div>
 
-            {{ html()->closeModelForm() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>

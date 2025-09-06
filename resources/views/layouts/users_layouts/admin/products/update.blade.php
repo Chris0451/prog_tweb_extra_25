@@ -7,7 +7,7 @@
     <div class="container-form">
         <div class="wrap-form">
             {{ html()->modelForm($prodotto, 'PUT', route('product.update', $prodotto))->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
-                
+                @csrf
                 {{ html()->hidden('id', $prodotto->id) }}
                 
                 <div  class="wrap-input  rs1-wrap-input">

@@ -7,7 +7,7 @@
     <div class="container-form">
         <div class="wrap-form">
             {{ html()->modelForm($centro, 'PUT', route('center.update', $centro))->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
-                
+                @csrf
                 {{ html()->hidden('id') }}
 
                 <div  class="wrap-input  rs1-wrap-input">
@@ -50,7 +50,7 @@
                     {{ html()->submit('Modifica Centro')->class(['form-btn1']) }}
                 </div>
 
-            {{ html()->form()->close() }}
+            {{ html()->closeModelForm() }}
         </div>
     </div>
 </div>

@@ -7,7 +7,7 @@
     <div class="container-form">
         <div class="wrap-form">
             {{ html()->form()->method('POST')->route('solution.store')->class(['data-form'])->attribute('enctype', 'multipart/form-data')->open()}}
-
+            @csrf
             <div class="wrap-input rs1-wrap-input">
                 {{ html()->label('Malfunzionamento associato', 'id_malfunzionamento')->class(['label-input']) }}
                 {{ html()->select('id_malfunzionamento', ['' => '-- Seleziona malfunzionamento --'] + $malfs, old('id_malfunzionamento'))->class(['input'])->id('id_malfunzionamento')->attribute('required', true) }}
@@ -47,6 +47,8 @@
             <div class="container-form-btn">
                 {{ html()->submit('Aggiungi malfunzionamento')->class(['form-btn1']) }}
             </div>
+
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>
